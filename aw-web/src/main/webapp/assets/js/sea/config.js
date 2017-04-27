@@ -25,6 +25,8 @@ seajs.config({
 		"register":"js/system/register.js",
 		"constants":"js/system/constants.js",
 		"componentutils":"js/system/componentutils.js",
+		"method-extend":"js/system/method-extends.js",
+        "adminIndex":"js/system/adminIndex.js",
 		
 	}
 })	

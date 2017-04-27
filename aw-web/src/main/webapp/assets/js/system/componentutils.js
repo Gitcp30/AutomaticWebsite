@@ -45,6 +45,33 @@ define(function(require, exports) {
 		);
 		return render(data);
 	};
+
+
+	// admin主页的左侧菜单栏
+	exports.adminMenu = function(data){
+        Template7.registerPartial(
+            'begin',
+            '<ul class="nav nav-list">' +
+            '{{#each this}}' +
+            '{{#with mainmenu}}' +
+            '<li class="{{style}}">' +
+            '<a href="#" class="dropdown-toggle">' +
+            '<i class="{{class}}"></i><span class="menu-text">{{text}}</span>' +
+            '<b class="arrow fa fa-angle-down"></b>' +
+            '</a>' +
+            '{{/with}}' +
+            '<ul class="submenu nav-show" >' +
+            '{{#each submenu}}' +
+            '<li><a href="{{url}}" class="active" ><i class="menu-icon fa fa-caret-right"></i>{{text}}</a><b class="arrow"></b></li>' +
+            '{{/each}}' +
+            '</ul>' +
+            '</li>' +
+            '{{/each}}' +
+            '</ul>'
+        );
+
+       return render(data);
+	}
 	
 	
 	

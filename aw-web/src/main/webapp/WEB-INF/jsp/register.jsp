@@ -322,13 +322,13 @@
 											</div>
 										</div>
 										<div class="space-2"></div>
-										<div class="form-group logoSrc">
+										<%--<div class="form-group logoSrc">
 											<label class="control-label col-xs-12 col-sm-4 no-padding-right" for="logoSrc">公司logo:</label>
 
 											<div class="col-xs-12 col-sm-3">
-												<input id="logoSrc" name="logoSrc" multiple="" type="file"/>
+												<input id="logoSrc" name=";" type="file"/>
 											</div>
-										</div>
+										</div>--%>
 
 										<div class="space-2"></div>
 
@@ -352,7 +352,7 @@
 
 											<div class="col-xs-12 col-sm-3">
 												<div class="input-group">
-													<input class="form-control date-picker" id="establishmentDate" name="establishmentDate" type="text" data-date-format="dd-mm-yyyy" />
+													<input class="form-control date-picker" id="establishmentDate" name="establishmentDate" type="text" data-date-format="yyyy-dd-mm" />
 													<span class="input-group-addon">
 														<i class="fa fa-calendar bigger-110"></i>
 													</span>
@@ -406,7 +406,7 @@
 						<hr />
 						<div class="wizard-actions">
 							<button class="btn btn-prev">
-								<i class="ace-icon fa fa-arrow-left"></i>上一步
+								<i class="ace-icon fa fa-arrow-left" data-la></i>上一步
 							</button>
 							<button class="btn btn-primary btn-next" data-last="首页">
 								<i class="ace-icon fa fa-arrow-right icon-on-right"></i>下一步

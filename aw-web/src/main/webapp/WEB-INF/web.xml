@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          metadata-complete="false" version="3.0">
 
-  <display-name>fk-web</display-name>
+  <display-name>aw-web</display-name>
 
   <!--加载spring容器 -->
   <context-param>

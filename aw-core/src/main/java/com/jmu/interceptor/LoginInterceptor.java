@@ -28,9 +28,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         //判断session
         HttpSession session  = request.getSession();
         //从session中取出用户身份信息
-        String username = (String) session.getAttribute("username");
         //身份存在，放行
-        if(username != null){
+        if(session.getAttribute("currentUser") != null){
             return super.preHandle(request, response, handler);
         }
         //执行这里表示用户身份需要认证，跳转登陆页面

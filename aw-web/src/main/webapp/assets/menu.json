@@ -1,0 +1,62 @@
+[  
+		{
+		"mainmenu": {
+					"text": "一级菜单",
+					"class": "menu-icon fa fa-list",
+					"style":"open"
+					},
+				"submenu": 		
+				[
+					{
+						"text": "测试",
+						"url": "location/html/test.html"
+					},{
+						"text": "单据类型管理",
+						"url": "basicdata/html/cdOrderTypeList.html"
+					}
+				]
+		},{
+			"mainmenu" : {
+				"text" : "商品相关",
+				"class" : "menu-icon fa fa-list",
+				"style" : "open"
+			},
+			"submenu" : [{
+						"text" : "包装规格",
+						"url" : "item/html/cdPackageList.html"
+					}, {
+						"text" : "商品组",
+						"url" : "item/html/ebMaterialGroupList.html"
+					}]
+		},{
+			"mainmenu" : {
+				"text" : "地点相关",
+				"class" : "menu-icon fa fa-list",
+				"style" : "open"
+			},
+			"submenu" : [{
+						"text": "距离数据管理",
+						"url": "basicdata/html/DistanceCacheList.html"
+					}]
+		}, {
+			"mainmenu" : {
+				"text" : "费用",
+				"class" : "menu-icon fa fa-list",
+				"style" : "open"
+			},
+			"submenu" : [{
+						"text" : "费用名称",
+						"url" : "fee/html/ebFeeList.html"
+					}]
+		}, {
+			"mainmenu" : {
+				"text" : "币种",
+				"class" : "menu-icon fa fa-list",
+				"style" : "open"
+			},
+			"submenu" : [{
+						"text" : "币种管理",
+						"url" : "rate/html/ebCurrencyList.html"
+					}]
+		}
+]

@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.UUID;
 
 /**
  * @Description: 注册用户服务实现类
@@ -76,7 +77,20 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Override
     public AjaxResponse save(User user, Company company) {
+        // 保存公司
+        company.setCompanyId(UUID.randomUUID().toString().replace("-", ""));
+        company.setCompanyState((short)2);
+        company.setMailbox(user.getMailbox());
+        companyMapper.insert(company);
+        // 保存用户
+        user.setUserId(UUID.randomUUID().toString().replace("-", ""));
+        user.setUserType((short) 1);
+        user.setPassword(CommonUtils.MD5(user.getPassword()));
+        user.setSysAccount(CommonUtils.createSysAccount(user.getMailbox()));
+        user.setUserState((short)0);
+        user.setCompanyId(company.getCompanyId());
+        userMapper.insert(user);
 
-        return null;
+        return AjaxResponse.success();
     }
 }

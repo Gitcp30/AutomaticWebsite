@@ -2,7 +2,7 @@
  * Created by zzr on 2017/4/23.
  */
 define(function(require, exports, module) {
-    require("jquery");
+    var $ = require("jquery");
     require("bootstrap");
     require("wizard");
     require("jquery-validate");
@@ -10,6 +10,11 @@ define(function(require, exports, module) {
     require("select2");
     require("ace-elements");
     require("ace");
+
+
+    require("method-extend");
+
+    var isSuccess =false;
 
     $('#steps-container')
         .ace_wizard({
@@ -19,12 +24,18 @@ define(function(require, exports, module) {
         .on('actionclicked.fu.wizard' , function(e, info){
             debugger
             if(info.step == 1) {
-                if(!$('#user-form').valid()) e.preventDefault();
-            } else if(info.step == 2){
+                if(!$('#user-form').valid()) e.preventDefault();// 阻止跳下一页
+            } else if(info.step == 2 && info.direction == "next"){
                 if(!$('#company-form').valid()) {
                     e.preventDefault();
                 } else {
                     // 执行保存
+                    save();
+                    if(!isSuccess){
+                        e.preventDefault();
+                    } else{
+                        $(".wizard-actions .btn-prev").hide();
+                    }
                 }
             }
         })
@@ -36,7 +47,7 @@ define(function(require, exports, module) {
     /**
      * 用户注册form验证
      */
-   /* $('#user-form').validate({
+    $('#user-form').validate({
         errorElement: 'div',
         errorClass: 'help-block',
         focusInvalid: false,
@@ -147,10 +158,9 @@ define(function(require, exports, module) {
         },
         invalidHandler: function (form) {
         }
-    });*/
+    });
 
-
-    jQuery.validator.addMethod("english", function(value, element) {
+    $.validator.addMethod("english", function(value, element) {
         var chrnum = /^([a-zA-Z]+)$/;
         return this.optional(element) || (chrnum.test(value));
     }, "只能输入字母");
@@ -238,9 +248,9 @@ define(function(require, exports, module) {
         debugger
         var val = $(this).val();
         switch (val){
-            case "0":$(".logoSrc").show();$(".industryType").show();$(".establishmentDate").show();$(".companySize").show();break;
-            case "1":$(".logoSrc").hide();$(".industryType").show();$(".establishmentDate").hide();$(".companySize").hide();break;
-            case "2":$(".logoSrc").hide();$(".industryType").hide();$(".establishmentDate").hide();$(".companySize").hide();break;
+            case "0":$(".industryType").show();$(".establishmentDate").show();$(".companySize").show();break;
+            case "1":$(".industryType").show();$(".establishmentDate").hide();$(".companySize").hide();break;
+            case "2":$(".industryType").hide();$(".establishmentDate").hide();$(".companySize").hide();break;
             default:alert("系统错误!");break;
         }
     });
@@ -288,7 +298,7 @@ define(function(require, exports, module) {
 
 
 
-    $('#logoSrc').ace_file_input({
+    /*$('#logoSrc').ace_file_input({
         style: 'well',
         btn_choose: 'Drop files here or click to choose',
         btn_change: null,
@@ -296,14 +306,14 @@ define(function(require, exports, module) {
         droppable: true,
         thumbnail: 'fit'//large | fit
         //,icon_remove:null//set null, to hide remove/reset button
-        /**,before_change:function(files, dropped) {
+        /!**,before_change:function(files, dropped) {
 						//Check an example below
 						//or examples/file-upload.html
 						return true;
-					}*/
-        /**,before_remove : function() {
+					}*!/
+        /!**,before_remove : function() {
 						return true;
-					}*/
+					}*!/
         ,
         preview_error : function(filename, error_code) {
             //name of the file that failed
@@ -317,8 +327,7 @@ define(function(require, exports, module) {
     }).on('change', function(){
         //console.log($(this).data('ace_input_files'));
         //console.log($(this).data('ace_input_method'));
-    });
-
+    });*/
     $('.date-picker').datepicker({
         autoclose: true,
         todayHighlight: true
@@ -327,6 +336,43 @@ define(function(require, exports, module) {
         .next().on(ace.click_event, function(){
         $(this).prev().focus();
     });
+
+
+    /**
+     * 保存数据
+     */
+    function  save() {
+        var userFrom = $("#user-form").serializeObject();
+        var companyFrom = $("#company-form").serializeObject();
+        var formData = {
+            user:userFrom,
+            company:companyFrom
+        }
+        debugger
+        $.ajax({
+            type: "POST",
+            url: ctx + "/register/save",
+            data: JSON.stringify(formData),
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            cache: false,
+            async: false,
+            success: function (res) {
+                debugger
+                if (res.code == "0") {
+                    alert("1");
+                    isSuccess =  true;
+                } else {
+                    alert("2");
+                    isSuccess = false;
+
+                }
+            }, error: function () {
+                    isSuccess =false;
+                    alert("系统错误");
+            }
+        });
+    }
 
 });
 

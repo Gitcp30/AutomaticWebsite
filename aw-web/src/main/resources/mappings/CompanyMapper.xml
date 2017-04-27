@@ -292,6 +292,7 @@
     <include refid="Base_Column_List" />
     from company
     where VISIT_URL = #{visitUrl,jdbcType=VARCHAR}
+    and COMPANY_STATE != '3'
   </select>
 
 </mapper>

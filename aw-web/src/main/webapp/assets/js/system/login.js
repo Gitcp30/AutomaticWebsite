@@ -86,7 +86,7 @@ define(function(require, exports, module) {
                         debugger
                         if (res.code == "0") {
                             //saveCookie();
-                            window.location.href = ctx + "/logins";
+                            window.location.href = ctx + "/admin";
                         } else {
                             setLoginMsg(res.message)
                             checkCode = false;

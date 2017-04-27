@@ -8,6 +8,7 @@ import com.jmu.domain.Company;
 import com.jmu.domain.User;
 import com.jmu.domain.vo.LoginUSer;
 import com.jmu.service.LoginService;
+import com.jmu.util.CommonUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,12 +47,15 @@ public class LoginServiceImpl implements LoginService {
             return AjaxResponse.fail("验证码不能为空!");
         }
         // 2 查询数据库验证
+        String pwd = loginUSer.getPassword();
+        loginUSer.setPassword(CommonUtils.MD5(pwd));
         User currentUser = userMapper.selectByLogin(loginUSer);
         if (currentUser == null){
             return AjaxResponse.fail("密码错误!");
         } else {
             // 判断当前用用户类型，为系统管理员直接进入系统
             if (currentUser.getUserType() == Constants.USER_SYS_ADMIN){
+                session.setAttribute("currentUser",currentUser);
                 return AjaxResponse.success();
                 // 否则判断用户状态
             } else if (currentUser.getUserState() == Constants.STATE_NORMAL){

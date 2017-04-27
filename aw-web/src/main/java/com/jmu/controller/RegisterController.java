@@ -2,17 +2,13 @@ package com.jmu.controller;
 
 import com.jmu.common.AjaxResponse;
 import com.jmu.constant.ResponseCode;
-import com.jmu.domain.Company;
-import com.jmu.domain.User;
+import com.jmu.domain.vo.RegisterVo;
 import com.jmu.entity.Email;
 import com.jmu.service.EmailService;
 import com.jmu.service.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -71,8 +67,15 @@ public class RegisterController {
 
     @ResponseBody
     @RequestMapping(value="/save",method = RequestMethod.POST)
-    public AjaxResponse save(@RequestParam("user")User user , @RequestParam("company")Company company){
-       // return registerService.checkVisitUrl(visitUrl);
-        return  AjaxResponse.success();
+    public AjaxResponse save(@RequestBody RegisterVo registerVo){
+       // return registerService.save(registerVo.getUser(),registerVo.getCompany());
+        return AjaxResponse.success();
     }
+    @ResponseBody
+    @RequestMapping(value="/save2",method = RequestMethod.POST)
+    public AjaxResponse save2(@RequestBody RegisterVo registerVo){
+        return registerService.save(registerVo.getUser(),registerVo.getCompany());
+    }
+
+
 }
