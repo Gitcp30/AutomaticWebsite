@@ -17,7 +17,7 @@
 	包括 ：js、css、img、..
 	 -->
     <mvc:resources mapping="/assets/**" location="/assets/"/>
-    <mvc:resources mapping="/img/**" location="/img/" />
+    <mvc:resources mapping="/static/**" location="/static/" />
 
     <!-- 全局异常处理 -->
     <bean class="com.jmu.exception.MyExceptionHandler" />
@@ -44,7 +44,7 @@
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <!-- 配置jsp路径的前缀 -->
-        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="prefix" value="/WEB-INF/"/>
         <!-- 配置jsp路径的后缀 -->
         <property name="suffix" value=".jsp"/>
     </bean>
@@ -57,7 +57,7 @@
             <mvc:exclude-mapping path="/login"/>
             <mvc:exclude-mapping path="/register/**" />
             <mvc:exclude-mapping path="/assets/**" />
-            <mvc:exclude-mapping path="/img/**" />
+            <mvc:exclude-mapping path="/static/**" />
             <mvc:exclude-mapping path="/validatecode/**" />
             <bean class="com.jmu.interceptor.LoginInterceptor"/>
         </mvc:interceptor>
@@ -66,7 +66,7 @@
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
             <mvc:exclude-mapping path="/assets/**" />
-            <mvc:exclude-mapping path="/img/**" />
+            <mvc:exclude-mapping path="/static/**" />
             <mvc:exclude-mapping path="/validatecode/**" />
             <bean class="com.jmu.interceptor.SetCommonDataInterceptor" />
         </mvc:interceptor>

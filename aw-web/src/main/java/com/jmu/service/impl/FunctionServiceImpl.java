@@ -23,8 +23,4 @@ public class FunctionServiceImpl extends BaseServiceImpl<Sysfunction> implements
         super.setBaseMapper(functionMapper);
     }
 
-    @Override
-    public void test() {
-        System.out.println("aaaaaaaaaaaaaaasadaaaa");
-    }
 }

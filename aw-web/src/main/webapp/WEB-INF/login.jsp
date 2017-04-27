@@ -5,13 +5,13 @@
 		<meta charset="UTF-8">
 		<title>用户登录</title>
 
-		<link rel="stylesheet" href="${ctx}/assets/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="${ctx}/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
-		<link rel="stylesheet" href="${ctx}/assets/css/fonts.googleapis.com.css" />
+		<link rel="stylesheet" href="${ctx}/static/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="${ctx}/static/font-awesome/4.5.0/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="${ctx}/static/css/fonts.googleapis.com.css" />
 		<!-- ace styles -->
-		<link rel="stylesheet" href="${ctx}/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+		<link rel="stylesheet" href="${ctx}/static/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
 
-		<link rel="shortcut icon" href="${ctx}/img/favicon.ico">
+		<link rel="shortcut icon" href="${ctx}/assets/image/favicon.ico">
 		<link rel="icon" href="favicon.ico">
 
 		<style>
@@ -36,7 +36,7 @@
 				width: 310px;
 				height: 100%;
 				padding-left: 15px;
-				background: url(${ctx}/img/logo3.jpg) 0 40% no-repeat;
+				background: url(${ctx}/assets/image/logo3.jpg) 0 40% no-repeat;
 			}
 			
 			.webHeader .middle_panel .left a {
@@ -53,7 +53,7 @@
 			.webHeader .middle_panel .right_link .sep {
 				width: 5px;
 				height: 15px;
-				background: url(${ctx}/img/dian.jpg) no-repeat center;
+				background: url(${ctx}/assets/image/dian.jpg) no-repeat center;
 			}
 			
 			.webHeader .middle_panel .right_link a {
@@ -81,7 +81,7 @@
 				height: 534px;
 				float: left;
 				margin: 10px 100px 0 0;
-				background: url(${ctx}/img/regVersion2016.png) -344px 0 no-repeat;
+				background: url(${ctx}/assets/image/regVersion2016.png) -344px 0 no-repeat;
 			}
 			
 			.webContent .right {
@@ -217,12 +217,12 @@
 			</div>
 		</div>
 
-		<script src="assets/js/sea/sea3.js"></script>
-		<script src="assets/js/sea/config.js"></script>
+		<script src="static/js/sea/sea3.js"></script>
+		<script src="static/js/sea/config.js"></script>
 		<script type="text/javascript">
             var ctx = "${ctx}";
-            seajs.use('login');
 		</script>
+		<script src="${ctx}/assets/js/login.js"></script>
 	</body>
 
 </html>

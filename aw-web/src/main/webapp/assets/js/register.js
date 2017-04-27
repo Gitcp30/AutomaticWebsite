@@ -1,18 +1,7 @@
 /**
  * Created by zzr on 2017/4/23.
  */
-define(function(require, exports, module) {
-    var $ = require("jquery");
-    require("bootstrap");
-    require("wizard");
-    require("jquery-validate");
-    require("bootstrap-datepicker");
-    require("select2");
-    require("ace-elements");
-    require("ace");
-
-
-    require("method-extend");
+seajs.use(['jquery','bootstrap','wizard','jquery-validate','bootstrap-datepicker','select2','ace-elements','ace','method-extend'],function($){
 
     var isSuccess =false;
 

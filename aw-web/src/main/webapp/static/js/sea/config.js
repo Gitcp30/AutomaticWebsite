@@ -1,5 +1,5 @@
 seajs.config({
-	base: "http://localhost:8082/aw-web/assets/",
+	base: "http://localhost:8082/aw-web/static/",
 	alias: {
 		//"jquery":"js/plus/jquery-1.11.3.min.js",
 		"jquery":"js/plus/jquery-2.1.4.min.js",
@@ -18,16 +18,11 @@ seajs.config({
 		"bootstrap-datepicker":"js/plus/bootstrap-datepicker.min.js",
 		"select2":"js/plus/select2.min.js",
 
-		/////自定义js文件
+		/////自定义sys   js文件
 		"editutils":"js/system/editutils.js",
-		"common":"js/system/common.js",
-		"login" :"js/system/login.js",
-		"register":"js/system/register.js",
 		"constants":"js/system/constants.js",
 		"componentutils":"js/system/componentutils.js",
 		"method-extend":"js/system/method-extends.js",
-        "adminIndex":"js/system/adminIndex.js",
-		
 	}
 })	
 

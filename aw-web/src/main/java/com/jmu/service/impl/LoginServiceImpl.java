@@ -40,6 +40,7 @@ public class LoginServiceImpl implements LoginService {
     public AjaxResponse checkLogin(LoginUSer loginUSer, HttpSession session) {
         // 1 验证码是否通过
         String patchca = (String) session.getAttribute("patchca");
+        session.removeAttribute("patchca");
         if (StringUtils.isNotEmpty(patchca) && StringUtils.isNotEmpty(loginUSer.getPatchca())) {
            Boolean b = patchca.equalsIgnoreCase(loginUSer.getPatchca());
            if (!b) return AjaxResponse.fail("验证码错误!");

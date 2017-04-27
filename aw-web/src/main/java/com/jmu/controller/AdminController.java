@@ -20,7 +20,7 @@ public class AdminController {
      */
     @RequestMapping(value = "",method= RequestMethod.GET)
     public String adminPage(){
-        return "admin/adminIndex";
+        return "admin/index";
     }
 
     /**

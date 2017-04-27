@@ -1,17 +1,7 @@
 /**
  * Created by zzr on 2017/4/23.
  */
-define(function(require, exports, module) {
-    var $ = require('jquery');
-    require("bootstrap");
-    require("jquery-ui.custom");
-    require("spinbox");
-    require("colorbox");
-    require("ace-elements");
-    require("ace");
-
-    var componentUtils = require("componentutils");
-    
+seajs.use(['componentutils','jquery','bootstrap','jquery-ui.custom','spinbox','colorbox','ace-elements','ace'],function(componentUtils,$){
     $(function () {
         /**
          * 点击切换验证码图片

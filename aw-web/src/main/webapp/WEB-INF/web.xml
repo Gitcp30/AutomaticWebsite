@@ -58,7 +58,7 @@
   <!-- 系统异常页面 -->
   <error-page>
     <error-code>404</error-code>
-    <location>/WEB-INF/jsp/error/error.jsp</location>
+    <location>/WEB-INF/error/error.jsp</location>
   </error-page>
 
 

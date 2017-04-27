@@ -8,5 +8,4 @@ import com.jmu.domain.Sysfunction;
  */
 public interface FunctionService extends BaseService<Sysfunction>{
 
-    void test();
 }

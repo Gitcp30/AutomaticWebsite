@@ -39,7 +39,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
             port = ":" + request.getServerPort();
         String basePath = request.getScheme() + "://" + request.getServerName() + port + path;
         request.setAttribute(Constants.CONTEXT_PATH, basePath);
-        request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
         return false;
     }
 

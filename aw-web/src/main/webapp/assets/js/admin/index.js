@@ -1,13 +1,7 @@
 /**
  * Created by zzr on 2017/4/27.
  */
-define(function(require, exports, module) {
-    var $ = require('jquery');
-    require("bootstrap");
-    require("ace");
-    require("jquery-ui.custom");
-
-    var componentUtils = require("componentutils");
+seajs.use(['componentutils','jquery','bootstrap','ace-elements','ace'],function(componentUtils,$){
 
     $(function() {
 
@@ -26,7 +20,7 @@ define(function(require, exports, module) {
         $("#footer").load(ctx+"/admin/footer");
 
         var renderSideBar = function(data) {
-            var data = data || ctx+"/assets/menu.json";
+            var data = data || ctx+"/static/menu.json";
             $.ajax({
                 type: "get",
                 url: data,
@@ -50,7 +44,7 @@ define(function(require, exports, module) {
         };
 
         // 渲染左侧菜单
-        renderSideBar(ctx+"/assets/menu.json");
+        renderSideBar(ctx+"/static/menu.json");
         $('#sidebar').delegate('.submenu a', 'click', function() {
             var curhash = $(this).attr('href');
             load(curhash);

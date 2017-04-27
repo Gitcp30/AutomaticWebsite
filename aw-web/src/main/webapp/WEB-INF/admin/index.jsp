@@ -8,15 +8,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>自动建站系统</title>
     <meta name="keywords" content=" ">
-    <link rel="stylesheet" href="${ctx}/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="${ctx}/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="${ctx}/static/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="${ctx}/static/font-awesome/4.5.0/css/font-awesome.min.css" />
 
-    <link rel="stylesheet" href="${ctx}/assets/css/fonts.googleapis.com.css" />
+    <link rel="stylesheet" href="${ctx}/static/css/fonts.googleapis.com.css" />
     <!-- ace styles -->
-    <link rel="stylesheet" href="${ctx}/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+    <link rel="stylesheet" href="${ctx}/static/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
 
-    <link rel="shortcut icon" href="${ctx}/img/favicon.ico">
-    <link rel="icon" href="${ctx}/img/favicon.ico">
+    <link rel="shortcut icon" href="${ctx}/assets/image/favicon.ico">
+    <link rel="icon" href="${ctx}/assets/image/favicon.ico">
 </head>
 
 <body class="no-skin">
@@ -46,12 +46,12 @@
         </a>
     </div>
     <!-- /.main-container -->
-    <script src="${ctx}/assets/js/sea/sea3.js"></script>
-    <script src="${ctx}/assets/js/sea/config.js"></script>
+    <script src="${ctx}/static/js/sea/sea3.js"></script>
+    <script src="${ctx}/static/js/sea/config.js"></script>
     <script type="text/javascript">
         var ctx = "${ctx}";
-        seajs.use("adminIndex");
     </script>
+    <script src="${ctx}/assets/js/admin/index.js"></script>
 </body>
 
 </html>

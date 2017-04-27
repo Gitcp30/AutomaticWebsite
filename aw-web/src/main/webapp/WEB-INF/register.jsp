@@ -6,17 +6,17 @@
 		<meta charset="UTF-8">
 		<title>注册界面</title>
 
-		<link rel="stylesheet" href="${ctx}/assets/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="${ctx}/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="${ctx}/static/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="${ctx}/static/font-awesome/4.5.0/css/font-awesome.min.css" />
 
-		<link rel="stylesheet" href="${ctx}/assets/css/fonts.googleapis.com.css" />
+		<link rel="stylesheet" href="${ctx}/static/css/fonts.googleapis.com.css" />
 		<!-- ace styles -->
-		<link rel="stylesheet" href="${ctx}/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+		<link rel="stylesheet" href="${ctx}/static/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
 		<!-- page specific plugin styles -->
-		<link rel="stylesheet" href="${ctx}/assets/css/select2.min.css" />
+		<link rel="stylesheet" href="${ctx}/static/css/select2.min.css" />
 
-		<link rel="shortcut icon" href="${ctx}/img/favicon.ico">
-		<link rel="icon" href="${ctx}/img/favicon.ico">
+		<link rel="shortcut icon" href="${ctx}/static/image/favicon.ico">
+		<link rel="icon" href="${ctx}/static/image/favicon.ico">
 
 		<style>
 			body {
@@ -114,7 +114,7 @@
 			
 			.banner_reg {
 				height: 171px;
-				background: url(${ctx}/img/bannerReg2.jpg) center no-repeat;
+				background: url(${ctx}/assets/image/bannerReg2.jpg) center no-repeat;
 			}
 			
 			.regContent {
@@ -160,7 +160,7 @@
 		<div class="webHeader">
 			<div class="middle_panel">
 				<a hidefocus="true" class="headLogo" style="background:none;" href="#" title="网站建设专家">
-					<img src="${ctx}/img/logo.png" style="width:131px;height:67px;margin-top:8px;" alt="网站建设专家">
+					<img src="${ctx}/assets/image/logo.png" style="width:131px;height:67px;margin-top:8px;" alt="网站建设专家">
 				</a>
 				<div class="webNav">
 					<div class="nav ">
@@ -436,7 +436,7 @@
 				</div>
 				<div class="footCpy">
 					<a target="_blank" hidefocus="true" href="#">
-						<img src="img/beianIcon.png" width="20" height="20" style="vertical-align:middle;">
+						<img src="${ctx}/assets/image/beianIcon.png" width="20" height="20" style="vertical-align:middle;">
 						<span style="color:#777;">粤公网安备 4401050XXXXXXX号</span>
 					</a>
 					<span style="display:inline-block; margin:0 10px;">|</span> Copyright
@@ -445,12 +445,12 @@
 			</div>
 		</div>
 
-		<script src="${ctx}/assets/js/sea/sea3.js"></script>
-		<script src="${ctx}/assets/js/sea/config.js"></script>
+		<script src="${ctx}/static/js/sea/sea3.js"></script>
+		<script src="${ctx}/static/js/sea/config.js"></script>
 		<script type="text/javascript">
             var ctx = "${ctx}";
-            seajs.use('register');
 		</script>
+		<script src="${ctx}/assets/js/register.js"></script>
 	</body>
 
 </html>
