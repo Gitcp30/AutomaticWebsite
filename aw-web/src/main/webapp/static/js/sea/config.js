@@ -17,6 +17,7 @@ seajs.config({
 		"jquery-additional-methods":"js/plus/jquery-additional-methods.min.js",
 		"bootstrap-datepicker":"js/plus/bootstrap-datepicker.min.js",
 		"select2":"js/plus/select2.min.js",
+		"jquery.SuperSlide":"js/plus/jquery.SuperSlide.2.1.source.js",
 
 		/////自定义sys   js文件
 		"editutils":"js/system/editutils.js",

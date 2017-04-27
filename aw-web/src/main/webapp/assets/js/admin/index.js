@@ -33,7 +33,7 @@ seajs.use(['componentutils','jquery','bootstrap','ace-elements','ace'],function(
 
         var load = function(path, command, data) {
             debugger
-            $("#page-content").load(path, function(module, html) {
+            $("#page-content").load(ctx+path, function(module, html) {
                 module.command = command;
                 module.data = data;
                 return {
