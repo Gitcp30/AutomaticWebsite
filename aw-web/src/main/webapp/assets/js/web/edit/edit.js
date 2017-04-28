@@ -1,15 +1,5 @@
-define(function(require, exports, module) {
-	var $ = require('jquery');
-	require("bootstrap");
-	require("jquery-ui.custom");
-	require("spinbox");
-	require("colorbox");
-	require("ace-elements");
-	require("ace");
+seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom','spinbox','colorbox','ace-elements','ace'],function(componentUtils,$,editUtils){
 
-	// 编辑工具
-	var editUtils = require("editutils");
-	var componentUtils = require("componentutils");
 	$(function() {
 		// 格式设置面板
 		var $panes = $(".panes");
@@ -42,7 +32,7 @@ define(function(require, exports, module) {
 		/**
 		 * 网站内容区域显示
 		 */
-		$("#mainContent").load("index.html");
+		$("#mainContent").load(ctx+"/web/edit/index");
 		/**
 		 * 侧边栏生成
 		 */
