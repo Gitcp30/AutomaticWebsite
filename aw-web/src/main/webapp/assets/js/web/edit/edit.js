@@ -1,6 +1,11 @@
 seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom','spinbox','colorbox','bootstrap-wysiwyg','jquery.hotkeys.index','bootstrap-duallistbox','ace-elements','ace'],function(componentUtils,$,editUtils){
 
 	$(function() {
+
+	    var alldData = {};
+        alldData.animation = "fold"; // 切换动画
+        alldData.delayTime = "500";  // 切换时间
+        alldData.interTime = "2500"; // 停留时间
         // 格式设置面板
 		var $panes = $(".panes");
 		//格式设置面板上的按钮
@@ -136,6 +141,7 @@ seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom',
                 slide: function(event, ui) {
                     $banner_widthSpinner.val(ui.value);
                     editUtils.setWidth($("#webBanner"),ui.value / 1440 * 100 + "%");
+                    updateBanner(ui.value+"px",undefined);
                 }
             });
         });
@@ -148,6 +154,7 @@ seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom',
             .on('changed.fu.spinbox', function() {
                 $banner_widthSlider.slider("value", $banner_widthSpinner.val());
                 editUtils.setWidth($("#webBanner"),$banner_widthSpinner.val() / 1440 * 100 + "%");
+                updateBanner($banner_widthSpinner.val()+"px",undefined);
             });
 
         /**
@@ -166,6 +173,7 @@ seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom',
                 slide: function(event, ui) {
                     $banner_heightSpinner.val(ui.value);
                     editUtils.setHeight($("#webBanner"),ui.value + "px");
+                    updateBanner(undefined,ui.value + "px",undefined);
                 }
             });
         });
@@ -177,8 +185,8 @@ seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom',
             .closest('.ace-spinner')
             .on('changed.fu.spinbox', function() {
                 $banner_heightSlider.slider("value", $banner_heightSpinner.val());
-                debugger
                 editUtils.setHeight($("#webBanner"),$banner_heightSpinner.val()+"px");
+                updateBanner(undefined,$banner_heightSpinner.val()+"px");
             });
 
         /**
@@ -567,23 +575,117 @@ seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom',
 		 * 横幅编辑框提交修改，设置横幅
 		 */
 		$("#bannerModal_footer_commitbtn").on("click",function(){
-			
+			/*
 				$("#slideBox .bd").empty();
 				$("#slideBox .bd").append('<ul style="margin: 0;"></ul>');
 				
 				
 				$("#slideBox .hd ul").empty();
-			
+			var imgs = new Array();
 			$("#bannerModal_common_selectedIMG li img").each(function(index){
 				var img = $(this).attr("src");
+                imgs[index] = img;
 				$("#slideBox .bd ul").append(
 				'<li><a href='+img+' target="_blank"><img src="'+img+'" /></a></li>');
 				
 				$("#slideBox .hd ul").append('<li>'+(index+1)+'</li>');
 			});
-			
-			$(".slideBox").slide({ mainCell: ".bd ul", effect: "fold"});
+			alldData.imgs = imgs;
+			$(".slideBox .bd li").css("height","300px");
+			$(".slideBox").slide({ mainCell: ".bd ul", effect: "fold"});*/
+
+            var imgs = $("#bannerModal_common_selectedIMG li img").map(function(index){
+                return $(this).attr("src");
+            });
+            alldData.imgs = imgs;
+            updateBanner();
 		});
+
+
+		//横幅修改样式
+
+        $("#bannerModal_pattern .imgBorder").on("click",function(){
+            $("#bannerModal_pattern .imgBorder").removeClass("imgBorderDown");
+            // 移除所有选中图片imgBorderDown
+            // 添加选中图标
+            $(this).addClass("imgBorderDown");
+            var pattern = $(this).parent().find(".slideLabel").text();
+
+            if (pattern == "数字轮播") {
+                $("#webBanner #slideBox a.prev,#webBanner #slideBox a.next").hide();
+                $("#webBanner #slideBox .hd").show();
+            } else  if (pattern == "箭头滑动"){
+                $("#webBanner #slideBox .hd").hide();
+                $("#webBanner #slideBox a.prev,#webBanner #slideBox a.next").show();
+            }
+        });
+
+
+
+        //横幅修改动画
+        $("#bannerModal_animation .effect").on("click",function(){
+            // 移除所有选中图片imgBorderDown
+            $("#bannerModal_animation .effect").removeClass("imgBorderDown");
+            // 添加选中图标
+            $(this).addClass("imgBorderDown");
+            var animation = $(this).attr("data-effect");
+            alldData.animation = animation;
+            updateBanner();
+        });
+
+
+
+        /**
+         * 初始化数字改变框(横幅编辑框->高级设置---横幅展示时间)
+         */
+        var $bannerModal_interTimeSpinner = $("#bannerModal_senior_interTime input");
+        $bannerModal_interTimeSpinner.ace_spinner({ value: 2500, min: 0, max: 10000, step: 100, btn_up_class: 'btn-info', btn_down_class: 'btn-info' })
+            .closest('.ace-spinner')
+            .on('changed.fu.spinbox', function() {
+                alldData.interTime = $bannerModal_interTimeSpinner.val();
+                updateBanner();
+            });
+        /**
+         * 初始化数字改变框(横幅编辑框->高级设置---动画切换时间)
+         */
+        var $bannerModal_delayTimeSpinner = $("#bannerModal_senior_delayTime input");
+        $bannerModal_delayTimeSpinner.ace_spinner({ value: 500, min: 0, max: 2000, step: 100, btn_up_class: 'btn-info', btn_down_class: 'btn-info' })
+            .closest('.ace-spinner')
+            .on('changed.fu.spinbox', function() {
+                alldData.delayTime = $bannerModal_delayTimeSpinner.val()
+                updateBanner();
+            });
+
+
+
+        /**
+         * 更新横幅栏
+         * @param setWidth
+         * @param setHeight
+         */
+		function updateBanner(setWidth,setHeight){
+            $("#slideBox .bd").empty();
+            $("#slideBox .bd").append('<ul style="margin: 0;"></ul>');
+
+            $("#slideBox .hd ul").empty();
+
+            alldData.imgs.each(function(index,value){
+                $("#slideBox .bd ul").append(
+                    '<li><a href='+value+' target="_blank"><img src="'+value+'" /></a></li>');
+
+                $("#slideBox .hd ul").append('<li>'+(index+1)+'</li>');
+            });
+            if (setWidth != undefined) {
+                $(".slideBox .bd li").css("width",setWidth);
+            }
+            if(setHeight != undefined){
+                $(".slideBox .bd li").css("height",setHeight);
+            }
+            $(".slideBox").slide({ mainCell: ".bd ul", effect: alldData.animation,autoPlay:true, delayTime:alldData.delayTime,interTime:alldData.interTime});
+        }
+
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         //底部栏目编辑框

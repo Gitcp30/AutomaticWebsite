@@ -134,6 +134,124 @@
 			.spiner div:first-child{
 				width: 145px;
 			}
+
+			/**横幅修改模式**/
+			#bannerModal_pattern .switch-style-panel {
+				margin-top: 30px;
+			}
+			#bannerModal_pattern .switch-style-panel .slide {
+				float: left;
+				margin: 0 15px 0 0;
+			}
+			#bannerModal_pattern .switch-style-panel .imgBorder {
+				cursor: pointer;
+				position: relative;
+			}
+			#bannerModal_pattern .switch-style-panel .slide_img {
+				width: 243px;
+				height: 62px;
+				border: 1px solid transparent;
+			}
+			#bannerModal_pattern .switch-style-panel .slide_img:hover {
+				border: 1px solid #22b437;
+			}
+
+			#numSilde .slide_img {
+				background: url(${ctx}/assets/image/bannerIcon.png) no-repeat -149px -9px;
+			}
+			#arrowSilde .slide_img {
+				background: url(${ctx}/assets/image/bannerIcon.png) no-repeat -149px -173px;
+			}
+
+			#bannerModal_pattern .switch-style-panel .slideLabel {
+				width: 240px;
+				margin-top: 25px;
+				margin-right: 15px;
+				text-align: center;
+				color: #aaa;
+				font-size: 12px;
+				font-family: "Miscrosoft YaHei";
+				cursor: pointer;
+			}
+			/**选中样式**/
+			#bannerModal_pattern .switch-style-panel .imgBorderDown .slide_img {
+				border: 1px solid #22b437;
+			}
+
+			#bannerModal_pattern .switch-style-panel .imgBorderDown .f-checked {
+				position: absolute;
+				bottom: 0;
+				right: 10px;
+				width: 20px;
+				height: 20px;
+				display: block;
+				background: url(${ctx}/assets/image/bannerIcon.png) no-repeat -14px -199px;
+			}
+
+
+
+			/**横幅动画效果**/
+			#bannerModal_animation .effect {
+				float: left;
+				height: 120px;
+				margin: 15px 6px 0 8px;
+				border: 1px solid #eaeaea;
+				cursor: pointer;
+			}
+			#bannerModal_animation .effectLabel {
+				color: #aaa;
+				font-family: "Miscrosoft YaHei";
+				font-size: 12px;
+				text-align: center;
+				cursor: pointer;
+			}
+
+			#bannerModal_animation .effect:hover {
+				border: 1px solid #22b437;
+			}
+
+			/**设置图片**/
+			#bannerModal_animation .effect_img {
+				width: 120px;
+				height: 90px;
+				background-image: url(${ctx}/assets/image/mbg01.png);
+			}
+
+			#bannerModal_animation .effect_img0 {
+				background: 0;
+				height: auto;
+				margin-bottom: 55px;
+			}
+
+			#bannerModal_animation .effect_img1 {
+				background-position: -232px -392px;
+			}
+			#bannerModal_animation .effect_img2 {
+				background-position: -321px -575px;
+			}
+
+			#bannerModal_animation .effect_img3 {
+				background-position: -232px -489px;
+			}
+			/**
+
+
+			/**选中**/
+
+			#bannerModal_animation .animationSetting .imgBorderDown {
+				position: relative;
+				border: 1px solid #22b437;
+			}
+			#bannerModal_animation .animationSetting .imgBorderDown .f-checked {
+				position: absolute;
+				bottom: 0;
+				right: -1px;
+				width: 20px;
+				height: 20px;
+				display: block;
+				background: url(${ctx}/assets/image/bannerIcon.png) no-repeat -14px -199px;
+			}
+
 		</style>
 	</head>
 
@@ -1475,13 +1593,69 @@
 									</div>
 								</div>
 							</div>
-							<div id="bannerModal_pattern" class="tab-pane">2</div>
-							<div id="bannerModal_animation" class="tab-pane">
+							<div id="bannerModal_pattern" class="tab-pane" style="height:100px;">
+								<div class="switch-style-panel">
+									<div class="slide">
+										<div id="numSilde" class="imgBorder imgBorderDown">
+											<div class="slide_img"></div>
+											<div class="f-checked"></div>
+										</div>
+										<div class="slideLabel">数字轮播</div>
+									</div>
+									<div class="slide">
+										<div id="arrowSilde" class="imgBorder">
+											<div class="slide_img"></div>
+											<div class="f-checked"></div>
+										</div>
+										<div class="slideLabel">箭头滑动</div>
+									</div>
+								</div>
+							</div>
+							<div id="bannerModal_animation" class="tab-pane" style="height: 150px;">
+								<div class="animationSetting">
+									<div class="effect imgBorderDown" data-effect="fold">
+										<div class="imgBorder" effectid="0"><div class="effect_img effect_img0"></div></div>
+										<div class="effectLabel">默认</div>
+										<div class="f-checked"></div>
+									</div>
 
+									<div class="effect" data-effect="fade">
+										<div class="imgBorder" effectid="1"><div class="effect_img effect_img1"></div></div>
+										<div class="effectLabel">淡入淡出</div>
+										<div class="f-checked"></div>
+									</div>
+
+									<div class="effect" data-effect="left">
+										<div class="imgBorder" effectid="2"><div class="effect_img effect_img2"></div></div>
+										<div class="effectLabel">水平滑动</div>
+										<div class="f-checked"></div>
+									</div>
+
+									<div class="effect" data-effect="top">
+										<div class="imgBorder" effectid="3"><div class="effect_img effect_img3"></div></div>
+										<div class="effectLabel">垂直滑动</div>
+										<div class="f-checked"></div>
+									</div>
+
+								</div>
 							</div>
 							<div id="bannerModal_senior" class="tab-pane">
-								<p>bannerModal_senior</p>
-								<p>Raw denim you probably haven't heard of them jean shorts Austin.</p>
+								<div class="row">
+									<div class="col-xs-4 col-md-4">
+										<label for="bannerModal_senior_interTime">横幅展示时间(毫秒)：</label>
+									</div>
+									<div class="col-xs-6 col-sm-6 spiner" id="bannerModal_senior_interTime">
+										<input type="text" />
+									</div>
+								</div>
+								<div class="row" style="margin-top: 10px">
+									<div class="col-xs-4 col-md-4">
+										<label for="bannerModal_senior_delayTime">动画切换时间(毫秒)：</label>
+									</div>
+									<div class="col-xs-6 col-sm-6 spiner" id="bannerModal_senior_delayTime">
+										<input type="text" />
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>

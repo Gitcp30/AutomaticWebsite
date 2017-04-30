@@ -73,7 +73,7 @@ define(function(require, exports) {
        return render(data);
 	}
 
-    // admin主页的左侧菜单栏
+    // admin主页的底部链接
     exports.footerLink = function(data){
             Template7.registerPartial(
                 'begin',
