@@ -18,6 +18,7 @@ seajs.use(['componentutils','jquery','bootstrap','ace-elements','ace'],function(
 
         $("#navbar").load(ctx+"/admin/head");
         $("#footer").load(ctx+"/admin/footer");
+        $("#page-content").load(ctx+"/admin/welcome");
 
         var renderSideBar = function(data) {
             var data = data || ctx+"/static/menu.json";

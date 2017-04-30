@@ -72,10 +72,21 @@ define(function(require, exports) {
 
        return render(data);
 	}
-	
-	
-	
-	
+
+    // admin主页的左侧菜单栏
+    exports.footerLink = function(data){
+            Template7.registerPartial(
+                'begin',
+                '{{#each links}}' +
+                '<span>' +
+                '<a hidefocus="true" href="#">{{this}}</a>'+
+                '</span>' +
+       			 '{{/each}}'
+            );
+            return render(data);
+        }
+
+
 	// 渲染视图
 	function render(data){
 		var template_nav2 = '{{> "begin"}}';

@@ -18,6 +18,9 @@ seajs.config({
 		"bootstrap-datepicker":"js/plus/bootstrap-datepicker.min.js",
 		"select2":"js/plus/select2.min.js",
 		"jquery.SuperSlide":"js/plus/jquery.SuperSlide.2.1.source.js",
+		"bootstrap-wysiwyg":"js/plus/bootstrap-wysiwyg.min.js",
+		"jquery.hotkeys.index":"js/plus/jquery.hotkeys.index.min.js",
+		"bootstrap-duallistbox":"js/plus/jquery.bootstrap-duallistbox.min.js",
 
 		/////自定义sys   js文件
 		"editutils":"js/system/editutils.js",

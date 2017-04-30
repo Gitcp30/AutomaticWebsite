@@ -54,9 +54,9 @@ public class AdminController {
      *  加载content界面
      * @return
      */
-    @RequestMapping(value = "/content",method= RequestMethod.GET)
+    @RequestMapping(value = "/welcome",method= RequestMethod.GET)
     public String contentPage(){
-        return "admin/content";
+        return "admin/welcome";
     }
 
 

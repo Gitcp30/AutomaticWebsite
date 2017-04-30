@@ -3,6 +3,15 @@
  */
 seajs.use(['jquery','jquery.SuperSlide'],function($) {
 
-    $(".slideBox").slide({ mainCell: ".bd ul", effect: "top"});
+    $(function(){
+        $(".slideBox").slide({ mainCell: ".bd ul", effect: "top"});
+        $("#editFooterBtn").on("click",function(){
+            var copyrightHtml = $("#webFooter div.footCpy").html();
+            $("#copyright-editor").html(copyrightHtml);
+        });
+
+    });
+
+
 
 });

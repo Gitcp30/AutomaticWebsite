@@ -1,4 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<style>
+    #navbar-container .navbar-header .nav-user-photo{
+        width: 100%;
+        height: 100%;
+        max-height:40px;
+    }
+</style>
 <!--头部 start-->
 <div class="navbar-container" id="navbar-container">
     <!-- #section:basics/sidebar.mobile.toggle -->
@@ -17,21 +25,32 @@
         <ul class="nav ace-nav">
             <!-- #section:basics/navbar.user_menu -->
             <li class="light-blue">
-                <a data-toggle="dropdown" href="#" class="dropdown-toggle"> <img class="nav-user-photo" src="${ctx}/static/images/avatars/avatar2.png" alt="Jason's Photo" /> <span class="user-info"> <small>Welcome,</small> Jason
-                </span> <i class="ace-icon fa fa-caret-down"></i>
+                <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                    <c:if test="${ empty sessionScope.currentUser.picSrc}">
+                        <img class="nav-user-photo" src="${ctx}/static/images/avatars/avatar2.png" alt="Jason's Photo" />
+                    </c:if>
+                    <c:if test="${!empty sessionScope.currentUser.picSrc}">
+                        <img class="nav-user-photo" src="${ctx}/${sessionScope.currentUser.picSrc}" alt="Jason's Photo" />
+                    </c:if>
+                    <span class="user-info">
+                        <small>Welcome,</small>
+                        <c:if test="${ empty sessionScope.currentUser.userName}">${sessionScope.currentUser.sysAccount}</c:if>
+                        <c:if test="${ !empty sessionScope.currentUser.userName}">${sessionScope.currentUser.userName}</c:if>
+                    </span>
+                    <i class="ace-icon fa fa-caret-down"></i>
                 </a>
                 <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
                     <li>
-                        <a href="#"> <i class="ace-icon fa fa-cog"></i>Settings
+                        <a href="#"> <i class="ace-icon fa fa-cog"></i>设置
                         </a>
                     </li>
                     <li>
-                        <a href="profile.html"> <i class="ace-icon fa fa-user"></i>Profile
+                        <a href="profile.html"> <i class="ace-icon fa fa-user"></i>个人信息
                         </a>
                     </li>
                     <li class="divider"></li>
                     <li>
-                        <a href="#"> <i class="ace-icon fa fa-power-off"></i>Logout
+                        <a href="${ctx}/loginout"> <i class="ace-icon fa fa-power-off"></i>退出
                         </a>
                     </li>
                 </ul>

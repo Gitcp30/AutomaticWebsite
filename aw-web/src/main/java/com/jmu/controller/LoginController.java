@@ -38,4 +38,15 @@ public class LoginController {
         return  loginService.checkLogin(loginUSer,session);
     }
 
+
+    @RequestMapping(value="/loginout",method = RequestMethod.GET)
+    public String loginOut(HttpSession session){
+        session.removeAttribute("currentUser");
+        session.removeAttribute("company");
+        return  "redirect:/login";
+    }
+
+
+
+
 }

@@ -217,8 +217,8 @@
 			</div>
 		</div>
 
-		<script src="static/js/sea/sea3.js"></script>
-		<script src="static/js/sea/config.js"></script>
+		<script src="${ctx}/static/js/sea/sea3.js"></script>
+		<script src="${ctx}/static/js/sea/config.js"></script>
 		<script type="text/javascript">
             var ctx = "${ctx}";
 		</script>
