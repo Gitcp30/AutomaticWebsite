@@ -252,11 +252,13 @@
 				background: url(${ctx}/assets/image/bannerIcon.png) no-repeat -14px -199px;
 			}
 
+
+
 		</style>
 	</head>
 
 	<body>
-		<div id="styleDesign" class="styleDesign">
+		<div id="styleDesign" class="styleDesign ">
 			<div class="tabsWrap">
 				<div class="content">
 					<ul class="nav nav-tabs padding-12 tab-color-blue background-blue">
@@ -1692,6 +1694,7 @@
 							</li>
 
 						</ul>
+					</div>
 						<div class="tab-content" style="border: 0;">
 							<!--栏目内容-->
 							<div id="footerModal_column" class="tab-pane in active">
@@ -1726,6 +1729,106 @@
 			<!-- /.modal-dialog -->
 		</div>
 		<!-- /.modal -->
+
+
+		<!--顶部logo编辑模态框（Modal） -->
+		<div class="modal fade" id="logoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" style="width: 400px;">
+				<div class="modal-content">
+					<div class="table-header">
+						<button type="button"  class="close" data-dismiss="modal" aria-hidden="true">
+							<span class="white" style="font-size: 30px;">&times;</span>
+						</button>
+						<div class="nav"><i class="ace-icon glyphicon glyphicon-th-list white"></i> 编辑logo</div>
+					</div>
+					<div>
+						<ul class="nav nav-tabs padding-20 tab-color-blue background-blue" style="border: 0;">
+							<li class="active">
+								<a data-toggle="tab" href="#goloModal_pic">设置图片</a>
+							</li>
+						</ul>
+					</div>
+					<div class="tab-content" style="border: 0;">
+						<!--设置图片-->
+						<div id="goloModal_pic" class="tab-pane in active">
+							<div class="row">
+								<div class="col-xs-12 col-sm-5">
+									<div class="logoPic" style="height: 150px;border: 1px dashed gray">
+										<img src="${ctx}/assets/image/pic7.jpg" height="100%" width="100%" style=" border-radius:0%;">
+									</div>
+								</div>
+
+								<div class="col-xs-12 col-sm-7">
+									<div class="form-group">
+										<label for="logoModal_radius">圆角弧度</label>
+										<div>
+											<span id="logoModal_radius" class="ui-slider-blue ui-slider-small">0</span>
+										</div>
+									</div>
+
+									<div class="space-4"></div>
+
+									<div class="form-group">
+										<label for="logoModal_opacity">图片透明度</label>
+										<div>
+											<span id="logoModal_opacity" class="ui-slider-blue ui-slider-small">100</span>
+										</div>
+									</div>
+
+
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+						<button id="logoModal_footer_commitbtn" type="button" class="btn btn-primary" data-dismiss="modal">保存</button>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<!-- /.modal -->
+
+
+
+		<!--顶部标题编辑模态框（Modal） -->
+		<div class="modal fade" id="titleModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" style="width: 500px;">
+				<div class="modal-content">
+					<div class="table-header">
+						<button type="button"  class="close" data-dismiss="modal" aria-hidden="true">
+							<span class="white" style="font-size: 30px;">&times;</span>
+						</button>
+						<div class="nav"><i class="ace-icon glyphicon glyphicon-th-list white"></i> 编辑标题</div>
+					</div>
+					<div>
+						<ul class="nav nav-tabs padding-20 tab-color-blue background-blue" style="border: 0;">
+							<li class="active">
+								<a data-toggle="tab" href="#titleModal_title">设置标题</a>
+							</li>
+						</ul>
+					</div>
+					<div class="tab-content" style="border: 0;">
+						<!--设置图片-->
+						<div id="titleModal_title" class="tab-pane in active">
+							<div class="wysiwyg-editor" id="title-editor"></div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+						<button id="titlegoModal_footer_commitbtn" type="button" class="btn btn-primary" data-dismiss="modal">保存</button>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<!-- /.modal -->
+
+
+
 		<script src="${ctx}/static/js/sea/sea3.js"></script>
 		<script src="${ctx}/static/js/sea/config.js"></script>
 		<script type="text/javascript">

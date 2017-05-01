@@ -63,7 +63,7 @@ seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom',
 			$(this).empty().slider({
 				value: value,
 				range: "min",
-				min: 0,
+				min: 300,
 				max: 1440,
 				animate: true,
 				slide: function(event, ui) {
@@ -76,7 +76,7 @@ seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom',
 		 * 初始化数字改变框(背景->宽度)
 		 */
 		var $widthSpinner = $("#leftSidebar_background .setting_width .spiner input");
-		$widthSpinner.ace_spinner({ value: 1440, min: 0, max: 1440, step: 10, btn_up_class: 'btn-info', btn_down_class: 'btn-info' })
+		$widthSpinner.ace_spinner({ value: 1440, min: 300, max: 1440, step: 10, btn_up_class: 'btn-info', btn_down_class: 'btn-info' })
 			.closest('.ace-spinner')
 			.on('changed.fu.spinbox', function() {
 				$widthSlider.slider("value", $widthSpinner.val());
@@ -444,6 +444,11 @@ seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom',
                     $("#header_bg_img img").attr("src",img);
                     editUtils.setBgImg($("#webHeader"),img);
                     break;
+                case "SET_LOGO":
+                    $("#goloModal_pic .logoPic img").attr("src",img);
+                    $("#webLogo .weblogo-content img").attr("src",img);
+                    break;
+
                 default:alert("错误");break;
             }
 
@@ -762,6 +767,91 @@ seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom',
         // 设置按钮样式
         var container = footer_column.bootstrapDualListbox('getContainer');
         container.find('.btn').addClass('btn-white btn-info btn-bold');
+
+        ////////////////////////////////////////////////////////////////////////////////////////
+
+        // logo编辑框
+
+        /**
+         * 初始化  logo编辑框(修改图片透明度)
+         */
+        var $opacity_logoSlider = $("#logoModal_opacity.ui-slider-blue");
+        $opacity_logoSlider.css({ width: '90%', 'float': 'left', margin: '15px 15px 15px 0' }).each(function() {
+            // read initial values from markup and remove that
+            var value = parseInt($(this).text(), 10);
+            $(this).empty().slider({
+                value: value,
+                range: "min",
+                min: 0,
+                max: 100,
+                animate: true,
+                slide: function(event, ui) {
+                    $("#goloModal_pic .logoPic img").css("opacity",ui.value/100);
+                    $("#webLogo .weblogo-content img").css("opacity",ui.value/100);
+                }
+            });
+        });
+
+
+        /**
+         * 初始化  logo编辑框(修改图片圆角)
+         */
+        var $radius_logoSlider = $("#logoModal_radius.ui-slider-blue");
+        $radius_logoSlider.css({ width: '90%', 'float': 'left', margin: '15px 15px 15px 0' }).each(function() {
+            // read initial values from markup and remove that
+            var value = parseInt($(this).text(), 10);
+            $(this).empty().slider({
+                value: value,
+                range: "min",
+                min: 0,
+                max: 50,
+                animate: true,
+                slide: function(event, ui) {
+                    $("#goloModal_pic .logoPic img").css("border-radius",ui.value + "%");
+                    $("#webLogo .weblogo-content img").css("border-radius",ui.value + "%");
+                }
+            });
+        });
+
+        $("#goloModal_pic .logoPic img").on("click",function(){
+            pic_state = "SET_LOGO";
+            $("#picModal").modal("show");
+        });
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        // 顶部title编辑框
+        $('#title-editor').ace_wysiwyg({
+            toolbar:
+                [
+                    'font',
+                    null,
+                    'fontSize',
+                    null,
+                    {name:'bold', className:'btn-info'},
+                    {name:'italic', className:'btn-info'},
+                    {name:'underline', className:'btn-info'},
+                    null,
+                    'foreColor',
+                    null,
+                    {name:'undo', className:'btn-grey'},
+                    {name:'redo', className:'btn-grey'}
+                ],
+            'wysiwyg': {
+                fileUploadError: function(){}
+            }
+        }).prev().addClass('wysiwyg-style2');
+
+
+        /**
+         * 设置Copyright信息
+         */
+        $("#titlegoModal_footer_commitbtn").on("click",function(){
+            var titleHtml = $("#title-editor").html();
+            $("#webTitle span").html(titleHtml);
+        });
+
 
 		///////////////////////////////////////////////////////////////////////////////////////
 		// 编辑页面 中所有单选按钮的初始化

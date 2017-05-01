@@ -5,6 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
+    <link rel="stylesheet" href="${ctx}/static/css/gridstack.css"/>
+    <link rel="shortcut icon" href="${ctx}/assets/image/favicon.ico">
+    <link rel="icon" href="favicon.ico">
     <style>
         body {
             /*background-color: white;*/
@@ -21,12 +24,13 @@
             border: 1px solid red;
         }
 
-        #webHeader .inner_header{
-            width:100%;
+        #webHeader .inner_header {
+            width: 100%;
             height: 100%;
             border: 1px solid black;
             margin: 0 auto;
-            overflow: hidden;
+           /* overflow: hidden;*/
+
         }
 
         #webBanner {
@@ -36,25 +40,23 @@
 
         }
 
-        #webContainer{
+        #webContainer {
             margin: 0 auto;
             border: 1px solid red;
             overflow: hidden;
         }
 
-
         #webFooter {
             margin: 0 auto;
-           /* height: 100px;*/
-           /* border: 1px solid red;*/
+            /* height: 100px;*/
+            /* border: 1px solid red;*/
             background-color: #222222;
         }
 
-        #webFooter .inner_footer{
+        #webFooter .inner_footer {
             margin: 0 auto;
             overflow: hidden;
         }
-
 
         .inner_footer .footLinks {
             line-height: 50px;
@@ -68,7 +70,7 @@
             font-size: 14px;
         }
 
-        .inner_footer .footLinks a{
+        .inner_footer .footLinks a {
             color: #8b939d;
             text-decoration: none;
         }
@@ -79,9 +81,9 @@
 
         .inner_footer .footCpy {
             text-align: center;
-           /* line-height: 25px;
-            color: #8b939d;
-            height: 25px;*/
+            /* line-height: 25px;
+             color: #8b939d;
+             height: 25px;*/
         }
 
         /* css 重置 */
@@ -157,7 +159,6 @@
             /*display: block;*/
         }
 
-
         /* 下面是前/后按钮代码，如果不需要删除即可 */
 
         .slideBox .prev,
@@ -193,15 +194,162 @@
         .slideBox .nextStop {
             display: none;
         }
+
+        /**拖拽测试**/
+        .grid-stack {
+            background: lightgoldenrodyellow;
+        }
+
+        .grid-stack-item-content {
+            color: #2c3e50;
+            text-align: center;
+            background-color: #18bc9c;
+        }
+
+        /**logo**/
+        #webLogo{
+            height: 80px;
+            width: 80px;
+            position: relative;
+        }
+
+        #webLogo:hover .editLayer {
+            display: block;
+        }
+
+        #webLogo:hover {
+            border: 1px dashed blue;
+        }
+
+        .editLayer{
+            height: 24px;
+            display: none;
+            position: absolute;
+            top:0;
+            left:-25px;
+        }
+        .editLayer ul{
+            list-style: none;
+        }
+        .editLayer ul li{
+            float: left;
+            width: 60px;
+            height: 24px;
+            text-align: center;
+            line-height: 24px;
+        }
+        .editLayer ul li a{
+            display: block;
+            width: 100%;
+            height: 100%;
+            text-decoration: none;
+            background-color: #4f97df;
+            color:#fff;
+            font-size: 12px;
+        }
+        .editLayer ul li a:hover{
+            text-decoration:underline;
+        }
+
+
+        #webLogo  .weblogo-content{
+            height: 100%;
+            width: 100%;
+        }
+
+        #webLogo  .weblogo-content img{
+            height: 100%;
+            width: 100%;
+        }
+        /**标题**/
+        #webTitle {
+            display: inline;
+            top:-50px;
+            left: 750px;
+        }
+        #webTitle:hover .editLayer {
+            display: block;
+        }
+
+        #webTitle:hover {
+           /* border: 1px dashed blue;*/
+        }
+
+        /**菜单栏**/
+        #webMenu{
+            width: 100%;
+            height: 50px;
+            background-color: yellow;
+        }
+       .inner_menu{
+            width: 100%;
+            height:50px;
+        }
+        .inner_menu ul{
+           list-style: none;
+       }
+       .inner_menu ul li{
+             float: left;
+             width: 120px;
+             height: 50px;
+             text-align: center;
+             line-height: 50px;
+         }
+          .inner_menu ul li a{
+              display: block;
+              width: 120px;
+              height: 100%;
+              text-decoration: none;
+              background-color: black;
+              color:white;
+          }
+          .inner_menu ul li a:hover{
+              background-color: grey;
+          }
+
+
     </style>
 </head>
 
 <body id="indexBody">
+
 <div class="content">
     <!--头部 -->
-    <div id="webHeader">
+    <div id="webHeader" style="overflow: hidden">
         <div class="inner_header">
-            inner_header
+            <!-- logo-->
+            <div id="webLogo" class="ui-widget-content">
+                <div class="weblogo-content">
+                   <img src="${ctx}/assets/image/pic7.jpg" />
+                </div>
+                <!--悬浮编辑栏-->
+                <div class="editLayer">
+                    <ul>
+                        <li><a href="#" data-toggle="modal" data-target="#logoModal" >编辑</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- 标题-->
+            <div id="webTitle" class="ui-widget-content">
+                   <span>qqqq</span>
+                <!--悬浮编辑栏-->
+                <div class="editLayer">
+                    <ul>
+                        <li><a href="#" data-toggle="modal" data-target="#titleModal" >编辑</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 菜单栏-->
+    <div id="webMenu">
+        <div class="inner_menu">
+            <ul>
+                <li><a href="#">网站栏目</a></li>
+                <li><a href="#">网站栏目</a></li>
+                <li><a href="#">网站栏目</a></li>
+                <li><a href="#">网站栏目</a></li>
+            </ul>
         </div>
     </div>
     <!--横幅-->
@@ -237,12 +385,13 @@
 
         </div>
     </div>
+
     <!--内容区域 -->
     <div id="webContainer">
-        <div class="inner_c">
-            <button id="tesBtn" data-toggle="modal" data-target="#bannerModal">横幅弹框</button>
-            <button id="editFooterBtn" data-toggle="modal" data-target="#footerModal">底部弹框</button>
-
+        <button id="tesBtn" data-toggle="modal" data-target="#bannerModal">横幅弹框</button>
+        <button id="editFooterBtn" data-toggle="modal" data-target="#footerModal">底部弹框</button>
+        <a class="btn btn-default" id="add-new-widget" href="#">Add Widget</a>
+        <div class="inner_c  grid-stack">
         </div>
     </div>
     <!--底部 -->

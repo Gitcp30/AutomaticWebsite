@@ -21,6 +21,9 @@ seajs.config({
 		"bootstrap-wysiwyg":"js/plus/bootstrap-wysiwyg.min.js",
 		"jquery.hotkeys.index":"js/plus/jquery.hotkeys.index.min.js",
 		"bootstrap-duallistbox":"js/plus/jquery.bootstrap-duallistbox.min.js",
+		"lodash":"js/plus/lodash.min.js",
+        "gridstack":"js/plus/gridstack.min.js",
+		"pgwmenu":"js/plus/pgwmenu.js",
 
 		/////自定义sys   js文件
 		"editutils":"js/system/editutils.js",
