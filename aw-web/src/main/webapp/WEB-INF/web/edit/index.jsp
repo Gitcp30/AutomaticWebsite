@@ -21,15 +21,13 @@
 
         #webHeader {
             height: 100px;
-            border: 1px solid red;
         }
 
         #webHeader .inner_header {
             width: 100%;
             height: 100%;
-            border: 1px solid black;
             margin: 0 auto;
-           /* overflow: hidden;*/
+            overflow: hidden;
 
         }
 
@@ -226,9 +224,10 @@
             display: none;
             position: absolute;
             top:0;
-            left:-25px;
         }
+
         .editLayer ul{
+            margin: 0;
             list-style: none;
         }
         .editLayer ul li{
@@ -277,15 +276,24 @@
 
         /**菜单栏**/
         #webMenu{
-            width: 100%;
             height: 50px;
-            background-color: yellow;
+            position: relative;
+            overflow: hidden;
         }
-       .inner_menu{
+
+        #webMenu:hover .editLayer {
+            display: block;
+        }
+
+        .inner_menu{
             width: 100%;
             height:50px;
+            border:1px solid red;
+            margin: 0 auto;
         }
         .inner_menu ul{
+            height: 100%;
+            margin: 0;
            list-style: none;
        }
        .inner_menu ul li{
@@ -300,7 +308,6 @@
               width: 120px;
               height: 100%;
               text-decoration: none;
-              background-color: black;
               color:white;
           }
           .inner_menu ul li a:hover{
@@ -345,10 +352,16 @@
     <div id="webMenu">
         <div class="inner_menu">
             <ul>
-                <li><a href="#">网站栏目</a></li>
-                <li><a href="#">网站栏目</a></li>
-                <li><a href="#">网站栏目</a></li>
-                <li><a href="#">网站栏目</a></li>
+                <li><a href="#">网站栏目1</a></li>
+                <li><a href="#">网站栏目2</a></li>
+                <li><a href="#">网站栏目3</a></li>
+                <li><a href="#">网站栏目4</a></li>
+            </ul>
+        </div>
+        <!--悬浮编辑栏-->
+        <div class="editLayer">
+            <ul>
+                <li><a href="#" data-toggle="modal" data-target="#menuModal" >编辑</a></li>
             </ul>
         </div>
     </div>
@@ -393,6 +406,7 @@
         <a class="btn btn-default" id="add-new-widget" href="#">Add Widget</a>
         <div class="inner_c  grid-stack">
         </div>
+
     </div>
     <!--底部 -->
     <div id="webFooter">

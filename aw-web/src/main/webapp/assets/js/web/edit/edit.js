@@ -1,4 +1,4 @@
-seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom','spinbox','colorbox','bootstrap-wysiwyg','jquery.hotkeys.index','bootstrap-duallistbox','ace-elements','ace'],function(componentUtils,$,editUtils){
+seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom','spinbox','colorbox','bootstrap-wysiwyg','jquery.hotkeys.index','bootstrap-duallistbox','nestable','ace-elements','ace'],function(componentUtils,$,editUtils){
 
 	$(function() {
 
@@ -85,6 +85,7 @@ seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom',
 
 		function  setIndexBgSize(value) {
             editUtils.setWidth($(".inner_header"),value);
+            editUtils.setWidth($("#webMenu .inner_menu"),value);
             editUtils.setWidth($("#webBanner"),value);
             editUtils.setWidth($("#webContainer"),value);
             editUtils.setWidth($(".inner_footer"),value);
@@ -843,14 +844,60 @@ seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom',
             }
         }).prev().addClass('wysiwyg-style2');
 
-
         /**
-         * 设置Copyright信息
+         * 设置标题信息
          */
         $("#titlegoModal_footer_commitbtn").on("click",function(){
             var titleHtml = $("#title-editor").html();
             $("#webTitle span").html(titleHtml);
         });
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+
+        // 菜单栏---设置栏目
+        $('footerModal_menu .dd').nestable();
+
+        $('footerModal_menu .dd-handle a').on('mousedown', function(e){
+            e.stopPropagation();
+        });
+
+
+        /**
+         * 初始化背景颜色改变框(菜单栏->背景)
+         */
+        $('#menu_bg_colorpicker').ace_colorpicker();
+
+        $('#menu_bg_colorpicker').change(function() {
+            $("#webMenu").css("background-color",$(this).val());
+        });
+
+        /**
+         * 初始化背景颜色改变框(菜单栏->字体 )
+         */
+        $('#menu_font_colorpicker').ace_colorpicker();
+
+        $('#menu_font_colorpicker').change(function() {
+            $("#webMenu .inner_menu ul li a").css("color",$(this).val());
+        });
+
+        /**
+         * 初始化背景颜色改变框(菜单栏->选中颜色)
+         */
+        $('#menu_selectItem_colorpicker').ace_colorpicker();
+
+        $('#menu_selectItem_colorpicker').change(function() {
+            $color = $(this).val();
+            $("#webMenu .inner_menu ul li a").hover(
+                //当鼠标放上去的时候,程序处理
+                function(){
+                    $(this).css("background-color",$color);
+                },
+                //当鼠标离开的时候,程序处理
+                function(){
+                    $(this).css("background-color",$('#menu_bg_colorpicker').val());
+                });
+        });
+
 
 
 		///////////////////////////////////////////////////////////////////////////////////////
