@@ -11,7 +11,7 @@ seajs.use(['jquery','lodash','gridstack','jquery.SuperSlide'],function($) {
         /**
          * 底部编辑栏点击确定
          */
-        $("#editFooterBtn").on("click",function(){
+        $("a[data-target=#footerModal]").on("click",function(){
             var copyrightHtml = $("#webFooter div.footCpy").html();
             $("#copyright-editor").html(copyrightHtml);
         });
@@ -30,7 +30,7 @@ seajs.use(['jquery','lodash','gridstack','jquery.SuperSlide'],function($) {
         $( "#webLogo" ).resizable();
 
         /*
-         * logo设置
+         * title设置
          */
         $( "#webTitle" ).draggable({
             containment: ".inner_header", scroll: false,
@@ -38,10 +38,9 @@ seajs.use(['jquery','lodash','gridstack','jquery.SuperSlide'],function($) {
              //   debugger
             }
         });
-        //$( "#webLogo" ).resizable();
 
 
-        /*var options = {
+        var options = {
          float: true,
          vertical_margin:0,
          cell_height:10,
@@ -78,7 +77,6 @@ seajs.use(['jquery','lodash','gridstack','jquery.SuperSlide'],function($) {
 
          $('#add-new-widget').click(this.add_new_widget);
          };
-         */
 
 
 

@@ -35,7 +35,11 @@
             margin: 0 auto;
             height: 500px;
             border: 1px solid red;
+            position: relative;
+        }
 
+        #webBanner:hover .editLayer {
+            display: block;
         }
 
         #webContainer {
@@ -49,11 +53,17 @@
             /* height: 100px;*/
             /* border: 1px solid red;*/
             background-color: #222222;
+            position: relative;
+        }
+
+        #webFooter:hover .editLayer {
+            display: block;
         }
 
         #webFooter .inner_footer {
             margin: 0 auto;
             overflow: hidden;
+
         }
 
         .inner_footer .footLinks {
@@ -288,33 +298,15 @@
         .inner_menu{
             width: 100%;
             height:50px;
-            border:1px solid red;
             margin: 0 auto;
+            overflow: hidden;
         }
-        .inner_menu ul{
-            height: 100%;
+        #webMenu .inner_menu  .nav>li>a {
+            padding: 15px 15px;
+        }
+        #webMenu .inner_menu ul{
             margin: 0;
-           list-style: none;
-       }
-       .inner_menu ul li{
-             float: left;
-             width: 120px;
-             height: 50px;
-             text-align: center;
-             line-height: 50px;
-         }
-          .inner_menu ul li a{
-              display: block;
-              width: 120px;
-              height: 100%;
-              text-decoration: none;
-              color:white;
-          }
-          .inner_menu ul li a:hover{
-              background-color: grey;
-          }
-
-
+        }
     </style>
 </head>
 
@@ -351,12 +343,14 @@
     <!-- 菜单栏-->
     <div id="webMenu">
         <div class="inner_menu">
-            <ul>
-                <li><a href="#">网站栏目1</a></li>
-                <li><a href="#">网站栏目2</a></li>
-                <li><a href="#">网站栏目3</a></li>
-                <li><a href="#">网站栏目4</a></li>
-            </ul>
+               <ul class="nav nav-pills nav-justified">
+                   <li class="active"><a href="#">Home</a></li>
+                   <li><a href="#">SVN</a></li>
+                   <li><a href="#">iOS</a></li>
+                   <li><a href="#">VB.Net</a></li>
+                   <li><a href="#">Java</a></li>
+                   <li><a href="#">PHP</a></li>
+               </ul>
         </div>
         <!--悬浮编辑栏-->
         <div class="editLayer">
@@ -397,16 +391,19 @@
             <a class="next" href="javascript:void(0)"></a>
 
         </div>
+        <!--悬浮编辑栏-->
+        <div class="editLayer">
+            <ul>
+                <li><a href="#" data-toggle="modal" data-target="#bannerModal" >编辑</a></li>
+            </ul>
+        </div>
     </div>
 
     <!--内容区域 -->
     <div id="webContainer">
-        <button id="tesBtn" data-toggle="modal" data-target="#bannerModal">横幅弹框</button>
-        <button id="editFooterBtn" data-toggle="modal" data-target="#footerModal">底部弹框</button>
-        <a class="btn btn-default" id="add-new-widget" href="#">Add Widget</a>
+        <a class="btn btn-default" id="add-new-widget" href="#">添加模块</a>
         <div class="inner_c  grid-stack">
         </div>
-
     </div>
     <!--底部 -->
     <div id="webFooter">
@@ -426,6 +423,12 @@
                     Copyright © 2010-2017 福建省厦门集美大学
                 </font>
             </div>
+        </div>
+        <!--悬浮编辑栏-->
+        <div class="editLayer">
+            <ul>
+                <li><a href="#" data-toggle="modal" data-target="#footerModal" >编辑</a></li>
+            </ul>
         </div>
     </div>
 </div>

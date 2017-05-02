@@ -141,6 +141,12 @@
             width: 145px;
         }
 
+        #leftSidebar.modal.aside-vc.navbar-offset .modal-dialog .aside-trigger{
+            top:170px;
+        }
+
+
+
         /**横幅修改模式**/
         #bannerModal_pattern .switch-style-panel {
             margin-top: 30px;
@@ -1984,7 +1990,7 @@
                                         </div>
                                         <div class="dd2-content">
                                             <div class="row">
-                                                <div class="col-sm-4">留言板</div>
+                                                <div class="col-sm-4">关于我们</div>
                                                 <div class="col-sm-4">用户栏目</div>
                                                 <div class="col-sm-3 pull-right action-buttons">
                                                     <a class="red" href="#">
@@ -2009,7 +2015,7 @@
                                         </div>
                                         <div class="dd2-content">
                                             <div class="row">
-                                                <div class="col-sm-4">留言板</div>
+                                                <div class="col-sm-4">联系我们</div>
                                                 <div class="col-sm-4">用户栏目</div>
                                                 <div class="col-sm-3 pull-right action-buttons">
                                                     <a class="red" href="#">
@@ -2034,7 +2040,7 @@
                                         </div>
                                         <div class="dd2-content">
                                             <div class="row">
-                                                <div class="col-sm-4">留言板</div>
+                                                <div class="col-sm-4">会员登录</div>
                                                 <div class="col-sm-4">用户栏目</div>
                                                 <div class="col-sm-3 pull-right action-buttons">
                                                     <a class="red" href="#">
@@ -2059,7 +2065,7 @@
                                         </div>
                                         <div class="dd2-content">
                                             <div class="row">
-                                                <div class="col-sm-4">留言板</div>
+                                                <div class="col-sm-4">新闻资讯</div>
                                                 <div class="col-sm-4">用户栏目</div>
                                                 <div class="col-sm-3 pull-right action-buttons">
                                                     <a class="red" href="#">
@@ -2084,7 +2090,7 @@
                                         </div>
                                         <div class="dd2-content">
                                             <div class="row">
-                                                <div class="col-sm-4">留言板</div>
+                                                <div class="col-sm-4">产品展示</div>
                                                 <div class="col-sm-4">用户栏目</div>
                                                 <div class="col-sm-3 pull-right action-buttons">
                                                     <a class="red" href="#">
@@ -2109,10 +2115,42 @@
                 <!-- 栏目样式-->
                 <div id="menuModal_menustyle" class="tab-pane">
                     <div class="row">
-                        <div class="col-xs-4 col-md-4">
-                            <label for="menu_bg_colorpicker">背景颜色： </label>
+                        <div class="col-xs-2 col-md-2">
+                            <label for="menu_colorpicker">菜单栏颜色</label>
                         </div>
-                        <div class="col-xs-6 col-md-6">
+                        <div class="col-xs-4 col-md-4">
+                            <select id="menu_colorpicker" class="hide">
+                                <option value="#ac725e">#ac725e</option>
+                                <option value="#d06b64">#d06b64</option>
+                                <option value="#f83a22">#f83a22</option>
+                                <option value="#fa573c">#fa573c</option>
+                                <option value="#ff7537">#ff7537</option>
+                                <option value="#ffad46" selected="">#ffad46</option>
+                                <option value="#42d692">#42d692</option>
+                                <option value="#16a765">#16a765</option>
+                                <option value="#7bd148">#7bd148</option>
+                                <option value="#b3dc6c">#b3dc6c</option>
+                                <option value="#fbe983">#fbe983</option>
+                                <option value="#fad165">#fad165</option>
+                                <option value="#92e1c0">#92e1c0</option>
+                                <option value="#9fe1e7">#9fe1e7</option>
+                                <option value="#9fc6e7">#9fc6e7</option>
+                                <option value="#4986e7">#4986e7</option>
+                                <option value="#9a9cff">#9a9cff</option>
+                                <option value="#b99aff">#b99aff</option>
+                                <option value="#c2c2c2">#c2c2c2</option>
+                                <option value="#cabdbf">#cabdbf</option>
+                                <option value="#cca6ac">#cca6ac</option>
+                                <option value="#f691b2">#f691b2</option>
+                                <option value="#cd74e6">#cd74e6</option>
+                                <option value="#a47ae2">#a47ae2</option>
+                                <option value="#555">#555</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-2 col-md-2">
+                            <label for="menu_bg_colorpicker">背景颜色</label>
+                        </div>
+                        <div class="col-xs-4 col-md-4">
                             <select id="menu_bg_colorpicker" class="hide">
                                 <option value="#ac725e">#ac725e</option>
                                 <option value="#d06b64">#d06b64</option>
@@ -2143,10 +2181,10 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-4 col-md-4">
-                            <label for="menu_font_colorpicker">字体颜色： </label>
+                        <div class="col-xs-2 col-md-2">
+                            <label for="menu_font_colorpicker">字体颜色 </label>
                         </div>
-                        <div class="col-xs-6 col-md-6">
+                        <div class="col-xs-4 col-md-4">
                             <select id="menu_font_colorpicker" class="hide">
                                 <option value="#ac725e">#ac725e</option>
                                 <option value="#d06b64">#d06b64</option>
@@ -2175,12 +2213,10 @@
                                 <option value="#555">#555</option>
                             </select>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-4 col-md-4">
-                            <label for="menu_selectItem_colorpicker">选中颜色： </label>
+                        <div class="col-xs-2 col-md-2">
+                            <label for="menu_selectItem_colorpicker">选中颜色</label>
                         </div>
-                        <div class="col-xs-6 col-md-6">
+                        <div class="col-xs-4 col-md-4">
                             <select id="menu_selectItem_colorpicker" class="hide">
                                 <option value="#ac725e">#ac725e</option>
                                 <option value="#d06b64">#d06b64</option>
@@ -2211,27 +2247,14 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-12 col-sm-3">
-                            <label>位置：</label>
+                        <div class="col-xs-2 col-md-2">
+                            <label for="menuModal_width">长度</label>
                         </div>
-                        <div class="col-xs-12 col-sm-3">
-                            <label>
-                                <input name="menu_layout" type="radio" class="ace" value="default" checked="true"/>
-                                <span class="lbl">居中</span>
-                            </label>
+                            <div class="col-xs-6 col-md-6">
+                                <span id="menuModal_width" class="ui-slider-blue ui-slider-small">100</span>
+                            </div>
                         </div>
-                        <div class="col-xs-12 col-sm-3">
-                            <label>
-                                <input name="menu_layout" type="radio" class="ace" value="hide"/>
-                                <span class="lbl">居左</span>
-                            </label>
-                        </div>
-                        <div class="col-xs-12 col-sm-3">
-                            <label>
-                                <input name="menu_layout" type="radio" class="ace" value="custom"/>
-                                <span class="lbl">居右</span>
-                            </label>
-                        </div>
+
                     </div>
                 </div>
             </div>

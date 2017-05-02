@@ -855,12 +855,52 @@ seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom',
         ///////////////////////////////////////////////////////////////////////////////////////
 
         // 菜单栏---设置栏目
-        $('footerModal_menu .dd').nestable();
+        $('#menuModal_menu .dd').nestable();
 
-        $('footerModal_menu .dd-handle a').on('mousedown', function(e){
+        $('#menuModal_menu .dd-handle a').on('mousedown', function(e){
             e.stopPropagation();
         });
 
+        /**
+         * 选中栏目
+         */
+        $("#menuModal_menu li .action-buttons").find("a:first").on("click",function(){
+                var $i  = $(this).find("i");
+                if ($i.hasClass("fa-check")){
+                    $i.removeClass("fa-check").addClass("fa-close").parent().removeClass("green").addClass("red");
+                } else {
+                    $i.removeClass("fa-close").addClass("fa-check").parent().removeClass("red").addClass("green");
+                }
+        });
+
+        /**
+         * 提交结果
+         */
+        $("#menuModal_footer_commitbtn").on("click",function(){
+            // 获取选中的栏目
+            var text = $("#menuModal_menu .dd-list li").map(function(){
+                var $li = $(this).find(".fa-check");
+                if ($li.length == 1){
+                    return $(this).find(".dd2-content .row div:first").text();
+                }
+            });
+            $("#webMenu .inner_menu ul").empty();
+            debugger
+            text.each(function(index,value){
+                $("#webMenu .inner_menu ul").append('<li><a href="#">'+value+'</a></li>');
+            });
+
+        });
+
+
+        /**
+         * 初始化背景颜色改变框(菜单栏)
+         */
+        $('#menu_colorpicker').ace_colorpicker();
+
+        $('#menu_colorpicker').change(function() {
+            $("#webMenu").css("background-color",$(this).val());
+        });
 
         /**
          * 初始化背景颜色改变框(菜单栏->背景)
@@ -868,7 +908,7 @@ seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom',
         $('#menu_bg_colorpicker').ace_colorpicker();
 
         $('#menu_bg_colorpicker').change(function() {
-            $("#webMenu").css("background-color",$(this).val());
+            $("#webMenu .inner_menu ul").css("background-color",$(this).val());
         });
 
         /**
@@ -899,6 +939,24 @@ seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom',
         });
 
 
+        /**
+         * 初始化  logo编辑框(修改图片圆角)
+         */
+        var $menu_widthSlider = $("#menuModal_width.ui-slider-blue");
+        $menu_widthSlider.css({ width: '90%', 'float': 'left', margin: '15px 15px 15px 0' }).each(function() {
+            // read initial values from markup and remove that
+            var value = parseInt($(this).text(), 10);
+            $(this).empty().slider({
+                value: value,
+                range: "min",
+                min: 20,
+                max: 100,
+                animate: true,
+                slide: function(event, ui) {
+                    $("#webMenu .inner_menu").css("width",ui.value + "%");
+                }
+            });
+        });
 
 		///////////////////////////////////////////////////////////////////////////////////////
 		// 编辑页面 中所有单选按钮的初始化
