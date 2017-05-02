@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <title></title>
     <link rel="stylesheet" href="${ctx}/static/css/gridstack.css"/>
+    <link rel="stylesheet" href="${ctx}/assets/css/user/userlogin.css"/>
     <link rel="shortcut icon" href="${ctx}/assets/image/favicon.ico">
     <link rel="icon" href="favicon.ico">
     <style>
@@ -34,7 +35,6 @@
         #webBanner {
             margin: 0 auto;
             height: 500px;
-            border: 1px solid red;
             position: relative;
         }
 
@@ -46,6 +46,7 @@
             margin: 0 auto;
             border: 1px solid red;
             overflow: hidden;
+            width: 80%;
         }
 
         #webFooter {
@@ -203,17 +204,6 @@
             display: none;
         }
 
-        /**拖拽测试**/
-        .grid-stack {
-            background: lightgoldenrodyellow;
-        }
-
-        .grid-stack-item-content {
-            color: #2c3e50;
-            text-align: center;
-            background-color: #18bc9c;
-        }
-
         /**logo**/
         #webLogo{
             height: 80px;
@@ -307,6 +297,30 @@
         #webMenu .inner_menu ul{
             margin: 0;
         }
+
+        .grid-stack-item:hover .editLayer{
+            display: block;
+            left:10px;
+        }
+        .grid-stack-item  .editLayer{
+            cursor: pointer;
+        }
+
+
+        #webContainer .grid-stack-item-content{
+            border: 1px dashed #3298fe;
+        }
+
+        #webContainer .grid-stack-item-content .addNewModule{
+            background: url(${ctx}/assets/image/mbg01.png) -611px -189px no-repeat;
+            height: 54px;
+            width: 206px;
+            margin: 0 auto;
+            cursor: pointer;
+
+        }
+
+        
     </style>
 </head>
 
@@ -401,8 +415,7 @@
 
     <!--内容区域 -->
     <div id="webContainer">
-        <a class="btn btn-default" id="add-new-widget" href="#">添加模块</a>
-        <div class="inner_c  grid-stack">
+        <div class="grid-stack">
         </div>
     </div>
     <!--底部 -->
@@ -434,7 +447,6 @@
 </div>
 
 <script src="${ctx}/assets/js/web/edit/index.js"></script>
-
 </body>
 
 </html>

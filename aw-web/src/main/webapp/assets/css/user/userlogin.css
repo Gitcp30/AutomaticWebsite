@@ -1,0 +1,12 @@
+.user_login .input-group {
+    margin: 10px 0px; //输入框上下外边距为10px,左右为0px
+}
+
+user_login h3 {
+    padding: 5px;
+    border-bottom: 1px solid #ddd; //h3字体下边框
+}
+
+.user_login .well{
+    margin-bottom: 0;
+}

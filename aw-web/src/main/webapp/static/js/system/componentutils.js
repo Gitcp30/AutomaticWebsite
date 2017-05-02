@@ -87,6 +87,29 @@ define(function(require, exports) {
         }
 
 
+
+
+        exports.memberLogin = function(){
+     	return  '<div class="row user_login">'
+               +'<div class="col-sm-12" style="border-right:1px solid #ddd;">'
+              + '<div class="well col-sm-12">'
+			  + '<h3>用户登录</h3>'
+              +  '<div class="input-group input-group-md">'
+             +   '<span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-user" aria-hidden="true"></i></span>'
+             +   '<input type="text" class="form-control" placeholder="用户名" aria-describedby="sizing-addon1">'
+             +   '</div>'
+             +   '<div class="input-group input-group-md">'
+             +   '<span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-lock"></i></span>'
+             +   '<input type="password" class="form-control" placeholder="密码" aria-describedby="sizing-addon1">'
+             +   '</div>'
+             +   '<button type="submit" class="btn btn-success btn-block">登录</button>'
+             +   '</div>'
+             +   '</div>'
+              +  '</div>';
+
+		}
+
+
 	// 渲染视图
 	function render(data){
 		var template_nav2 = '{{> "begin"}}';

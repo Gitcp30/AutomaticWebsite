@@ -264,6 +264,67 @@ seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom',
 
 
 
+        /**
+         * 初始化  滑动条(内容->宽度)
+         */
+        var $content_widthSlider = $("#leftSidebar_content .setting_width .ui-slider-blue");
+        $content_widthSlider.css({ width: '90%', 'float': 'left', margin: '15px 15px 15px 0' }).each(function() {
+            // read initial values from markup and remove that
+            var value = parseInt($(this).text(), 10);
+            $(this).empty().slider({
+                value: value,
+                range: "min",
+                min: 30,
+                max: 100,
+                animate: true,
+                slide: function(event, ui) {
+                    $("#webContainer").css("width",ui.value + "%");
+                }
+            });
+        });
+
+
+        /**
+         * 初始化  滑动条(内容->边距---上边距)
+         */
+        var $content_marginTopSlider = $("#leftSidebar_content .setting_margin .settingMarginTop .ui-slider-blue");
+        $content_marginTopSlider.css({ width: '90%', 'float': 'left', margin: '15px 15px 15px 0' }).each(function() {
+            // read initial values from markup and remove that
+            var value = parseInt($(this).text(), 10);
+            $(this).empty().slider({
+                value: value,
+                range: "min",
+                min: 0,
+                max: 100,
+                animate: true,
+                slide: function(event, ui) {
+                    $("#webContainer").css("margin-top",ui.value + "px");
+                }
+            });
+        });
+
+
+        /**
+         * 初始化  滑动条(内容->边距---下边距)
+         */
+        var $content_marginBottomSlider = $("#leftSidebar_content .setting_margin .settingMarginbottom  .ui-slider-blue");
+        $content_marginBottomSlider.css({ width: '90%', 'float': 'left', margin: '15px 15px 15px 0' }).each(function() {
+            // read initial values from markup and remove that
+            var value = parseInt($(this).text(), 10);
+            $(this).empty().slider({
+                value: value,
+                range: "min",
+                min: 0,
+                max: 100,
+                animate: true,
+                slide: function(event, ui) {
+                    $("#webContainer").css("margin-bottom",ui.value + "px");
+                }
+            });
+        });
+
+
+
 
         /**
          * 初始化  滑动条(底部->高度)

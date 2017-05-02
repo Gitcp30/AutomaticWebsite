@@ -1030,7 +1030,53 @@
                         </div>
                     </div>
                     <div id="leftSidebar_content" class="tab-pane">
-                        <p>leftSidebar_content</p>
+
+                        <!--宽度-->
+                        <div class="widget-box setting_width">
+                            <div class="widget-header" style="min-height: 20px;">
+                                <h6 class="smaller">宽度</h6>
+                            </div>
+                            <div class="widget-body">
+                                <div class="widget-main">
+                                    <div class="row">
+                                        <div class="col-xs-4 col-md-4">
+                                            <label>宽度：</label>
+                                        </div>
+                                        <div class="col-xs-6 col-md-6">
+                                            <span class="ui-slider-blue ui-slider-small">100</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--边距-->
+                        <div class="widget-box setting_margin">
+                            <div class="widget-header" style="min-height: 20px;">
+                                <h6 class="smaller">边距</h6>
+                            </div>
+                            <div class="widget-body">
+                                <div class="widget-main">
+                                    <div class="row">
+                                        <div class="col-xs-4 col-md-4">
+                                            <label>上边距：</label>
+                                        </div>
+                                        <div class="col-xs-6 col-md-6 settingMarginTop">
+                                            <span class="ui-slider-blue ui-slider-small">0</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-4 col-md-4">
+                                            <label>下边距：</label>
+                                        </div>
+                                        <div class="col-xs-6 col-md-6 settingMarginbottom">
+                                            <span class="ui-slider-blue ui-slider-small">0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <!--底部 -->
                     <div id="leftSidebar_footer" class="tab-pane">

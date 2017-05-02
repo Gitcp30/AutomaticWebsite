@@ -24,6 +24,7 @@ seajs.config({
 		"lodash":"js/plus/lodash.min.js",
         "gridstack":"js/plus/gridstack.min.js",
 		"nestable":"js/plus/jquery.nestable.min.js",
+		"knockout-min":"js/plus/knockout-min.js",
 
 		/////自定义sys   js文件
 		"editutils":"js/system/editutils.js",
