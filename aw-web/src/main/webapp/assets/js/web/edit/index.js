@@ -1,7 +1,7 @@
 /**
  * Created by zzr on 2017/4/28.
  */
-seajs.use(['jquery', 'lodash','componentutils', 'gridstack', 'jquery.SuperSlide'], function ($, _,componentUtils) {
+seajs.use(['jquery', 'lodash','componentutils', 'gridstack', 'jquery.SuperSlide','jquery.newsbox'], function ($, _,componentUtils) {
 
     var options = {
         auto: false,
@@ -51,8 +51,8 @@ seajs.use(['jquery', 'lodash','componentutils', 'gridstack', 'jquery.SuperSlide'
 
         // 第一种布局
         var serialized_data = [
-            {x: 0, y: 0, width: 3, height: 20},
-            {x: 4, y: 0, width: 9, height: 20},
+            {x: 0, y: 0, width: 3, height: 30},
+            {x: 4, y: 0, width: 9, height: 30},
         ];
 
 
@@ -117,14 +117,176 @@ seajs.use(['jquery', 'lodash','componentutils', 'gridstack', 'jquery.SuperSlide'
         });
 
 
+        var content;
         /**
          * 点击添加图片
          */
+
         $("#webContainer .grid-stack-item-content .addNewModule").on("click",function () {
-            var content = $(this).parent();
-            $(content).empty().html(componentUtils.memberLogin());
+            content = $(this).parent();
+            debugger
+            $("#componentModal").modal("show");
+            // 登录界面
+            // $(content).empty().html(componentUtils.memberLogin());
+            // 公告界面
+            /* var context = {
+             news : [
+             {
+             time: '2017/05/06',
+             title: '地球炸啦'
+             },
+             {
+             time: '2017/05/06',
+             title: '哈哈哈哈'
+             },
+             {
+             time: '2017/05/06',
+             title: '哈哈哈哈'
+             },
+             {
+             time: '2017/05/06',
+             title: '哈哈哈哈'
+             },
+             {
+             time: '2017/05/06',
+             title: '哈哈哈哈'
+             },
+             {
+             time: '2017/05/06',
+             title: '哈哈哈哈'
+             }
+             ]};
+             $(content).empty().html( componentUtils.bulletinBoard(context));
+             $(content).find(".bulletinBoard-content").bootstrapNews({
+             newsPerPage: 5,
+             autoplay: true,
+             pauseOnHover: true,
+             direction: 'up',
+             newsTickerInterval: 4000,
+             onToDo: function() {
+             //console.log(this);
+             }
+             });
+             */
+            //  $(content).empty().html(componentUtils.messageBoard());
             debugger
         });
+
+
+        /**
+         * 组件->添加
+         */
+        $(":radio[name='componentModal_component']").click(function() {
+            $("#componentModal").modal("hide");
+            debugger
+            switch($(this).val()) {
+                case "component_login":
+                    $(content).empty().html(componentUtils.memberLogin());
+                    break;
+                case "component_bulletinBoard":
+                    var context = {
+                        news : [
+                            {
+                                time: '2017/05/06',
+                                title: '地球炸啦'
+                            },
+                            {
+                                time: '2017/05/06',
+                                title: '哈哈哈哈'
+                            },
+                            {
+                                time: '2017/05/06',
+                                title: '哈哈哈哈'
+                            },
+                            {
+                                time: '2017/05/06',
+                                title: '哈哈哈哈'
+                            },
+                            {
+                                time: '2017/05/06',
+                                title: '哈哈哈哈'
+                            },
+                            {
+                                time: '2017/05/06',
+                                title: '哈哈哈哈'
+                            }
+                        ]};
+                    $(content).empty().html( componentUtils.bulletinBoard(context));
+                    $(content).find(".bulletinBoard-content").bootstrapNews({
+                        newsPerPage: 5,
+                        autoplay: true,
+                        pauseOnHover: true,
+                        direction: 'up',
+                        newsTickerInterval: 4000,
+                        onToDo: function() {
+                            //console.log(this);
+                        }
+                    });
+                    break;
+                case "component_messageBoard":
+                    $(content).empty().html(componentUtils.messageBoard());
+                    break;
+                default:
+                    alert("出错啦！");
+                    break;
+            }
+        });
+
+
+
+
+
+        /* /!**
+          * 点击添加图片
+          *!/
+         $("#webContainer .grid-stack-item-content .addNewModule").on("click",function () {
+             var content = $(this).parent();
+             $("#componentModal").modal("show");
+             // 登录界面
+           // $(content).empty().html(componentUtils.memberLogin());
+             // 公告界面
+            /!* var context = {
+                 news : [
+                     {
+                         time: '2017/05/06',
+                         title: '地球炸啦'
+                     },
+                     {
+                         time: '2017/05/06',
+                         title: '哈哈哈哈'
+                     },
+                     {
+                         time: '2017/05/06',
+                         title: '哈哈哈哈'
+                     },
+                     {
+                         time: '2017/05/06',
+                         title: '哈哈哈哈'
+                     },
+                     {
+                         time: '2017/05/06',
+                         title: '哈哈哈哈'
+                     },
+                     {
+                         time: '2017/05/06',
+                         title: '哈哈哈哈'
+                     }
+                 ]};
+             $(content).empty().html( componentUtils.bulletinBoard(context));
+             $(content).find(".bulletinBoard-content").bootstrapNews({
+                 newsPerPage: 5,
+                 autoplay: true,
+                 pauseOnHover: true,
+                 direction: 'up',
+                 newsTickerInterval: 4000,
+                 onToDo: function() {
+                     //console.log(this);
+                 }
+             });
+ *!/
+           //  $(content).empty().html(componentUtils.messageBoard());
+             debugger
+         });*/
 
     });
 

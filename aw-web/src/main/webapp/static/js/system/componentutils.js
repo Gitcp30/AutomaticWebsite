@@ -87,8 +87,10 @@ define(function(require, exports) {
         }
 
 
-
-
+    /**
+	 * 会员登录
+     * @returns {string}
+     */
         exports.memberLogin = function(){
      	return  '<div class="row user_login">'
                +'<div class="col-sm-12" style="border-right:1px solid #ddd;">'
@@ -108,6 +110,64 @@ define(function(require, exports) {
               +  '</div>';
 
 		}
+
+    /**
+	 * 公司公告
+     * @param data
+     */
+	exports.bulletinBoard = function(data){
+			debugger
+            Template7.registerPartial(
+                'begin',
+                '<div class="row bulletinBoard">'+
+                '<div class="col-xs-12">'+
+                '<div class="panel panel-default">'+
+                '<div class="panel-heading"> <span class="glyphicon glyphicon-list-alt"></span><b>公告板</b></div>'+
+                '<div class="panel-body">'+
+                '<div class="row">'+
+                '<div class="col-xs-12">'+
+                '<ul class="bulletinBoard-content">'+
+                '{{#each news}}' +
+					'<li class="news-item"><span>{{time}}</span>'+
+					'<a href="#">《{{title}}》</a>'+
+					'</li>'+
+                '{{/each}}' +
+            	'</ul>'+
+            	'</div>'+
+			    '</div>'+
+            	'</div>'+
+            	'<div class="panel-footer"></div>'+
+                '</div>'+
+                '</div>'+
+                '</div>'
+            );
+
+            return render(data);
+		}
+
+
+		// 留言板
+	exports.messageBoard = function () {
+		return '<div class="row messageBoard">'+
+            '<div class="col-sm-12" style="border-right:1px solid #ddd;">'+
+            '<div class="well col-sm-12">'+
+            '<h3><i class="fa fa-file-text" aria-hidden="true"></i> 留言板</h3>'+
+            '<div class="input-group input-group-md">'+
+            '<span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-user" aria-hidden="true"></i></span>'+
+            '<input type="text" class="form-control" placeholder="用户名" aria-describedby="sizing-addon1">'+
+            '<span class="input-group-addon" id="sizing-addon1"><i class="ace-icon fa fa-envelope"></i></span>'+
+            '<input type="text" class="form-control" placeholder="邮箱" aria-describedby="sizing-addon1">'+
+            '</div>'+
+            '<div class="input-group input-group-md">'+
+            '<span class="input-group-addon" id="sizing-addon1"><i class="ace-icon fa fa-pencil-square-o"></i></span>'+
+            '<textarea class="form-control" rows="3" placeholder="请输入留言" aria-describedby="sizing-addon1"></textarea>'+
+            '</div>'+
+            '<button type="submit" class="btn btn-info btn-block">提交</button>'+
+            '</div>'+
+            '</div>'+
+            '</div>';
+    }
+
 
 
 	// 渲染视图

@@ -949,6 +949,7 @@ seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom',
             debugger
             text.each(function(index,value){
                 $("#webMenu .inner_menu ul").append('<li><a href="#">'+value+'</a></li>');
+                $("#webMenu .inner_menu ul li a").css("color",$("#menu_font_colorpicker").val());
             });
 
         });
@@ -978,6 +979,7 @@ seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom',
         $('#menu_font_colorpicker').ace_colorpicker();
 
         $('#menu_font_colorpicker').change(function() {
+            debugger
             $("#webMenu .inner_menu ul li a").css("color",$(this).val());
         });
 
@@ -1321,6 +1323,7 @@ seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom',
                     break;
             }
         });
+
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////
 

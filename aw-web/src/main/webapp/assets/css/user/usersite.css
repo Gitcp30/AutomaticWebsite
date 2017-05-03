@@ -1,0 +1,44 @@
+.user_login .input-group , .messageBoard .input-group{
+    margin: 10px 0px; //输入框上下外边距为10px,左右为0px
+}
+
+.user_login h3 , .messageBoard h3{
+    padding: 5px;
+    border-bottom: 1px solid #ddd; //h3字体下边框
+}
+
+.user_login .well , .messageBoard .well{
+    margin-bottom: 0;
+}
+
+
+.bulletinBoard .messageBoard li {
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+}
+
+.bulletinBoard .bulletinBoard-content li span {
+    font-size: 12px;
+    color: #AFCCE4;
+    margin-right: 22px;
+}
+
+.bulletinBoard .bulletinBoard-content li a {
+    color: #444866;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.bulletinBoard .bulletinBoard-content li a:hover {
+    color: red;
+    text-decoration: none;
+}
+
+
+.bulletinBoard .panel{
+    margin-bottom: 0;
+}

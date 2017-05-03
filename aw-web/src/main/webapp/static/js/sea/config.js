@@ -25,6 +25,7 @@ seajs.config({
         "gridstack":"js/plus/gridstack.min.js",
 		"nestable":"js/plus/jquery.nestable.min.js",
 		"knockout-min":"js/plus/knockout-min.js",
+		"jquery.newsbox":"js/plus/jquery.bootstrap.newsbox.min.js",
 
 		/////自定义sys   js文件
 		"editutils":"js/system/editutils.js",

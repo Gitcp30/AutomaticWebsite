@@ -6,9 +6,10 @@
     <meta charset="UTF-8">
     <title></title>
     <link rel="stylesheet" href="${ctx}/static/css/gridstack.css"/>
-    <link rel="stylesheet" href="${ctx}/assets/css/user/userlogin.css"/>
+    <link rel="stylesheet" href="${ctx}/static/css/newsbox.css"/>
+    <link rel="stylesheet" href="${ctx}/assets/css/user/usersite.css"/>
     <link rel="shortcut icon" href="${ctx}/assets/image/favicon.ico">
-    <link rel="icon" href="favicon.ico">
+    <link rel="icon" href="${ctx}/assets/image/favicon.ico">
     <style>
         body {
             /*background-color: white;*/
@@ -44,7 +45,6 @@
 
         #webContainer {
             margin: 0 auto;
-            border: 1px solid red;
             overflow: hidden;
             width: 80%;
         }
@@ -445,6 +445,84 @@
         </div>
     </div>
 </div>
+
+
+
+<!-- 组件编辑模态框（Modal） -->
+<div class="modal fade" id="componentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 600px;">
+        <div class="modal-content">
+            <div class="table-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    <span class="white" style="font-size: 30px;">&times;</span>
+                </button>
+                <div class="nav"><i class="ace-icon glyphicon glyphicon-th-list white"></i> 组件列表</div>
+            </div>
+            <div>
+                <ul class="nav nav-tabs padding-20 tab-color-blue background-blue" style="border: 0;">
+                    <li class="active">
+                        <a data-toggle="tab" href="#componentModal_login">登录</a>
+                    </li>
+
+                    <li>
+                        <a data-toggle="tab" href="#componentModal_bulletinBoard">公告栏</a>
+                    </li>
+
+
+                    <li>
+                        <a data-toggle="tab" href="#componentModal_messageBoard">留言板</a>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="tab-content" style="border: 0;">
+                <!--登录-->
+                <div id="componentModal_login" class="tab-pane in active">
+                    <div class="row">
+                        <div class="col-xs-4 col-sm-4">
+                            <label>
+                                <input name="componentModal_component" type="radio" class="ace" value="component_login"/>
+                                <span class="lbl">登录</span>
+                            </label>
+                        </div>
+                        <div class="col-xs-4 col-sm-4">
+                            <label>
+                                <input name="componentModal_component" type="radio" class="ace" value="component_bulletinBoard"/>
+                                <span class="lbl">公告</span>
+                            </label>
+                        </div>
+                        <div class="col-xs-4 col-sm-4">
+                            <label>
+                                <input name="componentModal_component" type="radio" class="ace" value="component_messageBoard"
+                                       checked="true"/>
+                                <span class="lbl">留言板</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- 公告栏-->
+                <div id="componentModal_bulletinBoard" class="tab-pane">
+                    2
+                </div>
+
+                <!-- 留言板-->
+                <div id="componentModal_messageBoard" class="tab-pane">
+                    3
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button id="componentModal_footer_commitbtn" type="button" class="btn btn-primary" data-dismiss="modal">
+                    保存
+                </button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
 
 <script src="${ctx}/assets/js/web/edit/index.js"></script>
 </body>
