@@ -1,8 +1,17 @@
 package com.jmu.controller;
 
+import com.jmu.domain.User;
+import com.jmu.service.BaseSettingService;
+import com.jmu.service.InitWebService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Description: 后台管理系统controller
@@ -13,6 +22,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+
+    @Autowired
+    private InitWebService initWebService;
+    @Autowired
+    private BaseSettingService baseSettingService;
 
     /**
      *  进入admin界面
@@ -60,4 +74,36 @@ public class AdminController {
     }
 
 
+    /**
+     *
+     * 测试审核通过，自动生成页面默认代码
+     * @return
+     */
+    @RequestMapping(value = "/pass",method= RequestMethod.GET)
+    public String auditingPass(@RequestParam("companyId") String  companyId){
+        /*initWebService.addWebBaseSetting(companyId,"111");*/
+        Map map = baseSettingService.getBaseSettings(companyId);
+        return "web/edit/edit";
+    }
+
+
+    /**
+     *
+     * 测试审核通过，自动生成页面默认代码
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/pass2",method= RequestMethod.GET)
+    public Map testmap(){
+        Map<String,User> map = new HashMap<String,User>();
+        User user1 = new User();
+        User user2 = new User();
+        user1.setCompanyId("sadad");
+        user1.setSysAccount("asdasd");
+        user2.setCompanyId("sadad");
+        user2.setSysAccount("asdasd");
+        map.put("user1",user1);
+        map.put("user2",user2);
+        return map;
+    }
 }

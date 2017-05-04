@@ -1,8 +1,18 @@
-seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom','spinbox','colorbox','bootstrap-wysiwyg','jquery.hotkeys.index','bootstrap-duallistbox','nestable','ace-elements','ace'],function(componentUtils,$,editUtils){
+seajs.use(['componentutils','jquery','editutils','baseSettingUtils','initUtils','bootstrap','jquery-ui.custom','spinbox','colorbox','bootstrap-wysiwyg','jquery.hotkeys.index','bootstrap-duallistbox','nestable','ace-elements','ace','method-extend'],function(componentUtils,$,editUtils,baseSettingUtils,initUtils){
+
+    // 初始化基础数据
+    baseSettingUtils.baseSettingMap = baseSettingUtils.getBaseSettings();
+    // 基础数据
+    var baseSettingMap  = baseSettingUtils.baseSettingMap;
 
 	$(function() {
 
-	    var alldData = {};
+
+
+        ///////////////////////////////////////// ///////////////////////////////////////// /////////////////////////////////////////
+
+
+        var alldData = {};
         alldData.animation = "fold"; // 切换动画
         alldData.delayTime = "500";  // 切换时间
         alldData.interTime = "2500"; // 停留时间
@@ -14,6 +24,8 @@ seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom',
 		var pic_state = "";
 
 		$panes.hide();
+
+
 
 		/**
 		 * 设置格式面板显示|隐藏
@@ -37,10 +49,11 @@ seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom',
 			$("#close-left-menu-btn").trigger("click");
 		});
 
-		/**
-		 * 网站内容区域显示
-		 */
-		$("#mainContent").load(ctx+"/web/edit/index");
+        /**
+         * 网站内容区域显示
+         */
+        $("#mainContent").load(ctx+"/web/edit/index");
+
 		/**
 		 * 侧边栏生成
 		 */
@@ -94,11 +107,15 @@ seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom',
 		/**
 		 * 初始化背景颜色改变框(背景->背景)
 		 */
-		$('#background_background-colorpicker').ace_colorpicker();
 
-		$('#background_background-colorpicker').change(function() {
-			editUtils.setBgColor($("#mainContent"), $(this).val());
-		});
+        $('#background_background-colorpicker').myColorpicker();
+        $('#background_background-colorpicker').ace_colorpicker();
+        $('#background_background-colorpicker').ace_colorpicker('pick', '#FFF');
+        $('#background_background-colorpicker').change(function() {
+            editUtils.setBgColor($("#mainContent"), $(this).val());
+        });
+
+
 
 
         /**
@@ -193,6 +210,8 @@ seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom',
         /**
          * 初始化背景颜色改变框(顶部->背景)
          */
+        $('#header_bg_colorpicker').myColorpicker();
+
         $('#header_bg_colorpicker').ace_colorpicker();
 
         $('#header_bg_colorpicker').change(function() {
@@ -271,6 +290,7 @@ seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom',
         $content_widthSlider.css({ width: '90%', 'float': 'left', margin: '15px 15px 15px 0' }).each(function() {
             // read initial values from markup and remove that
             var value = parseInt($(this).text(), 10);
+            debugger
             $(this).empty().slider({
                 value: value,
                 range: "min",
@@ -800,21 +820,21 @@ seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom',
          */
         function setLinkTestStyle(){
             var val =$("input:radio[name='footer_linktext']:checked").val();
-            if(val == "custom"){
-                $("#leftSidebar_footer .setting_linktext .content").show();
-                // 1字体默认 font-size: 14px; 2.颜色默认color: #8b939d;color: #ffffff
-                $(".inner_footer .footLinks a").css("color",$('#footer_linktext_colorpicker').val());
-                $(".inner_footer .footLinks a").hover(function(){
-                    $(this).css("color",$('#footer_linkhover_colorpicker').val());
-                },function(){
-                    $(this).css("color",$('#footer_linktext_colorpicker').val());
-                });
-                var size = $footer_textSlider.slider('option', 'value');
-                $(".inner_footer .footLinks a").css("font-size",size);
-
-            }
+        if(val == "custom"){
+            $("#leftSidebar_footer .setting_linktext .content").show();
+            // 1字体默认 font-size: 14px; 2.颜色默认color: #8b939d;color: #ffffff
+            $(".inner_footer .footLinks a").css("color",$('#footer_linktext_colorpicker').val());
+            $(".inner_footer .footLinks a").hover(function(){
+                $(this).css("color",$('#footer_linkhover_colorpicker').val());
+            },function(){
+                $(this).css("color",$('#footer_linktext_colorpicker').val());
+            });
+            var size = $footer_textSlider.slider('option', 'value');
+            $(".inner_footer .footLinks a").css("font-size",size);
 
         }
+
+    }
 
         /**
          *  选择栏目
@@ -1045,37 +1065,9 @@ seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom',
 		/**
 		 * 背景->背景
 		 */
-		$(":radio[name='bg_bg']").click(function() {
-			switch($(this).val()) {
-				case "default":
-					$("#leftSidebar_background .setting_background .content").hide();
-                    editUtils.setBgColor($("#mainContent"),"#E4E6E9");
-                    editUtils.setBgColor($("#webHeader"),"");
-                    editUtils.setBgImg($("#mainContent"),"");
-					break;
-				case "hide":
-					$("#leftSidebar_background .setting_background .content").hide();
-                    editUtils.setBgColor($("#mainContent"),"");
-                    editUtils.setBgColor($("#webHeader"),"");
-                    editUtils.setBgImg($("#mainContent"),"");
-					break;
-				case "custom":
-					$("#leftSidebar_background .setting_background .content").show();
-                    var imgSrc = $("#bg_bg_img img").attr("src");
-                    if (imgSrc != undefined){
-                        editUtils.setBgImg($("#mainContent"),imgSrc);
-					} else {
-                        $("#bg_bg_img").hide();
-                        $("#bg_bg_img img").removeAttr("src");
-                        editUtils.setBgColor($("#mainContent"), $('#background_background-colorpicker').val());
-                        $("select[name='bg_bg_showStyle'] option:first-child").prop("selected", 'selected');
-                    }
-					break;
-				default:
-					alert("出错啦！");
-					break;
-			}
-		});
+		$(":radio[name='bg_bg']").on("click",function () {
+            initUtils.bgBgEvent($(this).val());
+        });
 
 
         /**
@@ -1148,10 +1140,6 @@ seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom',
                 case "default":
                     $("#leftSidebar_header .setting_bg .content").hide();
                     editUtils.setBgColor($("#webHeader"),"#E4E6E9");
-                    break;
-                case "hide":
-                    $("#leftSidebar_header .setting_bg .content").hide();
-                    editUtils.setBgColor($("#webHeader"), "");
                     editUtils.setBgImg($("#webHeader"),"");
                     break;
                 case "custom":
@@ -1226,6 +1214,7 @@ seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom',
 				case "custom":
                     $("#leftSidebar_header .setting_border .content").show();
 					var color = $('#header_border_colorpicker').val();
+					debugger
 					var width = $border_heightSlider.slider('option', 'value');
 					var style = $("select[name='header_border_showStyle']").val();
                     $("#webHeader").css("border-bottom",width+"px  "+style+" "+color);
@@ -1276,10 +1265,6 @@ seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom',
                     $("#leftSidebar_footer .setting_bg .content").hide();
                     editUtils.setBgColor($("#webFooter"),"#222222");
                     break;
-                case "hide":
-                    $("#leftSidebar_footer .setting_bg .content").hide();
-                    editUtils.setBgColor($("#webFooter"), "");
-                    break;
                 case "custom":
                     $("#leftSidebar_footer .setting_bg .content").show();
                     editUtils.setBgColor($("#webFooter"), $('#footer_border_colorpicker').val());
@@ -1326,7 +1311,6 @@ seajs.use(['componentutils','jquery','editutils','bootstrap','jquery-ui.custom',
 
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 	});
 
 });

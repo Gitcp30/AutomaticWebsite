@@ -35,7 +35,7 @@
 
         #webBanner {
             margin: 0 auto;
-            height: 500px;
+            height: 350px;
             position: relative;
         }
 
@@ -51,7 +51,7 @@
 
         #webFooter {
             margin: 0 auto;
-            /* height: 100px;*/
+             height: 80px;
             /* border: 1px solid red;*/
             background-color: #222222;
             position: relative;
@@ -125,6 +125,7 @@
             right: 5px;
             bottom: 5px;
             z-index: 1;
+            display: none;
         }
 
         .slideBox .hd ul {
@@ -158,7 +159,7 @@
         .slideBox .bd li {
             zoom: 1;
             width: 100%;
-            height: 500px;
+            height: 350px;
             vertical-align: middle;
         }
 
@@ -207,8 +208,11 @@
         /**logo**/
         #webLogo{
             height: 80px;
-            width: 80px;
+            width: 280px;
             position: relative;
+            opacity: 1;
+            left: 235px;
+            top:12px;
         }
 
         #webLogo:hover .editLayer {
@@ -263,8 +267,9 @@
         /**标题**/
         #webTitle {
             display: inline;
-            top:-50px;
-            left: 750px;
+
+            top:-70px;
+            left: 648px;
         }
         #webTitle:hover .editLayer {
             display: block;
@@ -279,6 +284,7 @@
             height: 50px;
             position: relative;
             overflow: hidden;
+            background-color: #e60012;
         }
 
         #webMenu:hover .editLayer {
@@ -286,17 +292,23 @@
         }
 
         .inner_menu{
-            width: 100%;
+            width: 70%;
             height:50px;
             margin: 0 auto;
             overflow: hidden;
+            background-color: #e60012;
         }
         #webMenu .inner_menu  .nav>li>a {
+            color: #ffffff;
             padding: 15px 15px;
         }
         #webMenu .inner_menu ul{
             margin: 0;
         }
+        #webMenu .inner_menu  .nav>li>a:hover{
+           background-color: #cc0010;
+        }
+
 
         .grid-stack-item:hover .editLayer{
             display: block;
@@ -333,7 +345,7 @@
             <!-- logo-->
             <div id="webLogo" class="ui-widget-content">
                 <div class="weblogo-content">
-                   <img src="${ctx}/assets/image/pic7.jpg" />
+                   <img src="${ctx}/pic/sys/default/jmu-logo.png" />
                 </div>
                 <!--悬浮编辑栏-->
                 <div class="editLayer">
@@ -344,7 +356,7 @@
             </div>
             <!-- 标题-->
             <div id="webTitle" class="ui-widget-content">
-                   <span>qqqq</span>
+                   <span><font size="7" color="#f83a22">集美大学</font></span>
                 <!--悬浮编辑栏-->
                 <div class="editLayer">
                     <ul>
@@ -358,12 +370,10 @@
     <div id="webMenu">
         <div class="inner_menu">
                <ul class="nav nav-pills nav-justified">
-                   <li class="active"><a href="#">Home</a></li>
-                   <li><a href="#">SVN</a></li>
-                   <li><a href="#">iOS</a></li>
-                   <li><a href="#">VB.Net</a></li>
-                   <li><a href="#">Java</a></li>
-                   <li><a href="#">PHP</a></li>
+                   <li style="background-color: #cc0010;"><a href="#">首页</a></li>
+                   <li><a href="#">新闻</a></li>
+                   <li><a href="#">留言板</a></li>
+                   <li><a href="#">关于我们</a></li>
                </ul>
         </div>
         <!--悬浮编辑栏-->
@@ -386,16 +396,16 @@
             <div class="bd">
                 <ul style="margin: 0;">
                     <li>
-                        <a href="http://www.SuperSlide2.com" target="_blank"><img
-                                src="${ctx}/assets/image/pic1.jpg"/></a>
+                        <a href="#" target="_blank"><img
+                                src="${ctx}/pic/sys/default/banner-1.png"/></a>
                     </li>
                     <li>
-                        <a href="http://www.SuperSlide2.com" target="_blank"><img
-                                src="${ctx}/assets/image/pic2.jpg"/></a>
+                        <a href="#" target="_blank"><img
+                                src="${ctx}/pic/sys/default/banner-2.png"/></a>
                     </li>
                     <li>
-                        <a href="http://www.SuperSlide2.com" target="_blank"><img
-                                src="${ctx}/assets/image/pic3.jpg"/></a>
+                        <a href="#" target="_blank"><img
+                                src="${ctx}/pic/sys/default/banner-3.png"/></a>
                     </li>
                 </ul>
             </div>
@@ -432,7 +442,7 @@
                 <span><a hidefocus="true" href="#" rel="nofollow">法律声明</a></span>
             </div>
             <div class="footCpy">
-                <font color="#cabdbf" size="3">
+                <font color="#cabdbf" size="2">
                     Copyright © 2010-2017 福建省厦门集美大学
                 </font>
             </div>

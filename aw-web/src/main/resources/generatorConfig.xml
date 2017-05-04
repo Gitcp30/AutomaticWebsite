@@ -52,10 +52,10 @@
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
 		<!-- 指定数据库表 -->
-		<table tableName="%" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+		<!--<table tableName="%" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
 			   enableSelectByExample="false" selectByExampleQueryId="false"></table>
 		<table tableName="sysrole" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
-			   enableSelectByExample="false" selectByExampleQueryId="false"></table>
+			   enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
 		<!-- <table schema="" tableName="sys_user"></table>
 		<table schema="" tableName="sys_role"></table>
 		<table schema="" tableName="sys_permission"></table>
@@ -66,5 +66,12 @@
 		 <table schema="" tableName="">
 			<columnOverride column="" javaType="" />
 		</table> -->
+
+		<!--<table tableName="base_setting"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+			   enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+
+
+		<table tableName="base_setting"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+			   enableSelectByExample="false" selectByExampleQueryId="false"></table>
 	</context>
 </generatorConfiguration>

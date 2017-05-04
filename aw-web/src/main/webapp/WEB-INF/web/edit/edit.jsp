@@ -272,6 +272,9 @@
             background: url(${ctx}/assets/image/bannerIcon.png) no-repeat -14px -199px;
         }
 
+        #mainContent{
+            background-color: #E4E6E9;
+        }
 
     </style>
 </head>
@@ -623,22 +626,15 @@
                             <div class="widget-body">
                                 <div class="widget-main">
                                     <div class="row">
-                                        <div class="col-xs-4 col-sm-4">
+                                        <div class="col-xs-6 col-sm-6">
                                             <label>
                                                 <input name="bg_bg" type="radio" class="ace" value="default"/>
                                                 <span class="lbl">默认</span>
                                             </label>
                                         </div>
-                                        <div class="col-xs-4 col-sm-4">
+                                        <div class="col-xs-6 col-sm-6">
                                             <label>
-                                                <input name="bg_bg" type="radio" class="ace" value="hide"/>
-                                                <span class="lbl">隐藏</span>
-                                            </label>
-                                        </div>
-                                        <div class="col-xs-4 col-sm-4">
-                                            <label>
-                                                <input name="bg_bg" type="radio" class="ace" value="custom"
-                                                       checked="true"/>
+                                                <input name="bg_bg" type="radio" class="ace" value="custom"/>
                                                 <span class="lbl">自定义</span>
                                             </label>
                                         </div>
@@ -648,33 +644,7 @@
                                             <label for="background_background-colorpicker">颜色： </label>
                                         </div>
                                         <div class="col-xs-6 col-md-6">
-                                            <select id="background_background-colorpicker" class="hide">
-                                                <option value="#ac725e">#ac725e</option>
-                                                <option value="#d06b64">#d06b64</option>
-                                                <option value="#f83a22">#f83a22</option>
-                                                <option value="#fa573c">#fa573c</option>
-                                                <option value="#ff7537">#ff7537</option>
-                                                <option value="#ffad46" selected="">#ffad46</option>
-                                                <option value="#42d692">#42d692</option>
-                                                <option value="#16a765">#16a765</option>
-                                                <option value="#7bd148">#7bd148</option>
-                                                <option value="#b3dc6c">#b3dc6c</option>
-                                                <option value="#fbe983">#fbe983</option>
-                                                <option value="#fad165">#fad165</option>
-                                                <option value="#92e1c0">#92e1c0</option>
-                                                <option value="#9fe1e7">#9fe1e7</option>
-                                                <option value="#9fc6e7">#9fc6e7</option>
-                                                <option value="#4986e7">#4986e7</option>
-                                                <option value="#9a9cff">#9a9cff</option>
-                                                <option value="#b99aff">#b99aff</option>
-                                                <option value="#c2c2c2">#c2c2c2</option>
-                                                <option value="#cabdbf">#cabdbf</option>
-                                                <option value="#cca6ac">#cca6ac</option>
-                                                <option value="#f691b2">#f691b2</option>
-                                                <option value="#cd74e6">#cd74e6</option>
-                                                <option value="#a47ae2">#a47ae2</option>
-                                                <option value="#555">#555</option>
-                                            </select>
+                                            <select id="background_background-colorpicker" class="hide"></select>
                                         </div>
 
                                     </div>
@@ -721,13 +691,13 @@
                             <div class="widget-body">
                                 <div class="widget-main">
                                     <div class="row">
-                                        <div class="col-xs-6 col-sm-4">
+                                        <div class="col-xs-6 col-sm-6">
                                             <label>
                                                 <input name="bg_width" type="radio" class="ace" value="default"/>
                                                 <span class="lbl">默认</span>
                                             </label>
                                         </div>
-                                        <div class="col-xs-6 col-sm-4">
+                                        <div class="col-xs-6 col-sm-6">
                                             <label>
                                                 <input name="bg_width" type="radio" class="ace" value="custom"
                                                        checked="true"/>
@@ -758,19 +728,13 @@
                             <div class="widget-body">
                                 <div class="widget-main">
                                     <div class="row">
-                                        <div class="col-xs-4 col-sm-4">
+                                        <div class="col-xs-6 col-sm-6">
                                             <label>
                                                 <input name="header_bg" type="radio" class="ace" value="default"/>
                                                 <span class="lbl">默认</span>
                                             </label>
                                         </div>
-                                        <div class="col-xs-4 col-sm-4">
-                                            <label>
-                                                <input name="header_bg" type="radio" class="ace" value="hide"/>
-                                                <span class="lbl">隐藏</span>
-                                            </label>
-                                        </div>
-                                        <div class="col-xs-4 col-sm-4">
+                                        <div class="col-xs-6 col-sm-6">
                                             <label>
                                                 <input name="header_bg" type="radio" class="ace" value="custom"
                                                        checked="true"/>
@@ -783,33 +747,7 @@
                                             <label for="header_bg_colorpicker">颜色： </label>
                                         </div>
                                         <div class="col-xs-6 col-md-6">
-                                            <select id="header_bg_colorpicker" class="hide">
-                                                <option value="#ac725e">#ac725e</option>
-                                                <option value="#d06b64">#d06b64</option>
-                                                <option value="#f83a22">#f83a22</option>
-                                                <option value="#fa573c">#fa573c</option>
-                                                <option value="#ff7537">#ff7537</option>
-                                                <option value="#ffad46" selected="">#ffad46</option>
-                                                <option value="#42d692">#42d692</option>
-                                                <option value="#16a765">#16a765</option>
-                                                <option value="#7bd148">#7bd148</option>
-                                                <option value="#b3dc6c">#b3dc6c</option>
-                                                <option value="#fbe983">#fbe983</option>
-                                                <option value="#fad165">#fad165</option>
-                                                <option value="#92e1c0">#92e1c0</option>
-                                                <option value="#9fe1e7">#9fe1e7</option>
-                                                <option value="#9fc6e7">#9fc6e7</option>
-                                                <option value="#4986e7">#4986e7</option>
-                                                <option value="#9a9cff">#9a9cff</option>
-                                                <option value="#b99aff">#b99aff</option>
-                                                <option value="#c2c2c2">#c2c2c2</option>
-                                                <option value="#cabdbf">#cabdbf</option>
-                                                <option value="#cca6ac">#cca6ac</option>
-                                                <option value="#f691b2">#f691b2</option>
-                                                <option value="#cd74e6">#cd74e6</option>
-                                                <option value="#a47ae2">#a47ae2</option>
-                                                <option value="#555">#555</option>
-                                            </select>
+                                            <select id="header_bg_colorpicker" class="hide"></select>
                                         </div>
 
                                     </div>
@@ -856,13 +794,13 @@
                             <div class="widget-body">
                                 <div class="widget-main">
                                     <div class="row">
-                                        <div class="col-xs-4 col-sm-4">
+                                        <div class="col-xs-6 col-sm-6">
                                             <label>
                                                 <input name="header_border" type="radio" class="ace" value="hide"/>
                                                 <span class="lbl">隐藏</span>
                                             </label>
                                         </div>
-                                        <div class="col-xs-4 col-sm-4">
+                                        <div class="col-xs-6 col-sm-6">
                                             <label>
                                                 <input name="header_border" type="radio" class="ace" value="custom"
                                                        checked="true"/>
@@ -907,7 +845,7 @@
                                     </div>
                                     <div class="row content">
                                         <div class="col-xs-4 col-md-4">
-                                            <label for="header_border_colorpicker">宽度：</label>
+                                            <label>宽度：</label>
                                         </div>
                                         <div class="col-xs-8 col-md-8">
                                             <span class="ui-slider-blue ui-slider-small">0</span>
@@ -934,13 +872,13 @@
                             <div class="widget-body">
                                 <div class="widget-main">
                                     <div class="row">
-                                        <div class="col-xs-6 col-sm-4">
+                                        <div class="col-xs-6 col-sm-6">
                                             <label>
                                                 <input name="header_height" type="radio" class="ace" value="default"/>
                                                 <span class="lbl">默认</span>
                                             </label>
                                         </div>
-                                        <div class="col-xs-6 col-sm-4">
+                                        <div class="col-xs-6 col-sm-6">
                                             <label>
                                                 <input name="header_height" type="radio" class="ace" value="custom"
                                                        checked="true"/>
@@ -970,13 +908,13 @@
                             <div class="widget-body">
                                 <div class="widget-main">
                                     <div class="row">
-                                        <div class="col-xs-6 col-sm-4">
+                                        <div class="col-xs-6 col-sm-6">
                                             <label>
                                                 <input name="banner_width" type="radio" class="ace" value="default"/>
                                                 <span class="lbl">默认</span>
                                             </label>
                                         </div>
-                                        <div class="col-xs-6 col-sm-4">
+                                        <div class="col-xs-6 col-sm-6">
                                             <label>
                                                 <input name="banner_width" type="radio" class="ace" value="custom"
                                                        checked="true"/>
@@ -1003,13 +941,13 @@
                             <div class="widget-body">
                                 <div class="widget-main">
                                     <div class="row">
-                                        <div class="col-xs-6 col-sm-4">
+                                        <div class="col-xs-6 col-sm-6">
                                             <label>
                                                 <input name="banner_height" type="radio" class="ace" value="default"/>
                                                 <span class="lbl">默认</span>
                                             </label>
                                         </div>
-                                        <div class="col-xs-6 col-sm-4">
+                                        <div class="col-xs-6 col-sm-6">
                                             <label>
                                                 <input name="banner_height" type="radio" class="ace" value="custom"
                                                        checked="true"/>
@@ -1122,19 +1060,13 @@
                             <div class="widget-body">
                                 <div class="widget-main">
                                     <div class="row">
-                                        <div class="col-xs-4 col-sm-4">
+                                        <div class="col-xs-6 col-sm-6">
                                             <label>
                                                 <input name="footer_bg" type="radio" class="ace" value="default"/>
                                                 <span class="lbl">默认</span>
                                             </label>
                                         </div>
-                                        <div class="col-xs-4 col-sm-4">
-                                            <label>
-                                                <input name="footer_bg" type="radio" class="ace" value="hide"/>
-                                                <span class="lbl">隐藏</span>
-                                            </label>
-                                        </div>
-                                        <div class="col-xs-4 col-sm-4">
+                                        <div class="col-xs-6 col-sm-6">
                                             <label>
                                                 <input name="footer_bg" type="radio" class="ace" value="custom"
                                                        checked="true"/>
@@ -1293,7 +1225,7 @@
         </div>
         <!-- /.modal-content -->
         <button class="aside-trigger btn btn-info btn-app btn-sm ace-settings-btn" data-target="#leftSidebar"
-                data-toggle="modal" type="button">
+                data-toggle="modal" type="button" id="cc">
             <i data-icon1="fa-cog" data-icon2="fa-minus" class="ace-icon fa fa-cog bigger-110 icon-only"></i>
         </button>
     </div>
@@ -1950,7 +1882,7 @@
 
 <!-- 顶部菜单栏栏目编辑模态框（Modal） -->
 <div class="modal fade" id="menuModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="width: 850px;">
+    <div class="modal-dialog" style="width: 650px;">
         <div class="modal-content">
             <div class="table-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -2228,7 +2160,7 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-2 col-md-2">
-                            <label for="menu_font_colorpicker">字体颜色</label>
+                            <label for="menu_font_colorpicker">文字颜色</label>
                         </div>
                         <div class="col-xs-4 col-md-4">
                             <select id="menu_font_colorpicker" class="hide">
