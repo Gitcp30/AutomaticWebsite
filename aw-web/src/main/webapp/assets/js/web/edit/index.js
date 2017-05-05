@@ -24,6 +24,7 @@ seajs.use(['jquery', 'lodash','componentutils','baseSettingUtils', 'gridstack', 
         var bg_bg_img_Data = baseSettingMap['bgBgPic'];
         var bg_bg_showStyle_Data = baseSettingMap['bg_bg_showStyle'];
 
+
         $("#mainContent").css("background-color",bg_bg_color_Data.bsValue);
         // 自定义要设置图片及显示样式
         if(bg_bg_Data.bsValue == "custom" && bg_bg_img_Data.bsValue !=""){
@@ -118,7 +119,7 @@ seajs.use(['jquery', 'lodash','componentutils','baseSettingUtils', 'gridstack', 
 
 //////////////////////////////////////////////////////////////////////////////
 
-
+        //1
 
 
 

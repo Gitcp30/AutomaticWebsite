@@ -1,4 +1,4 @@
-seajs.use(['componentutils','jquery','editutils','baseSettingUtils','initUtils','bootstrap','jquery-ui.custom','spinbox','colorbox','bootstrap-wysiwyg','jquery.hotkeys.index','bootstrap-duallistbox','nestable','ace-elements','ace','method-extend'],function(componentUtils,$,editUtils,baseSettingUtils,initUtils){
+seajs.use(['componentutils','jquery','editutils','baseSettingUtils','initUtils','bootstrap','jquery-ui.custom','spinbox','colorbox','bootstrap-wysiwyg','jquery.hotkeys.index','bootstrap-duallistbox','nestable','bootstrap-colorpicker','ace-elements','ace','method-extend'],function(componentUtils,$,editUtils,baseSettingUtils,initUtils){
 
     // 初始化基础数据
     baseSettingUtils.baseSettingMap = baseSettingUtils.getBaseSettings();
@@ -6,11 +6,6 @@ seajs.use(['componentutils','jquery','editutils','baseSettingUtils','initUtils',
     var baseSettingMap  = baseSettingUtils.baseSettingMap;
 
 	$(function() {
-
-
-
-        ///////////////////////////////////////// ///////////////////////////////////////// /////////////////////////////////////////
-
 
         var alldData = {};
         alldData.animation = "fold"; // 切换动画
@@ -24,8 +19,6 @@ seajs.use(['componentutils','jquery','editutils','baseSettingUtils','initUtils',
 		var pic_state = "";
 
 		$panes.hide();
-
-
 
 		/**
 		 * 设置格式面板显示|隐藏
@@ -66,34 +59,136 @@ seajs.use(['componentutils','jquery','editutils','baseSettingUtils','initUtils',
 			$showPanelBtn.removeClass("glyphicon-chevron-up").addClass("glyphicon-chevron-down");
 			$panes.hide();
 		});
-		/**
-		 * 初始化  滑动条(背景->宽度)
-		 */
+
+
+		$(".styleDesignBtnContainer button.btn-info").on("click",function(){
+            var aa = baseSettingUtils.updateBsMap;
+
+            $.ajax({
+                type: "POST",
+                url: ctx + "/web/edit/updateBaseSettings",
+                data: JSON.stringify(baseSettingUtils.updateBsMap),
+                contentType: "application/json",
+                cache: false,
+                success: function (res) {
+                    if(res == null){
+                        alert("获取系统配置出错了");
+                    } else {
+                        basesettingMap = res;
+                    }
+                }, error: function () {
+                    alert("获取系统配置出错了");
+                }
+            });
+		    debugger
+        });
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+       //  侧边栏初始化
+
+
+        // 1.1背景-背景
+        var bg_bg_Data = baseSettingMap['bg_bg'];
+        var bg_bg_color_Data = baseSettingMap['background_background-colorpicker'];
+        var bg_bg_img_Data = baseSettingMap['bgBgPic'];
+        var bg_bg_showStyle_Data = baseSettingMap['bg_bg_showStyle'];
+
+
+        if (bg_bg_Data.bsValue == "default" || bg_bg_Data.bsValue == "hide"){
+            $("#leftSidebar_background .setting_background .content").hide();
+        }
+
+        $(":radio[name='bg_bg'][value='" + bg_bg_Data.bsValue + "']").prop("checked", "checked");
+
+        // 初始化背景颜色改变框(背景->背景)
+        $('#background_background-colorpicker').colorpicker({
+            color: bg_bg_color_Data.bsValue,
+            align: 'left',
+            colorSelectors: {
+                'black': '#000000',
+                'white': '#ffffff',
+                'red': '#FF0000',
+                'default': '#777777',
+                'primary': '#337ab7',
+                'success': '#5cb85c',
+                'info': '#5bc0de',
+                'warning': '#f0ad4e',
+                'danger': '#d9534f'
+            }
+        }).on('changeColor', function(e) {
+            editUtils.setBgColor($("#mainContent"), e.color.toHex());
+            $('#background_background-colorpicker').colorpicker('hide');
+            // 保存更新
+            debugger
+            bg_bg_color_Data['bsValue'] = e.color.toHex();
+            baseSettingUtils.updateBsMap['background_background-colorpicker'] = bg_bg_color_Data;
+        });
+
+        // 初始化图片
+        if(bg_bg_img_Data.bsValue != ''){
+            $("#bg_bg_img img").attr("src",ctx+bg_bg_img_Data.bsValue);
+        }
+        $("select[name='bg_bg_showStyle']").val(bg_bg_showStyle_Data.bsValue);
+
+        // 背景->背景
+        $(":radio[name='bg_bg']").on("click",initUtils.bgBgEvent);
+
+        // 背景--背景--自定义显示方式
+        $("select[name='bg_bg_showStyle']").change(initUtils.bgBgShowStyleEvent);
+
+
+        // 1.2背景-宽度
+
+        var bg_width_Data = baseSettingMap['bg_width'];
+        var bg_WidthSlider_Data = baseSettingMap['bgWidthSlider'];
+
+        if (bg_width_Data.bsValue == "default"){
+            $("#leftSidebar_background .setting_width .content").hide();
+        }
+        $(":radio[name='bg_width'][value='" + bg_width_Data.bsValue + "']").prop("checked", "checked");
+
+        // 背景->宽度
+        $(":radio[name='bg_width']").on("click",function() {
+            switch($(this).val()) {
+                case "default":
+                    $("#leftSidebar_background .setting_width .content").hide();
+                    // 宽度100%
+                    setIndexBgSize("100%");
+                    break;
+                case "custom":
+                    $("#leftSidebar_background .setting_width .content").show();
+                    setIndexBgSize($widthSpinner.val()+"%");
+                    break;
+                default:
+                    alert("出错啦！");
+                    break;
+            }
+        });
+
+        // 初始化  滑动条(背景->宽度)
 		var $widthSlider = $("#leftSidebar_background .setting_width .ui-slider-blue");
 		$widthSlider.css({ width: '90%', 'float': 'left', margin: '15px' }).each(function() {
 			// read initial values from markup and remove that
-			var value = parseInt($(this).text(), 10);
 			$(this).empty().slider({
-				value: value,
+				value: bg_WidthSlider_Data.bsValue,
 				range: "min",
-				min: 300,
-				max: 1440,
+				min: 30,
+				max: 100,
 				animate: true,
 				slide: function(event, ui) {
 					$widthSpinner.val(ui.value);
-                    setIndexBgSize(ui.value / 1440 * 100 + "%");
+                    setIndexBgSize(ui.value + "%");
 				}
 			});
 		});
-		/**
-		 * 初始化数字改变框(背景->宽度)
-		 */
+
+		// 初始化数字改变框(背景->宽度)
 		var $widthSpinner = $("#leftSidebar_background .setting_width .spiner input");
-		$widthSpinner.ace_spinner({ value: 1440, min: 300, max: 1440, step: 10, btn_up_class: 'btn-info', btn_down_class: 'btn-info' })
+		$widthSpinner.ace_spinner({ value: bg_WidthSlider_Data.bsValue, min: 30, max: 100, step: 1, btn_up_class: 'btn-info', btn_down_class: 'btn-info' })
 			.closest('.ace-spinner')
 			.on('changed.fu.spinbox', function() {
 				$widthSlider.slider("value", $widthSpinner.val());
-				setIndexBgSize($widthSpinner.val() / 1440 * 100 + "%");
+				setIndexBgSize($widthSpinner.val() + "%");
 			});
 
 		function  setIndexBgSize(value) {
@@ -104,23 +199,25 @@ seajs.use(['componentutils','jquery','editutils','baseSettingUtils','initUtils',
             editUtils.setWidth($(".inner_footer"),value);
         }
 
-		/**
-		 * 初始化背景颜色改变框(背景->背景)
-		 */
 
-        $('#background_background-colorpicker').myColorpicker();
-        $('#background_background-colorpicker').ace_colorpicker();
-        $('#background_background-colorpicker').ace_colorpicker('pick', '#FFF');
-        $('#background_background-colorpicker').change(function() {
-            editUtils.setBgColor($("#mainContent"), $(this).val());
-        });
+        // 2.1头部-背景
+        var header_bg_Data = baseSettingMap['header_bg'];
+        var header_bg_color_Data = baseSettingMap['header_bg_colorpicker'];
+        var header_bg_img_Data = baseSettingMap['headerBgPic'];
+        var header_bg_showStyle_Data = baseSettingMap['header_bg_showStyle'];
+
+/*
+        if (header_bg_Data.bsValue == "default" || header_bg_Data.bsValue == "hide"){
+            $("#leftSidebar_background .setting_background .content").hide();
+        }
+
+        $(":radio[name='bg_bg'][value='" + bg_bg_Data.bsValue + "']").prop("checked", "checked");*/
 
 
 
 
-        /**
-		 * 背景--背景--添加图片点击
-         */
+
+        // 背景--背景--添加图片点击
 		$("#leftSidebar_background button[data-target=#picModal]").on("click",function(){
            // $("#close-left-menu-btn").trigger("click");
             //1取消其他选中的图片（由于只能选中一张图片）
@@ -129,9 +226,7 @@ seajs.use(['componentutils','jquery','editutils','baseSettingUtils','initUtils',
             pic_state = "SET_BG";
 		});
 
-        /**
-         * 顶部--背景--添加图片点击
-         */
+        // 顶部--背景--添加图片点击
         $("#leftSidebar_header button[data-target=#picModal]").on("click",function(){
             // $("#close-left-menu-btn").trigger("click");
             //1取消其他选中的图片（由于只能选中一张图片）
@@ -246,7 +341,6 @@ seajs.use(['componentutils','jquery','editutils','baseSettingUtils','initUtils',
             .closest('.ace-spinner')
             .on('changed.fu.spinbox', function() {
                 $header_heightSlider.slider("value", $header_heightSpinner.val());
-                debugger
                 editUtils.setHeight($("#webHeader"),$header_heightSpinner.val()+"px");
             });
 
@@ -969,7 +1063,6 @@ seajs.use(['componentutils','jquery','editutils','baseSettingUtils','initUtils',
             debugger
             text.each(function(index,value){
                 $("#webMenu .inner_menu ul").append('<li><a href="#">'+value+'</a></li>');
-                $("#webMenu .inner_menu ul li a").css("color",$("#menu_font_colorpicker").val());
             });
 
         });
@@ -1043,53 +1136,7 @@ seajs.use(['componentutils','jquery','editutils','baseSettingUtils','initUtils',
 
 		///////////////////////////////////////////////////////////////////////////////////////
 		// 编辑页面 中所有单选按钮的初始化
-		/**
-		 * 背景->宽度
-		 */
-		$(":radio[name='bg_width']").click(function() {
-			switch($(this).val()) {
-				case "default":
-					$("#leftSidebar_background .setting_width .content").hide();
-					// 宽度100%
-                    setIndexBgSize("100%");
-					break;
-				case "custom":
-					$("#leftSidebar_background .setting_width .content").show();
-                    setIndexBgSize($widthSpinner.val());
-					break;
-				default:
-					alert("出错啦！");
-					break;
-			}
-		});
-		/**
-		 * 背景->背景
-		 */
-		$(":radio[name='bg_bg']").on("click",function () {
-            initUtils.bgBgEvent($(this).val());
-        });
 
-
-        /**
-		 * 背景--背景--自定义显示方式
-         */
-        $("select[name='bg_bg_showStyle']").change(function(){
-			var val = $(this).val();
-        	if (val == "no"){
-                //$("#bg_bg_img").hide();
-                $("#bg_bg_img img").removeAttr("src");
-                editUtils.setBgImg($("#mainContent"),"");
-                editUtils.setBgSize($("#mainContent"),"");
-                editUtils.setBgRepeat($("#mainContent"),"");
-			}
-        	else if (val == "no-repeat" || val == "repeat-y" || val =="repeat-x"){
-                editUtils.setBgRepeat($("#mainContent"),val);
-                editUtils.setBgSize($("#mainContent"),"");
-			} else{
-                editUtils.setBgSize($("#mainContent"),val);
-                editUtils.setBgRepeat($("#mainContent"),"");
-			}
-		});
 
         /**
          * 横幅->宽度

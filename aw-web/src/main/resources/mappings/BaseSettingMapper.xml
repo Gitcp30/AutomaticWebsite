@@ -188,4 +188,32 @@
     where COMPANY_ID = #{compantId,jdbcType=VARCHAR}
   </select>
 
+
+  <!--<insert id="Batch" useGeneratedKeys="true" parameterType="java.util.List">
+    <selectKey resultType="long" keyProperty="id" order="AFTER">
+      SELECT
+      LAST_INSERT_ID()
+    </selectKey>
+    insert into t_train_record (add_time,emp_id,activity_id,flag)
+    values
+    <foreach collection="list" item="item" index="index" separator="," >
+      (#{item.addTime},#{item.empId},#{item.activityId},#{item.flag})
+    </foreach>
+  </insert>-->
+
+  <update id="batchUpdateByPrimaryKey" parameterType="java.util.List">
+    <foreach collection="list" item="item" separator=";">
+      update base_setting
+      set COMPANY_ID = #{item.companyId,jdbcType=VARCHAR},
+      TYPE = #{item.type,jdbcType=VARCHAR},
+      BS_NAME = #{item.bsName,jdbcType=VARCHAR},
+      BS_VALUE = #{item.bsValue,jdbcType=VARCHAR},
+      BS_TARGET = #{item.bsTarget,jdbcType=VARCHAR},
+      BS_CSS = #{item.bsCss,jdbcType=VARCHAR},
+      MODIFY_TIME = #{item.modifyTime,jdbcType=TIMESTAMP},
+      MODIFIER = #{item.modifier,jdbcType=VARCHAR}
+      where BASE_SETTING_ID = #{item.baseSettingId,jdbcType=VARCHAR}
+    </foreach>
+  </update>
+
 </mapper>

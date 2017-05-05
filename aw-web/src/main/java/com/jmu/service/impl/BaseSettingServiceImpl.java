@@ -1,7 +1,5 @@
 package com.jmu.service.impl;
 
-import com.google.common.collect.Collections2;
-import com.google.common.collect.FluentIterable;
 import com.jmu.common.AjaxResponse;
 import com.jmu.dao.BaseSettingMapper;
 import com.jmu.domain.BaseSetting;
@@ -9,7 +7,7 @@ import com.jmu.service.BaseSettingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +42,16 @@ public class BaseSettingServiceImpl implements BaseSettingService {
     }
 
     @Override
-    public AjaxResponse updateBaseSettings() {
-        return null;
+    public AjaxResponse updateBaseSettings(Map<String,BaseSetting> baseSettingMap,String modifier) {
+        List<BaseSetting> baseSettings = new ArrayList<BaseSetting>();
+        for (String key : baseSettingMap.keySet()) {
+            BaseSetting baseSetting = baseSettingMap.get(key);
+            baseSetting.setModifier(modifier);
+            baseSettings.add(baseSetting);
+        }
+        if (!baseSettings.isEmpty()){
+            baseSettingMapper.batchUpdateByPrimaryKey(baseSettings);
+        }
+        return AjaxResponse.success();
     }
 }

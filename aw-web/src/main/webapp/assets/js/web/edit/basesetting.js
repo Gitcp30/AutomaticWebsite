@@ -7,10 +7,11 @@ define(function(require, exports, module) {
 
     exports.baseSettingMap = '';
 
+    exports.updateBsMap = {};
+
 
     exports.getBaseSettings = function () {
         var basesettingMap = '';
-        debugger
             $.ajax({
                 type: "GET",
                 url: ctx + "/web/edit/getBaseSettings",

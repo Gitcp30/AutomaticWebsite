@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 
@@ -28,7 +29,6 @@
         body {
             background-color: white;
         }
-
         .styleDesign {
             display: block;
             background: #EFF3F8;
@@ -579,7 +579,7 @@
 <div id="mainContent"></div>
 <!-- 右部侧边栏-->
 <div id="leftSidebar" class="modal aside" data-body-scroll="false" data-offset="true" data-placement="left"
-     data-fixed="true" data-backdrop="false" tabindex="-1">
+     data-fixed="true" data-backdrop="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content" style="width: 400px; ">
             <div class="modal-header no-padding">
@@ -626,13 +626,19 @@
                             <div class="widget-body">
                                 <div class="widget-main">
                                     <div class="row">
-                                        <div class="col-xs-6 col-sm-6">
+                                        <div class="col-xs-4 col-sm-4">
                                             <label>
                                                 <input name="bg_bg" type="radio" class="ace" value="default"/>
                                                 <span class="lbl">默认</span>
                                             </label>
                                         </div>
-                                        <div class="col-xs-6 col-sm-6">
+                                        <div class="col-xs-4 col-sm-4">
+                                            <label>
+                                                <input name="bg_bg" type="radio" class="ace" value="hide"/>
+                                                <span class="lbl">隐藏</span>
+                                            </label>
+                                        </div>
+                                        <div class="col-xs-4 col-sm-4">
                                             <label>
                                                 <input name="bg_bg" type="radio" class="ace" value="custom"/>
                                                 <span class="lbl">自定义</span>
@@ -641,14 +647,17 @@
                                     </div>
                                     <div class="row content">
                                         <div class="col-xs-4 col-md-4">
-                                            <label for="background_background-colorpicker">颜色： </label>
+                                            <label>颜色： </label>
                                         </div>
-                                        <div class="col-xs-6 col-md-6">
-                                            <select id="background_background-colorpicker" class="hide"></select>
+                                        <div class="col-xs-5 col-md-5">
+                                            <div id="background_background-colorpicker" data-format="alias" class="input-group colorpicker-component">
+                                                <input type="text" value="primary" class="form-control" />
+                                                <span class="input-group-addon"><i></i></span>
+                                            </div>
                                         </div>
 
                                     </div>
-                                    <div class="row content">
+                                    <div class="row content" style="margin-top: 5px">
                                         <div class="col-xs-4 col-md-4">
                                             <label>图片：</label>
                                         </div>
@@ -669,7 +678,6 @@
                                         <div class="col-xs-4 col-md-4"><label>显示方式：</label></div>
                                         <div class="col-xs-6 col-md-6">
                                             <select class="form-control" name="bg_bg_showStyle">
-                                                <option value=""></option>
                                                 <option value="no">不使用背景图片</option>
                                                 <option value="no-repeat">不平铺</option>
                                                 <option value="repeat-x">按X轴平铺</option>
@@ -686,7 +694,7 @@
                         <!--宽度 -->
                         <div class="widget-box setting_width">
                             <div class="widget-header" style="min-height: 20px;">
-                                <h6 class="smaller">宽度</h6>
+                                <h6 class="smaller">宽度(%)</h6>
                             </div>
                             <div class="widget-body">
                                 <div class="widget-main">
@@ -1265,121 +1273,30 @@
                                 <!-- PAGE CONTENT BEGINS -->
                                 <div class="toSelectGallery">
                                     <ul class="ace-thumbnails clearfix">
-                                        <li>
-                                            <div>
-                                                <img width="140" height="80" alt="150x150"
-                                                     src="${ctx}/static/images/gallery/image-1.jpg"/>
-                                                <!--右下角使用标签 -->
-                                                <div class="tags">
-															<span class="label-holder">
-																<span class="label label-success arrowed">使用</span>
-															</span>
-                                                </div>
-                                                <!-- 鼠标悬浮操作-->
-                                                <div class="text">
-                                                    <div class="inner">
-                                                        <!--<span>Some Title!</span>-->
-                                                        <br/>
-                                                        <a href="${ctx}/static/images/gallery/image-1.jpg"
-                                                           data-rel="picModal_colorbox">
-                                                            <i class="ace-icon fa fa-search-plus"></i>
-                                                        </a>
-                                                        <a href="#" data-target="tocancel">
-                                                            <i class="ace-icon fa fa-trash-o"></i>
-                                                        </a>
+                                        <c:forEach items="${requestScope.sysPics}" var="pic">
+                                            <li>
+                                                <div>
+                                                    <img width="140" height="80" alt="150x150"
+                                                         src="${ctx}${pic.pictureUrl }"/>
+                                                    <!--右下角使用标签 -->
+                                                    <div class="tags"></div>
+                                                    <!-- 鼠标悬浮操作-->
+                                                    <div class="text">
+                                                        <div class="inner">
+                                                            <!--<span>Some Title!</span>-->
+                                                            <br/>
+                                                            <a href="${ctx}${pic.pictureUrl }"
+                                                               data-rel="picModal_colorbox">
+                                                                <i class="ace-icon fa fa-search-plus"></i>
+                                                            </a>
+                                                            <a href="#" data-target="tocancel">
+                                                                <i class="ace-icon fa fa-trash-o"></i>
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div>
-                                                <img width="140" height="80" alt="150x150"
-                                                     src="${ctx}/static/images/gallery/image-2.jpg"/>
-                                                <!--右下角使用标签 -->
-                                                <div class="tags"></div>
-                                                <!-- 鼠标悬浮操作-->
-                                                <div class="text">
-                                                    <div class="inner">
-                                                        <!--<span>Some Title!</span>-->
-                                                        <br/>
-                                                        <a href="${ctx}/static/images/gallery/image-2.jpg"
-                                                           data-rel="picModal_colorbox">
-                                                            <i class="ace-icon fa fa-search-plus"></i>
-                                                        </a>
-                                                        <a href="#" data-target="toadd">
-                                                            <i class="ace-icon fa  fa-check-square-o"></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div>
-                                                <img width="140" height="80" alt="150x150"
-                                                     src="${ctx}/static/images/gallery/image-3.jpg"/>
-                                                <!--右下角使用标签 -->
-                                                <div class="tags"></div>
-                                                <!-- 鼠标悬浮操作-->
-                                                <div class="text">
-                                                    <div class="inner">
-                                                        <!--<span>Some Title!</span>-->
-                                                        <br/>
-                                                        <a href="${ctx}/static/images/gallery/image-3.jpg"
-                                                           data-rel="picModal_colorbox">
-                                                            <i class="ace-icon fa fa-search-plus"></i>
-                                                        </a>
-                                                        <a href="#" data-target="toadd">
-                                                            <i class="ace-icon fa  fa-check-square-o"></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div>
-                                                <img width="140" height="80" alt="150x150"
-                                                     src="${ctx}/static/images/gallery/image-4.jpg"/>
-                                                <!--右下角使用标签 -->
-                                                <div class="tags"></div>
-                                                <!-- 鼠标悬浮操作-->
-                                                <div class="text">
-                                                    <div class="inner">
-                                                        <!--<span>Some Title!</span>-->
-                                                        <br/>
-                                                        <a href="${ctx}/static/images/gallery/image-4.jpg"
-                                                           data-rel="picModal_colorbox">
-                                                            <i class="ace-icon fa fa-search-plus"></i>
-                                                        </a>
-                                                        <a href="#" data-target="toadd">
-                                                            <i class="ace-icon fa  fa-check-square-o"></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div>
-                                                <img width="140" height="80" alt="150x150"
-                                                     src="${ctx}/static/images/gallery/image-5.jpg"/>
-                                                <!--右下角使用标签 -->
-                                                <div class="tags"></div>
-                                                <!-- 鼠标悬浮操作-->
-                                                <div class="text">
-                                                    <div class="inner">
-                                                        <!--<span>Some Title!</span>-->
-                                                        <br/>
-                                                        <a href="${ctx}/static/images/gallery/image-5.jpg"
-                                                           data-rel="picModal_colorbox">
-                                                            <i class="ace-icon fa fa-search-plus"></i>
-                                                        </a>
-                                                        <a href="#" data-target="toadd">
-                                                            <i class="ace-icon fa  fa-check-square-o"></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-
+                                            </li>
+                                        </c:forEach>
                                     </ul>
                                 </div>
                                 <!-- PAGE CONTENT ENDS -->

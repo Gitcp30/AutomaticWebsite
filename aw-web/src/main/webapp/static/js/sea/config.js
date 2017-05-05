@@ -26,6 +26,7 @@ seajs.config({
 		"nestable":"js/plus/jquery.nestable.min.js",
 		"knockout-min":"js/plus/knockout-min.js",
 		"jquery.newsbox":"js/plus/jquery.bootstrap.newsbox.min.js",
+		"bootstrap-colorpicker":"js/plus/bootstrap-colorpicker.min.js",
 
 		/////自定义sys   js文件
 		"editutils":"js/system/editutils.js",

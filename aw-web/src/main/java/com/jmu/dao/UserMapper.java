@@ -3,7 +3,9 @@ package com.jmu.dao;
 import com.jmu.base.BaseMapper;
 import com.jmu.domain.User;
 import com.jmu.domain.vo.LoginUSer;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface UserMapper extends BaseMapper<User> {
 
     public User selectByLogin(LoginUSer loginUSer);

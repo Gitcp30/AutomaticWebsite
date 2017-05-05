@@ -1,6 +1,7 @@
 package com.jmu.service;
 
 import com.jmu.common.AjaxResponse;
+import com.jmu.domain.BaseSetting;
 
 import java.util.Map;
 
@@ -12,5 +13,5 @@ public interface BaseSettingService {
 
     public Map getBaseSettings(String companyId);
 
-    public AjaxResponse updateBaseSettings();
+    public AjaxResponse updateBaseSettings(Map<String,BaseSetting> baseSettingMap,String modifier);
 }

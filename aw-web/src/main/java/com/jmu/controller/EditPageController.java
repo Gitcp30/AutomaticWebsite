@@ -1,14 +1,20 @@
 package com.jmu.controller;
 
+import com.jmu.common.AjaxResponse;
+import com.jmu.domain.BaseSetting;
 import com.jmu.domain.Company;
+import com.jmu.domain.User;
 import com.jmu.service.BaseSettingService;
+import com.jmu.service.SysPictureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,13 +29,17 @@ public class EditPageController {
 
     @Autowired
     private BaseSettingService baseSettingService;
+    @Autowired
+    private SysPictureService sysPictureService;
 
     /**
      *  进入编辑界面
      * @return
      */
     @RequestMapping(value = "",method= RequestMethod.GET)
-    public String editPage(){
+    public String editPage(Map<String, Object> map){
+        List list = sysPictureService.getAll("sys");
+        map.put("sysPics",list);
         return "web/edit/edit";
     }
 
@@ -60,5 +70,16 @@ public class EditPageController {
         Map map = baseSettingService.getBaseSettings(company.getCompanyId());
         return map;
     }
+
+    @ResponseBody
+    @RequestMapping(value = "updateBaseSettings",method = RequestMethod.POST)
+    public AjaxResponse updateBaseSettings(@RequestBody Map<String,BaseSetting> baseSettingMap, HttpSession session){
+        // seesion获取公司ID
+        User user = (User) session.getAttribute("currentUser");
+        return baseSettingService.updateBaseSettings(baseSettingMap,user.getUserId());
+    }
+
+
+
 
 }
