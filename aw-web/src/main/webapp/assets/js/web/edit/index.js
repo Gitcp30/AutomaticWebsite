@@ -24,11 +24,10 @@ seajs.use(['jquery', 'lodash','componentutils','baseSettingUtils', 'gridstack', 
         var bg_bg_img_Data = baseSettingMap['bgBgPic'];
         var bg_bg_showStyle_Data = baseSettingMap['bg_bg_showStyle'];
 
-
         $("#mainContent").css("background-color",bg_bg_color_Data.bsValue);
         // 自定义要设置图片及显示样式
         if(bg_bg_Data.bsValue == "custom" && bg_bg_img_Data.bsValue !=""){
-            $("#mainContent").css("background-image",ctx+bg_bg_img_Data.bsValue);
+            $("#mainContent").css('background-image',"url("+ctx+bg_bg_img_Data.bsValue+")");
             var showStyle = bg_bg_showStyle_Data.bsValue;
             if (showStyle == "no-repeat" || showStyle == "repeat-y" || showStyle =="repeat-x"){
                 $("#mainContent").css("background-repeat",showStyle);
@@ -39,7 +38,15 @@ seajs.use(['jquery', 'lodash','componentutils','baseSettingUtils', 'gridstack', 
 
         // 1.2背景-宽度
         var bg_WidthSlider_Data = baseSettingMap['bgWidthSlider'];
-        $("#mainContent").css("width",bg_WidthSlider_Data.bsValue+"%");
+        /*$("#mainContent").css("width",bg_WidthSlider_Data.bsValue+"%");*/
+
+
+        $(".inner_header").css("width",bg_WidthSlider_Data.bsValue+"%");
+        $("#webMenu .inner_menu").css("width",bg_WidthSlider_Data.bsValue+"%");
+        $("#webBanner").css("width",bg_WidthSlider_Data.bsValue+"%");
+        $("#webContainer").css("width",bg_WidthSlider_Data.bsValue+"%");
+        $(".inner_footer").css("width",bg_WidthSlider_Data.bsValue+"%");
+
 
         // 2.1头部-背景
         var header_bg_Data = baseSettingMap['header_bg'];
@@ -50,7 +57,7 @@ seajs.use(['jquery', 'lodash','componentutils','baseSettingUtils', 'gridstack', 
         $("#webHeader").css("background-color",header_bg_color_Data.bsValue);
         // 自定义要设置图片及显示样式
         if(header_bg_Data.bsValue == "custom" && header_bg_img_Data.bsValue !=""){
-            $("#webHeader").css("background-image",ctx+header_bg_img_Data.bsValue);
+            $("#webHeader").css("background-image","url("+ctx+header_bg_img_Data.bsValue+")");
             var showStyle = header_bg_showStyle_Data.bsValue;
             if (showStyle == "no-repeat" || showStyle == "repeat-y" || showStyle =="repeat-x"){
                 $("#webHeader").css("background-repeat",showStyle);
@@ -83,7 +90,8 @@ seajs.use(['jquery', 'lodash','componentutils','baseSettingUtils', 'gridstack', 
         // 3.2横幅-高度
         var banner_heightSlider_Data = baseSettingMap['banner_heightSlider'];
         $("#webBanner").css("height",banner_heightSlider_Data.bsValue+"px");
-
+        // 要设置横幅slide的高度
+        $(".slideBox .bd li").css("height",banner_heightSlider_Data.bsValue+"px");
 
         // 4.1内容宽度
         var content_widthSlider_Data = baseSettingMap['content_widthSlider'];
@@ -91,11 +99,11 @@ seajs.use(['jquery', 'lodash','componentutils','baseSettingUtils', 'gridstack', 
 
         // 4.2.1内容边距上
         var content_marginTopSlider_Data = baseSettingMap['content_marginTopSlider'];
-        $("#webContainer").css("margin-top",content_marginTopSlider_Data.bsValue+"%");
+        $("#webContainer").css("margin-top",content_marginTopSlider_Data.bsValue+"px");
 
         // 4.2.2内容边距下
         var content_marginBottomSlider_Data = baseSettingMap['content_marginBottomSlider'];
-        $("#webContainer").css("margin-bottom",content_marginBottomSlider_Data.bsValue+"%");
+        $("#webContainer").css("margin-bottom",content_marginBottomSlider_Data.bsValue+"px");
 
         // 5.1底部-高度
         var footer_heightSlider_Data = baseSettingMap['footer_heightSlider'];
@@ -104,22 +112,49 @@ seajs.use(['jquery', 'lodash','componentutils','baseSettingUtils', 'gridstack', 
         // 5.2底部-背景
         var footer_bg_colorpicker_Data = baseSettingMap['footer_bg_colorpicker'];
         $("#webFooter").css("background-color",footer_bg_colorpicker_Data.bsValue);
-        // 5.3底部-栏目文字
 
+        // 5.3底部-栏目文字
         var footer_linktext_colorpicker_Data = baseSettingMap['footer_linktext_colorpicker'];
         var footer_linkhover_colorpicker_Data = baseSettingMap['footer_linkhover_colorpicker'];
+        var footer_textSlider_Data = baseSettingMap['footer_textSlider'];
+        $(".inner_footer .footLinks a").css("font-size",footer_textSlider_Data.bsValue + "px");
+        debugger
         $("#webFooter .inner_footer .footLinks a").css("color",footer_linktext_colorpicker_Data.bsValue);
-        $("#webFooter .inner_footer .footLinks a").change(function() {
-            $(".inner_footer .footLinks a").hover(function(){
+            $("#webFooter .inner_footer .footLinks a").hover(function(){
                 $(this).css("color",footer_linkhover_colorpicker_Data.bsValue);
             },function(){
-                $(this).css("color",footer_linktext_colorpicker_Data.bsValue+" !important");
+                $(this).css("color",footer_linktext_colorpicker_Data.bsValue);
             });
-        });
+
+        // 5.1菜单栏颜色
+        var menu_colorpicker_Data = baseSettingMap['menu_colorpicker'];
+        // 5.2菜单栏选项颜色
+        var menu_bg_colorpicker_Data = baseSettingMap['menu_bg_colorpicker'];
+        // 5.3文字颜色
+        var menu_font_colorpicker_Data = baseSettingMap['menu_font_colorpicker'];
+        // 5.4选中颜色
+        var menu_selectItem_colorpicker_Data = baseSettingMap['menu_selectItem_colorpicker'];
+        // 5.5菜单栏长度
+        var menu_widthSlider_Data = baseSettingMap['menu_widthSlider'];
+
+        $("#webMenu").css("background-color",menu_colorpicker_Data.bsValue);
+        $("#webMenu .inner_menu ul").css("background-color",menu_bg_colorpicker_Data.bsValue);
+        $("#webMenu .inner_menu ul li a").css("color",menu_font_colorpicker_Data.bsValue);
+        $("#webMenu .inner_menu ul li a").hover(
+            //当鼠标放上去的时候,程序处理
+            function(){
+                $(this).css("background-color",menu_selectItem_colorpicker_Data.bsValue);
+            },
+            //当鼠标离开的时候,程序处理
+            function(){
+                $(this).css("background-color",menu_bg_colorpicker_Data.bsValue);
+            }
+        );
+
+        $("#webMenu .inner_menu").css("width",menu_widthSlider_Data.bsValue + "%");
+
 
 //////////////////////////////////////////////////////////////////////////////
-
-        //1
 
 
 

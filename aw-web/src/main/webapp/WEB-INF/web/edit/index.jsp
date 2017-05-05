@@ -55,6 +55,7 @@
             /* border: 1px solid red;*/
             background-color: #222222;
             position: relative;
+            height: 80px;
         }
 
         #webFooter:hover .editLayer {
@@ -80,13 +81,9 @@
         }
 
         .inner_footer .footLinks a {
-            color: #8b939d;
             text-decoration: none;
         }
 
-        .inner_footer .footLinks a:hover {
-            color: #ffffff /*!important*/;
-        }
 
         .inner_footer .footCpy {
             text-align: center;
@@ -296,7 +293,6 @@
             height:50px;
             margin: 0 auto;
             overflow: hidden;
-            background-color: #e60012;
         }
         #webMenu .inner_menu  .nav>li>a {
             color: #ffffff;
@@ -304,9 +300,6 @@
         }
         #webMenu .inner_menu ul{
             margin: 0;
-        }
-        #webMenu .inner_menu  .nav>li>a:hover{
-           background-color: #cc0010;
         }
 
 

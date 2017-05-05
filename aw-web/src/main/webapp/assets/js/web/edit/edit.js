@@ -63,7 +63,7 @@ seajs.use(['componentutils','jquery','editutils','baseSettingUtils','initUtils',
 
 		$(".styleDesignBtnContainer button.btn-info").on("click",function(){
             var aa = baseSettingUtils.updateBsMap;
-
+debugger
             $.ajax({
                 type: "POST",
                 url: ctx + "/web/edit/updateBaseSettings",
@@ -86,6 +86,11 @@ seajs.use(['componentutils','jquery','editutils','baseSettingUtils','initUtils',
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
        //  侧边栏初始化
 
+        function updateBS(key,value) {
+            // 保存更新
+            baseSettingUtils.baseSettingMap[key]['bsValue'] = value;
+            baseSettingUtils.updateBsMap[key] = baseSettingUtils.baseSettingMap[key];
+        }
 
         // 1.1背景-背景
         var bg_bg_Data = baseSettingMap['bg_bg'];
@@ -93,6 +98,11 @@ seajs.use(['componentutils','jquery','editutils','baseSettingUtils','initUtils',
         var bg_bg_img_Data = baseSettingMap['bgBgPic'];
         var bg_bg_showStyle_Data = baseSettingMap['bg_bg_showStyle'];
 
+        // 初始化图片
+        if(bg_bg_img_Data.bsValue != ''){
+            $("#bg_bg_img").show();
+            $("#bg_bg_img img").attr("src",ctx+bg_bg_img_Data.bsValue);
+        }
 
         if (bg_bg_Data.bsValue == "default" || bg_bg_Data.bsValue == "hide"){
             $("#leftSidebar_background .setting_background .content").hide();
@@ -105,8 +115,8 @@ seajs.use(['componentutils','jquery','editutils','baseSettingUtils','initUtils',
             color: bg_bg_color_Data.bsValue,
             align: 'left',
             colorSelectors: {
-                'black': '#000000',
                 'white': '#ffffff',
+                'black': '#000000',
                 'red': '#FF0000',
                 'default': '#777777',
                 'primary': '#337ab7',
@@ -119,15 +129,9 @@ seajs.use(['componentutils','jquery','editutils','baseSettingUtils','initUtils',
             editUtils.setBgColor($("#mainContent"), e.color.toHex());
             $('#background_background-colorpicker').colorpicker('hide');
             // 保存更新
-            debugger
-            bg_bg_color_Data['bsValue'] = e.color.toHex();
-            baseSettingUtils.updateBsMap['background_background-colorpicker'] = bg_bg_color_Data;
+            updateBS('background_background-colorpicker',e.color.toHex());
         });
 
-        // 初始化图片
-        if(bg_bg_img_Data.bsValue != ''){
-            $("#bg_bg_img img").attr("src",ctx+bg_bg_img_Data.bsValue);
-        }
         $("select[name='bg_bg_showStyle']").val(bg_bg_showStyle_Data.bsValue);
 
         // 背景->背景
@@ -148,22 +152,10 @@ seajs.use(['componentutils','jquery','editutils','baseSettingUtils','initUtils',
         $(":radio[name='bg_width'][value='" + bg_width_Data.bsValue + "']").prop("checked", "checked");
 
         // 背景->宽度
-        $(":radio[name='bg_width']").on("click",function() {
-            switch($(this).val()) {
-                case "default":
-                    $("#leftSidebar_background .setting_width .content").hide();
-                    // 宽度100%
-                    setIndexBgSize("100%");
-                    break;
-                case "custom":
-                    $("#leftSidebar_background .setting_width .content").show();
-                    setIndexBgSize($widthSpinner.val()+"%");
-                    break;
-                default:
-                    alert("出错啦！");
-                    break;
-            }
+        $(":radio[name='bg_width']").on("click",function () {
+            initUtils.bgWidthEvent($(this).val(),$widthSpinner);
         });
+
 
         // 初始化  滑动条(背景->宽度)
 		var $widthSlider = $("#leftSidebar_background .setting_width .ui-slider-blue");
@@ -177,7 +169,7 @@ seajs.use(['componentutils','jquery','editutils','baseSettingUtils','initUtils',
 				animate: true,
 				slide: function(event, ui) {
 					$widthSpinner.val(ui.value);
-                    setIndexBgSize(ui.value + "%");
+                    setIndexBgSize(ui.value);
 				}
 			});
 		});
@@ -188,16 +180,26 @@ seajs.use(['componentutils','jquery','editutils','baseSettingUtils','initUtils',
 			.closest('.ace-spinner')
 			.on('changed.fu.spinbox', function() {
 				$widthSlider.slider("value", $widthSpinner.val());
-				setIndexBgSize($widthSpinner.val() + "%");
+				setIndexBgSize($widthSpinner.val());
 			});
 
-		function  setIndexBgSize(value) {
-            editUtils.setWidth($(".inner_header"),value);
-            editUtils.setWidth($("#webMenu .inner_menu"),value);
-            editUtils.setWidth($("#webBanner"),value);
-            editUtils.setWidth($("#webContainer"),value);
-            editUtils.setWidth($(".inner_footer"),value);
+        function  setIndexBgSize(value) {
+            $(".inner_header").css("width",value+"%");
+            $("#webMenu .inner_menu").css("width",value+"%");
+            $("#webBanner").css("width",value+"%");
+            $("#webContainer").css("width",value+"%");
+            $(".inner_footer").css("width",value+"%");
+            updateBS("bgWidthSlider",value);
+            updateBS("bgWidthSpiner",value);
+            updateBS("menu_widthSlider",value);
+            updateBS("banner_widthSlider",value);
+            updateBS("banner_widthSpinner",value);
+            updateBS("content_widthSlider",value);
         }
+
+
+
+
 
 
         // 2.1头部-背景
@@ -206,25 +208,57 @@ seajs.use(['componentutils','jquery','editutils','baseSettingUtils','initUtils',
         var header_bg_img_Data = baseSettingMap['headerBgPic'];
         var header_bg_showStyle_Data = baseSettingMap['header_bg_showStyle'];
 
-/*
-        if (header_bg_Data.bsValue == "default" || header_bg_Data.bsValue == "hide"){
-            $("#leftSidebar_background .setting_background .content").hide();
+
+        // 初始化图片
+        if(header_bg_img_Data.bsValue != ''){
+            $("#header_bg_img").show();
+            $("#header_bg_img img").attr("src",ctx+header_bg_img_Data.bsValue);
         }
 
-        $(":radio[name='bg_bg'][value='" + bg_bg_Data.bsValue + "']").prop("checked", "checked");*/
+        if (header_bg_Data.bsValue == "default" || header_bg_Data.bsValue == "hide"){
+            $("#leftSidebar_header .setting_bg .content").hide();
+        }
 
+        $(":radio[name='header_bg'][value='" + header_bg_Data.bsValue + "']").prop("checked", "checked");
 
+        // 初始化背景颜色改变框(顶部->背景)
+        $('#header_bg_colorpicker').colorpicker({
+            color: header_bg_color_Data.bsValue,
+            align: 'left',
+            colorSelectors: {
+                'white': '#ffffff',
+                'black': '#000000',
+                'red': '#FF0000',
+                'default': '#777777',
+                'primary': '#337ab7',
+                'success': '#5cb85c',
+                'info': '#5bc0de',
+                'warning': '#f0ad4e',
+                'danger': '#d9534f'
+            }
+        }).on('changeColor', function(e) {
+            editUtils.setBgColor($("#webHeader"), e.color.toHex());
+            $('#header_bg_colorpicker').colorpicker('hide');
+            // 保存更新
+            updateBS('header_bg_colorpicker',e.color.toHex());
+        });
 
+        $("select[name='header_bg_showStyle']").val(header_bg_showStyle_Data.bsValue);
 
+        // 顶部->背景
+        $(":radio[name='header_bg']").on("click",initUtils.headerBgEvent);
+
+        // 顶部--背景--自定义显示方式
+        $("select[name='header_bg_showStyle']").change(initUtils.headerBgShowStyleEvent);
 
         // 背景--背景--添加图片点击
-		$("#leftSidebar_background button[data-target=#picModal]").on("click",function(){
-           // $("#close-left-menu-btn").trigger("click");
+        $("#leftSidebar_background button[data-target=#picModal]").on("click",function(){
+            // $("#close-left-menu-btn").trigger("click");
             //1取消其他选中的图片（由于只能选中一张图片）
             var $tocancel = $("#picModal_sys .toSelectGallery .text a[data-target='tocancel']");
             cancelSelectPic($tocancel);
             pic_state = "SET_BG";
-		});
+        });
 
         // 顶部--背景--添加图片点击
         $("#leftSidebar_header button[data-target=#picModal]").on("click",function(){
@@ -236,57 +270,253 @@ seajs.use(['componentutils','jquery','editutils','baseSettingUtils','initUtils',
         });
 
 
+        // 2.2头部-底部边框
+        var header_border_Data = baseSettingMap['header_border'];
+        var header_border_color_Data = baseSettingMap['header_border_colorpicker'];
+        var header_border_height_Data = baseSettingMap['borderHeightSlider'];
+        var header_border_showStyle_Data = baseSettingMap['header_border_showStyle'];
 
+        if (header_border_Data.bsValue == "hide"){
+            $("#leftSidebar_header .setting_border .content").hide();
+        }
+        $(":radio[name='header_border'][value='" + header_border_Data.bsValue + "']").prop("checked", "checked");
 
-        /**
-         * 初始化  滑动条(横幅->宽度)
-         */
-        var $banner_widthSlider = $("#leftSidebar_banner .setting_width .ui-slider-blue");
-        $banner_widthSlider.css({ width: '90%', 'float': 'left', margin: '15px' }).each(function() {
-            // read initial values from markup and remove that
-            var value = parseInt($(this).text(), 10);
+        $("select[name='header_border_showStyle']").val(header_border_showStyle_Data.bsValue);
+
+        // 顶部->边框
+        $(":radio[name='header_border']").on("click",function() {
+                initUtils.headerBorderEvent($(this).val(),$border_heightSlider);
+        });
+
+        // 初始化背景颜色改变框(顶部->边框)
+        $('#header_border_colorpicker').colorpicker({
+            color: header_border_color_Data.bsValue,
+            align: 'left',
+            colorSelectors: {
+                'white': '#ffffff',
+                'black': '#000000',
+                'red': '#FF0000',
+                'default': '#777777',
+                'primary': '#337ab7',
+                'success': '#5cb85c',
+                'info': '#5bc0de',
+                'warning': '#f0ad4e',
+                'danger': '#d9534f'
+            }
+        }).on('changeColor', function(e) {
+            $("#webHeader").css("border-bottom-color", e.color.toHex());
+            $('#header_border_colorpicker').colorpicker('hide');
+            // 保存更新
+            updateBS('header_border_colorpicker',e.color.toHex());
+        });
+
+        // 初始化  滑动条(顶部->边框)
+        var $border_heightSlider = $("#leftSidebar_header .setting_border .ui-slider-blue");
+        $border_heightSlider.css({ width: '90%', 'float': 'left', margin: '15px 15px 15px 0' }).each(function() {
             $(this).empty().slider({
-                value: value,
+                value: header_border_height_Data.bsValue,
                 range: "min",
                 min: 0,
-                max: 1440,
+                max: 50,
                 animate: true,
                 slide: function(event, ui) {
-                    $banner_widthSpinner.val(ui.value);
-                    editUtils.setWidth($("#webBanner"),ui.value / 1440 * 100 + "%");
-                    updateBanner(ui.value+"px",undefined);
+                    $("#webHeader").css("border-bottom-width",ui.value + "px");
+                    // 保存更新
+                    updateBS('borderHeightSlider',ui.value);
                 }
             });
         });
-        /**
-         * 初始化数字改变框(横幅->宽度)
-         */
-        var $banner_widthSpinner = $("#leftSidebar_banner .setting_width .spiner input");
-        $banner_widthSpinner.ace_spinner({ value: 1440, min: 0, max: 1440, step: 10, btn_up_class: 'btn-info', btn_down_class: 'btn-info' })
+
+        // 顶部--背景--自定义显示方式
+        $("select[name='header_border_showStyle']").change(function(){
+            $("#webHeader").css("border-bottom-style",$(this).val());
+            // 保存更新
+            updateBS('header_border_showStyle',$(this).val());
+        });
+
+
+        // 2.3头部-高度
+        var header_height_Data = baseSettingMap['header_height'];
+        var header_WidthSlider_Data = baseSettingMap['headerWidthSlider'];
+        var headerWidthSpiner_Data = baseSettingMap['headerWidthSpiner'];
+
+
+        if (header_height_Data.bsValue == "default"){
+            $("#leftSidebar_header .setting_height .content").hide();
+        }
+        $(":radio[name='header_height'][value='" + header_height_Data.bsValue + "']").prop("checked", "checked");
+
+        // 顶部->高度
+        $(":radio[name='header_height']").on("click",function() {
+                initUtils.headerHeightEvent($(this).val(),$header_heightSpinner);
+        });
+
+        // 初始化  滑动条(顶部->高度)
+        var $header_heightSlider = $("#leftSidebar_header .setting_height .ui-slider-blue");
+        $header_heightSlider.css({ width: '90%', 'float': 'left', margin: '15px' }).each(function() {
+            $(this).empty().slider({
+                value: header_WidthSlider_Data.bsValue,
+                range: "min",
+                min: 50,
+                max: 200,
+                animate: true,
+                slide: function(event, ui) {
+                    $header_heightSpinner.val(ui.value);
+                    editUtils.setHeight($("#webHeader"),ui.value + "px");
+                    // 保存更新
+                    updateBS('headerWidthSlider',ui.value);
+
+                }
+            });
+        });
+        // 初始化数字改变框(顶部->高度)
+        var $header_heightSpinner = $("#leftSidebar_header .setting_height .spiner input");
+        $header_heightSpinner.ace_spinner({ value: 100, min: 50, max: 200, step: 5, btn_up_class: 'btn-info', btn_down_class: 'btn-info' })
             .closest('.ace-spinner')
             .on('changed.fu.spinbox', function() {
-                $banner_widthSlider.slider("value", $banner_widthSpinner.val());
-                editUtils.setWidth($("#webBanner"),$banner_widthSpinner.val() / 1440 * 100 + "%");
-                updateBanner($banner_widthSpinner.val()+"px",undefined);
+                $header_heightSlider.slider("value", $header_heightSpinner.val());
+                editUtils.setHeight($("#webHeader"),$header_heightSpinner.val()+"px");
+                // 保存更新
+                updateBS('headerWidthSpiner',$header_heightSpinner.val()+"px");
             });
 
-        /**
-         * 初始化  滑动条(横幅->高度)
-         */
+
+        // 3.1横幅-宽度
+        var banner_width_Data = baseSettingMap['banner_width'];
+        var banner_widthSlider_Data = baseSettingMap['banner_widthSlider'];
+        var banner_widthSpinner_Data = baseSettingMap['banner_widthSpinner'];
+
+        if (banner_width_Data.bsValue == "default"){
+            $("#leftSidebar_banner .setting_width .content").hide();
+        }
+        $(":radio[name='banner_width'][value='" + banner_width_Data.bsValue + "']").prop("checked", "checked");
+
+
+        // 横幅->宽度
+        $(":radio[name='banner_width']").on("click",function() {
+            switch($(this).val()) {
+                case "default":
+                    $("#leftSidebar_banner .setting_width .content").hide();
+                    // 宽度100%
+                    editUtils.setWidth($("#webBanner"),"100%");
+                    // 更新横幅状态
+                    updateBanner();
+                    // 保存更新
+                    updateBS('banner_width',"default");
+                    updateBS('banner_widthSlider',"100");
+                    updateBS('banner_widthSpinner',"100");
+                    break;
+                case "custom":
+                    $("#leftSidebar_banner .setting_width .content").show();
+                    editUtils.setWidth($("#webBanner"),$banner_widthSpinner.val()+"%");
+                    // 更新横幅状态
+                    updateBanner();
+                    // 保存更新
+                    updateBS('banner_width',"custom");
+                    updateBS('banner_widthSlider',$banner_widthSpinner.val());
+                    updateBS('banner_widthSpinner',$banner_widthSpinner.val());
+                    break;
+                default:
+                    alert("出错啦！");
+                    break;
+            }
+        });
+
+        // 初始化  滑动条(横幅->宽度)
+        var $banner_widthSlider = $("#leftSidebar_banner .setting_width .ui-slider-blue");
+        $banner_widthSlider.css({ width: '90%', 'float': 'left', margin: '15px' }).each(function() {
+            $(this).empty().slider({
+                value: banner_widthSlider_Data.bsValue,
+                range: "min",
+                min: 30,
+                max: 100,
+                animate: true,
+                slide: function(event, ui) {
+                    $banner_widthSpinner.val(ui.value);
+                    editUtils.setWidth($("#webBanner"),ui.value + "%");
+                    updateBanner();
+                    // 保存更新
+                    updateBS('banner_widthSlider',ui.value);
+                    updateBS('banner_widthSpinner',ui.value);
+                }
+            });
+        });
+
+        // 初始化数字改变框(横幅->宽度)
+        var $banner_widthSpinner = $("#leftSidebar_banner .setting_width .spiner input");
+        $banner_widthSpinner.ace_spinner({ value:banner_widthSpinner_Data.bsValue , min: 30, max: 100, step: 5, btn_up_class: 'btn-info', btn_down_class: 'btn-info' })
+            .closest('.ace-spinner')
+            .on('changed.fu.spinbox', function() {
+
+                $banner_widthSlider.slider("value", $banner_widthSpinner.val());
+                editUtils.setWidth($("#webBanner"),$banner_widthSpinner.val() + "%");
+                updateBanner();
+                // 保存更新
+                updateBS('banner_widthSlider',$banner_widthSpinner.val());
+                updateBS('banner_widthSpinner',$banner_widthSpinner.val());
+            });
+
+
+
+        // 3.2横幅-高度
+        var banner_height_Data = baseSettingMap['banner_height'];
+        var banner_heightSlider_Data = baseSettingMap['banner_heightSlider'];
+        var banner_heightSpinner_Data = baseSettingMap['banner_heightSpinner'];
+
+        if (banner_height_Data.bsValue == "default"){
+            $("#leftSidebar_banner .setting_height .content").hide();
+        }
+        $(":radio[name='banner_height'][value='" + banner_height_Data.bsValue + "']").prop("checked", "checked");
+
+
+        // 横幅->高度
+        $(":radio[name='banner_height']").click(function() {
+            switch($(this).val()) {
+                case "default":
+                    $("#leftSidebar_banner .setting_height .content").hide();
+                    // 宽度100%
+                    editUtils.setHeight($("#webBanner"),"350px");
+                    // 更新横幅状态
+                    updateBanner(undefined,"350px");
+                    // 保存更新
+                    updateBS('banner_height',"default");
+                    updateBS('banner_heightSlider',"350");
+                    updateBS('banner_heightSpinner',"350");
+                    break;
+                case "custom":
+                    $("#leftSidebar_banner .setting_height .content").show();
+                    editUtils.setHeight($("#webBanner"),$banner_heightSpinner.val()+"px");
+                    // 更新横幅状态
+                    updateBanner(undefined,$banner_heightSpinner.val()+"px");
+                    // 保存更新
+                    updateBS('banner_height',"custom");
+                    updateBS('banner_heightSlider',$banner_heightSpinner.val());
+                    updateBS('banner_heightSpinner',$banner_heightSpinner.val());
+                    break;
+                default:
+                    alert("出错啦！");
+                    break;
+            }
+        });
+
+
+        // 初始化  滑动条(横幅->高度)
         var $banner_heightSlider = $("#leftSidebar_banner .setting_height .ui-slider-blue");
         $banner_heightSlider.css({ width: '90%', 'float': 'left', margin: '15px' }).each(function() {
             // read initial values from markup and remove that
-            var value = parseInt($(this).text(), 10);
             $(this).empty().slider({
-                value: value,
+                value: banner_heightSlider_Data.bsValue,
                 range: "min",
-                min: 0,
+                min: 200,
                 max: 500,
                 animate: true,
                 slide: function(event, ui) {
                     $banner_heightSpinner.val(ui.value);
                     editUtils.setHeight($("#webBanner"),ui.value + "px");
-                    updateBanner(undefined,ui.value + "px",undefined);
+                    updateBanner(undefined,ui.value + "px");
+                    // 保存更新
+                    updateBS('banner_heightSlider',ui.value);
+                    updateBS('banner_heightSpinner',ui.value);
                 }
             });
         });
@@ -294,234 +524,424 @@ seajs.use(['componentutils','jquery','editutils','baseSettingUtils','initUtils',
          * 初始化数字改变框(横幅->高度)
          */
         var $banner_heightSpinner = $("#leftSidebar_banner .setting_height .spiner input");
-        $banner_heightSpinner.ace_spinner({ value: 500, min: 0, max: 500, step: 10, btn_up_class: 'btn-info', btn_down_class: 'btn-info' })
+        $banner_heightSpinner.ace_spinner({ value: banner_heightSpinner_Data.bsValue, min: 200, max: 500, step: 10, btn_up_class: 'btn-info', btn_down_class: 'btn-info' })
             .closest('.ace-spinner')
             .on('changed.fu.spinbox', function() {
                 $banner_heightSlider.slider("value", $banner_heightSpinner.val());
                 editUtils.setHeight($("#webBanner"),$banner_heightSpinner.val()+"px");
                 updateBanner(undefined,$banner_heightSpinner.val()+"px");
-            });
+                // 保存更新
+                updateBS('banner_heightSlider',$banner_heightSpinner.val());
+                updateBS('banner_heightSpinner',$banner_heightSpinner.val());
 
-        /**
-         * 初始化背景颜色改变框(顶部->背景)
-         */
-        $('#header_bg_colorpicker').myColorpicker();
-
-        $('#header_bg_colorpicker').ace_colorpicker();
-
-        $('#header_bg_colorpicker').change(function() {
-            editUtils.setBgColor($("#webHeader"), $(this).val());
-        });
-
-
-        /**
-         * 初始化  滑动条(顶部->高度)
-         */
-        var $header_heightSlider = $("#leftSidebar_header .setting_height .ui-slider-blue");
-        $header_heightSlider.css({ width: '90%', 'float': 'left', margin: '15px' }).each(function() {
-            // read initial values from markup and remove that
-            var value = parseInt($(this).text(), 10);
-            $(this).empty().slider({
-                value: value,
-                range: "min",
-                min: 0,
-                max: 200,
-                animate: true,
-                slide: function(event, ui) {
-                    $header_heightSpinner.val(ui.value);
-                    editUtils.setHeight($("#webHeader"),ui.value + "px");
-                }
-            });
-        });
-        /**
-         * 初始化数字改变框(顶部->高度)
-         */
-        var $header_heightSpinner = $("#leftSidebar_header .setting_height .spiner input");
-        $header_heightSpinner.ace_spinner({ value: 100, min: 0, max: 200, step: 5, btn_up_class: 'btn-info', btn_down_class: 'btn-info' })
-            .closest('.ace-spinner')
-            .on('changed.fu.spinbox', function() {
-                $header_heightSlider.slider("value", $header_heightSpinner.val());
-                editUtils.setHeight($("#webHeader"),$header_heightSpinner.val()+"px");
             });
 
 
-        /**
-         * 初始化背景颜色改变框(顶部->边框)
-         */
-        $('#header_border_colorpicker').ace_colorpicker();
+        // 4.1内容宽度
+        var content_widthSlider_Data = baseSettingMap['content_widthSlider'];
 
-        $('#header_border_colorpicker').change(function() {
-			$("#webHeader").css("border-bottom-color",$(this).val());
-        });
-
-
-
-        /**
-         * 初始化  滑动条(顶部->边框)
-         */
-        var $border_heightSlider = $("#leftSidebar_header .setting_border .ui-slider-blue");
-        $border_heightSlider.css({ width: '90%', 'float': 'left', margin: '15px 15px 15px 0' }).each(function() {
-            // read initial values from markup and remove that
-            var value = parseInt($(this).text(), 10);
-            $(this).empty().slider({
-                value: value,
-                range: "min",
-                min: 0,
-                max: 100,
-                animate: true,
-                slide: function(event, ui) {
-                    $("#webHeader").css("border-bottom-width",ui.value + "px");
-                }
-            });
-        });
-
-
-
-        /**
-         * 初始化  滑动条(内容->宽度)
-         */
+        // 初始化  滑动条(内容->宽度)
         var $content_widthSlider = $("#leftSidebar_content .setting_width .ui-slider-blue");
         $content_widthSlider.css({ width: '90%', 'float': 'left', margin: '15px 15px 15px 0' }).each(function() {
-            // read initial values from markup and remove that
-            var value = parseInt($(this).text(), 10);
             debugger
             $(this).empty().slider({
-                value: value,
+                value: content_widthSlider_Data.bsValue,
                 range: "min",
                 min: 30,
                 max: 100,
                 animate: true,
                 slide: function(event, ui) {
                     $("#webContainer").css("width",ui.value + "%");
+                    // 保存更新
+                    updateBS('content_widthSlider',ui.value);
                 }
             });
         });
 
+        // 4.2.1内容边距上
+        var content_marginTopSlider_Data = baseSettingMap['content_marginTopSlider'];
 
-        /**
-         * 初始化  滑动条(内容->边距---上边距)
-         */
+        // 初始化  滑动条(内容->边距---上边距)
         var $content_marginTopSlider = $("#leftSidebar_content .setting_margin .settingMarginTop .ui-slider-blue");
         $content_marginTopSlider.css({ width: '90%', 'float': 'left', margin: '15px 15px 15px 0' }).each(function() {
-            // read initial values from markup and remove that
-            var value = parseInt($(this).text(), 10);
             $(this).empty().slider({
-                value: value,
+                value: content_marginTopSlider_Data.bsValue,
                 range: "min",
                 min: 0,
                 max: 100,
                 animate: true,
                 slide: function(event, ui) {
                     $("#webContainer").css("margin-top",ui.value + "px");
+                    // 保存更新
+                    updateBS('content_marginTopSlider',ui.value);
                 }
             });
         });
-
-
-        /**
-         * 初始化  滑动条(内容->边距---下边距)
-         */
+        // 4.2.2内容边距下
+        var content_marginBottomSlider_Data = baseSettingMap['content_marginBottomSlider'];
+        // 初始化  滑动条(内容->边距---下边距)
         var $content_marginBottomSlider = $("#leftSidebar_content .setting_margin .settingMarginbottom  .ui-slider-blue");
         $content_marginBottomSlider.css({ width: '90%', 'float': 'left', margin: '15px 15px 15px 0' }).each(function() {
-            // read initial values from markup and remove that
-            var value = parseInt($(this).text(), 10);
             $(this).empty().slider({
-                value: value,
+                value: content_marginBottomSlider_Data.bsValue,
                 range: "min",
                 min: 0,
                 max: 100,
                 animate: true,
                 slide: function(event, ui) {
                     $("#webContainer").css("margin-bottom",ui.value + "px");
+                    // 保存更新
+                    updateBS('content_marginBottomSlider',ui.value);
                 }
             });
         });
 
 
+        // 5.1底部-高度
+        var footer_height_Data = baseSettingMap['footer_height'];
+        var footer_heightSlider_Data = baseSettingMap['footer_heightSlider'];
+        var footer_heightSpinner_Data = baseSettingMap['footer_heightSpinner'];
 
+        if (footer_height_Data.bsValue == "default"){
+            $("#leftSidebar_footer .setting_height .content").hide();
+        }
+        $(":radio[name='footer_height'][value='" + footer_height_Data.bsValue + "']").prop("checked", "checked");
 
-        /**
-         * 初始化  滑动条(底部->高度)
-         */
+        // 底部->高度
+        $(":radio[name='footer_height']").click(function() {
+                initUtils.footerHeightEvent($(this).val(),$footer_heightSpinner);
+        });
+
+        // 初始化  滑动条(底部->高度)
         var $footer_heightSlider = $("#leftSidebar_footer .setting_height .ui-slider-blue");
         $footer_heightSlider.css({ width: '90%', 'float': 'left', margin: '15px' }).each(function() {
-            // read initial values from markup and remove that
-            var value = parseInt($(this).text(), 10);
             $(this).empty().slider({
-                value: value,
+                value: footer_heightSlider_Data.bsValue,
                 range: "min",
-                min: 100,
-                max: 500,
+                min: 0,
+                max: 200,
                 animate: true,
                 slide: function(event, ui) {
                     $footer_heightSpinner.val(ui.value);
                     editUtils.setHeight($("#webFooter"),ui.value + "px");
+                    // 保存更新
+                    updateBS('footer_heightSlider',ui.value);
+                    updateBS('footer_heightSpinner',ui.value);
                 }
             });
         });
-        /**
-         * 初始化数字改变框(底部->高度)
-         */
+        // 初始化数字改变框(底部->高度)
         var $footer_heightSpinner = $("#leftSidebar_footer .setting_height .spiner input");
-        $footer_heightSpinner.ace_spinner({ value: 100, min: 100, max: 500, step: 5, btn_up_class: 'btn-info', btn_down_class: 'btn-info' })
+        $footer_heightSpinner.ace_spinner({ value: footer_heightSpinner_Data.bsValue, min: 0, max: 200, step: 5, btn_up_class: 'btn-info', btn_down_class: 'btn-info' })
             .closest('.ace-spinner')
             .on('changed.fu.spinbox', function() {
                 $footer_heightSlider.slider("value", $footer_heightSpinner.val());
-                debugger
                 editUtils.setHeight($("#webFooter"),$footer_heightSpinner.val()+"px");
+                // 保存更新
+                updateBS('footer_heightSlider',$footer_heightSpinner.val());
+                updateBS('footer_heightSpinner',$footer_heightSpinner.val());
             });
 
 
 
-        /**
-         * 初始化背景颜色改变框(底部 ->背景)
-         */
-        $('#footer_bg_colorpicker').ace_colorpicker();
+        // 5.2底部-背景
 
-        $('#footer_bg_colorpicker').change(function() {
-            editUtils.setBgColor($("#webFooter"),$(this).val());
+        var footer_bg_Data = baseSettingMap['footer_bg'];
+        var footer_bg_colorpicker_Data = baseSettingMap['footer_bg_colorpicker'];
+
+
+        if (footer_bg_Data.bsValue == "default"){
+            $("#leftSidebar_footer .setting_bg .content").hide();
+        }
+        $(":radio[name='footer_bg'][value='" + footer_bg_Data.bsValue + "']").prop("checked", "checked");
+
+        // 底部->背景
+        $(":radio[name='footer_bg']").on("click",initUtils.footerBgEvent);
+
+        $('#footer_bg_colorpicker').colorpicker({
+            color: footer_bg_colorpicker_Data.bsValue,
+            align: 'left',
+            colorSelectors: {
+                'white': '#ffffff',
+                'black': '#000000',
+                'red': '#FF0000',
+                'default': '#777777',
+                'primary': '#337ab7',
+                'success': '#5cb85c',
+                'info': '#5bc0de',
+                'warning': '#f0ad4e',
+                'danger': '#d9534f'
+            }
+        }).on('changeColor', function(e) {
+            editUtils.setBgColor($("#webFooter"),e.color.toHex());
+            $('#footer_bg_colorpicker').colorpicker('hide');
+            // 保存更新
+            updateBS('footer_bg_colorpicker',e.color.toHex());
         });
 
-        /**
-         * 初始化字体颜色改变框(底部 ->字体)
-         */
-        $('#footer_linktext_colorpicker').ace_colorpicker();
 
-        $('#footer_linktext_colorpicker').change(function() {
-            editUtils.setTextColor($(".inner_footer .footLinks a"),$(this).val());
+
+        // 5.3底部-栏目文字
+        var footer_linktext_Data = baseSettingMap['footer_linktext'];
+        var footer_linktext_colorpicker_Data = baseSettingMap['footer_linktext_colorpicker'];
+        var footer_linkhover_colorpicker_Data = baseSettingMap['footer_linkhover_colorpicker'];
+        var footer_textSlider_Data = baseSettingMap['footer_textSlider'];
+
+        if (footer_linktext_Data.bsValue == "default"){
+            $("#leftSidebar_footer .setting_linktext .content").hide();
+        }
+        $(":radio[name='footer_linktext'][value='" + footer_linktext_Data.bsValue + "']").prop("checked", "checked");
+        // 底部->栏目字体---大小
+        $(":radio[name='footer_linktext']").click(function() {
+            switch($(this).val()) {
+                case "default":
+                    $("#leftSidebar_footer .setting_linktext .content").hide();
+                    // 1字体默认 font-size: 14px; 2.颜色默认color: #8b939d;color: #ffffff
+                    $(".inner_footer .footLinks a").css("color","#8b939d");
+                    $(".inner_footer .footLinks a").hover(function(){
+                        $(this).css("color","#ffffff");
+                    },function(){
+                        $(this).css("color","#8b939d");
+                    });
+                    $(".inner_footer .footLinks a").css("font-size","14px");
+
+                    // 保存更新
+                    updateBS('footer_linktext',"default");
+                    updateBS('footer_linktext_colorpicker',"#8b939d");
+                    updateBS('footer_linkhover_colorpicker',"#ffffff");
+                    updateBS('footer_textSlider',"14");
+                    break;
+
+                case "custom":
+                    $("#leftSidebar_footer .setting_linktext .content").show();
+
+                    $(".inner_footer .footLinks a").css("color",$('#footer_linktext_colorpicker').colorpicker("getValue"));
+                    $(".inner_footer .footLinks a").hover(function(){
+                        $(this).css("color", $('#footer_linkhover_colorpicker').colorpicker("getValue"));
+                    },function(){
+                        $(this).css("color",$('#footer_linktext_colorpicker').colorpicker("getValue"));
+                    });
+                    var size = $footer_textSlider.slider('option', 'value');
+                    $(".inner_footer .footLinks a").css("font-size",size);
+
+                    // 保存更新
+                    updateBS('footer_linktext',"custom");
+                    updateBS('footer_linktext_colorpicker',$('#footer_linktext_colorpicker').colorpicker("getValue"));
+                    updateBS('footer_linkhover_colorpicker',$('#footer_linkhover_colorpicker').colorpicker("getValue"));
+                    updateBS('footer_textSlider',size);
+                    break;
+                default:
+                    alert("出错啦！");
+                    break;
+            }
         });
-        /**
-         * 初始化字体颜色改变框(底部 ->鼠标悬浮字体)
-         */
-        $('#footer_linkhover_colorpicker').ace_colorpicker();
 
-        $('#footer_linkhover_colorpicker').change(function() {
+
+        // 初始化字体颜色改变框(底部 ->字体)
+        $('#footer_linktext_colorpicker').colorpicker({
+            color: footer_linktext_colorpicker_Data.bsValue,
+            align: 'left',
+            colorSelectors: {
+                'white': '#ffffff',
+                'black': '#000000',
+                'red': '#FF0000',
+                'default': '#777777',
+                'primary': '#337ab7',
+                'success': '#5cb85c',
+                'info': '#5bc0de',
+                'warning': '#f0ad4e',
+                'danger': '#d9534f'
+            }
+        }).on('changeColor', function(e) {
+            editUtils.setTextColor($(".inner_footer .footLinks a"),e.color.toHex());
+            $('#footer_linktext_colorpicker').colorpicker('hide');
+            // 保存更新
+            updateBS('footer_linktext_colorpicker',e.color.toHex());
+        });
+
+        // 初始化字体颜色改变框(底部 ->鼠标悬浮字体)
+        $('#footer_linkhover_colorpicker').colorpicker({
+            color: footer_linkhover_colorpicker_Data.bsValue,
+            align: 'left',
+            colorSelectors: {
+                'white': '#ffffff',
+                'black': '#000000',
+                'red': '#FF0000',
+                'default': '#777777',
+                'primary': '#337ab7',
+                'success': '#5cb85c',
+                'info': '#5bc0de',
+                'warning': '#f0ad4e',
+                'danger': '#d9534f'
+            }
+        }).on('changeColor', function(e) {
+            $('#footer_linkhover_colorpicker').colorpicker('hide');
             $(".inner_footer .footLinks a").hover(function(){
-                $(this).css("color",$('#footer_linkhover_colorpicker').val());
+                $(this).css("color",e.color.toHex());
             },function(){
-                $(this).css("color",$('#footer_linktext_colorpicker').val()+" !important");
+                $(this).css("color",$('#footer_linktext_colorpicker').colorpicker("getValue")+" !important");
             });
+            // 保存更新
+            updateBS('footer_linkhover_colorpicker',e.color.toHex());
         });
 
-
-        /**
-         * 初始化  滑动条(底部->字体大小)
-         */
+        // 初始化  滑动条(底部->字体大小)
         var $footer_textSlider = $("#leftSidebar_footer .setting_linktext .ui-slider-blue");
         $footer_textSlider.css({ width: '90%', 'float': 'left', margin: '15px' }).each(function() {
-            // read initial values from markup and remove that
-            var value = parseInt($(this).text(), 10);
             $(this).empty().slider({
-                value: value,
+                value: footer_textSlider_Data.bsValue,
                 range: "min",
                 min: 5,
                 max: 20,
                 animate: true,
                 slide: function(event, ui) {
                     $(".inner_footer .footLinks a").css("font-size",ui.value + "px");
+                    updateBS('footer_textSlider',ui.value);
                 }
             });
         });
+
+
+        // 5.1菜单栏颜色
+        var menu_colorpicker_Data = baseSettingMap['menu_colorpicker'];
+        // 5.2菜单栏选项颜色
+        var menu_bg_colorpicker_Data = baseSettingMap['menu_bg_colorpicker'];
+        // 5.3文字颜色
+        var menu_font_colorpicker_Data = baseSettingMap['menu_font_colorpicker'];
+        // 5.4选中颜色
+        var menu_selectItem_colorpicker_Data = baseSettingMap['menu_selectItem_colorpicker'];
+        // 5.5菜单栏长度
+        var menu_widthSlider_Data = baseSettingMap['menu_widthSlider'];
+debugger
+        // 初始化背景颜色改变框(菜单栏)
+        $('#menu_colorpicker').colorpicker({
+            color: menu_colorpicker_Data.bsValue,
+            align: 'left',
+            colorSelectors: {
+                'white': '#ffffff',
+                'black': '#000000',
+                'red': '#FF0000',
+                'default': '#777777',
+                'primary': '#337ab7',
+                'success': '#5cb85c',
+                'info': '#5bc0de',
+                'warning': '#f0ad4e',
+                'danger': '#d9534f'
+            }
+        }).on('changeColor', function(e) {
+            $('#menu_colorpicker').colorpicker('hide');
+            $("#webMenu").css("background-color",e.color.toHex());
+            // 保存更新
+             updateBS('menu_colorpicker',e.color.toHex());
+        });
+
+
+        // 初始化背景颜色改变框(菜单栏->背景)
+        $('#menu_bg_colorpicker').colorpicker({
+            color: menu_bg_colorpicker_Data.bsValue,
+            align: 'left',
+            colorSelectors: {
+                'white': '#ffffff',
+                'black': '#000000',
+                'red': '#FF0000',
+                'default': '#777777',
+                'primary': '#337ab7',
+                'success': '#5cb85c',
+                'info': '#5bc0de',
+                'warning': '#f0ad4e',
+                'danger': '#d9534f'
+            }
+        }).on('changeColor', function(e) {
+            $('#menu_bg_colorpicker').colorpicker('hide');
+            $("#webMenu .inner_menu ul").css("background-color",e.color.toHex());
+            // 保存更新
+             updateBS('menu_bg_colorpicker',e.color.toHex());
+        });
+
+
+
+        // 初始化背景颜色改变框(菜单栏->字体 )
+        $('#menu_font_colorpicker').colorpicker({
+            color: menu_font_colorpicker_Data.bsValue,
+            align: 'left',
+            colorSelectors: {
+                'white': '#ffffff',
+                'black': '#000000',
+                'red': '#FF0000',
+                'default': '#777777',
+                'primary': '#337ab7',
+                'success': '#5cb85c',
+                'info': '#5bc0de',
+                'warning': '#f0ad4e',
+                'danger': '#d9534f'
+            }
+        }).on('changeColor', function(e) {
+            $('#menu_font_colorpicker').colorpicker('hide');
+            debugger
+            $("#webMenu .inner_menu ul li a").css("color",e.color.toHex());
+            // 保存更新
+             updateBS('menu_font_colorpicker',e.color.toHex());
+        });
+
+
+        // 初始化背景颜色改变框(菜单栏->选中颜色)
+        $('#menu_selectItem_colorpicker').colorpicker({
+            color: menu_selectItem_colorpicker_Data.bsValue,
+            align: 'left',
+            colorSelectors: {
+                'white': '#ffffff',
+                'black': '#000000',
+                'red': '#FF0000',
+                'default': '#777777',
+                'primary': '#337ab7',
+                'success': '#5cb85c',
+                'info': '#5bc0de',
+                'warning': '#f0ad4e',
+                'danger': '#d9534f'
+            }
+        }).on('changeColor', function(e) {
+            $('#menu_selectItem_colorpicker').colorpicker('hide');
+
+            $("#webMenu .inner_menu ul li a").hover(
+                //当鼠标放上去的时候,程序处理
+                function(){
+                    $(this).css("background-color",e.color.toHex());
+                },
+                //当鼠标离开的时候,程序处理
+                function(){
+                    $(this).css("background-color",$('#menu_bg_colorpicker').colorpicker('getValue', defaultValue));
+                });
+
+            // 保存更新
+             updateBS('menu_selectItem_colorpicker',e.color.toHex());
+        });
+
+
+
+        /**
+         * 初始化  修改菜单栏长度
+         */
+        var $menu_widthSlider = $("#menuModal_width.ui-slider-blue");
+        $menu_widthSlider.css({ width: '90%', 'float': 'left', margin: '15px 15px 15px 0' }).each(function() {
+            $(this).empty().slider({
+                value: menu_widthSlider_Data.bsValue,
+                range: "min",
+                min: 20,
+                max: 100,
+                animate: true,
+                slide: function(event, ui) {
+                    $("#webMenu .inner_menu").css("width",ui.value + "%");
+                    // 保存更新
+                    debugger
+                    updateBS('menu_widthSlider',ui.value);
+                }
+            });
+        });
+
+
+
+
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
         /**
@@ -602,7 +1022,6 @@ seajs.use(['componentutils','jquery','editutils','baseSettingUtils','initUtils',
             // 获取选中的图片
             var $tocancel = $("#picModal_sys .toSelectGallery .text a[data-target='tocancel']");
             var img =  $tocancel.parents("li:first").find("img").attr("src");
-            debugger
             if (img == undefined){
                 alert("没有选中图片，无法提交。。");
                 return;
@@ -610,15 +1029,19 @@ seajs.use(['componentutils','jquery','editutils','baseSettingUtils','initUtils',
             switch (pic_state){
                 case "SET_BG":
                     $("#bg_bg_img").show();
-					/*$("#leftSidebar button[data-target=#leftSidebar]").trigger("click");*/
                     $("#bg_bg_img img").attr("src",img);
                     editUtils.setBgImg($("#mainContent"),img);
+                    // 保存更新
+                    img = img.replace(ctx,"");
+                    updateBS('bgBgPic',img);
                     break;
                 case "SET_HEADER":
                     $("#header_bg_img").show();
-					/*$("#leftSidebar button[data-target=#leftSidebar]").trigger("click");*/
                     $("#header_bg_img img").attr("src",img);
                     editUtils.setBgImg($("#webHeader"),img);
+                    // 保存更新
+                    img = img.replace(ctx,"");
+                    updateBS('headerBgPic',img);
                     break;
                 case "SET_LOGO":
                     $("#goloModal_pic .logoPic img").attr("src",img);
@@ -917,11 +1340,11 @@ seajs.use(['componentutils','jquery','editutils','baseSettingUtils','initUtils',
         if(val == "custom"){
             $("#leftSidebar_footer .setting_linktext .content").show();
             // 1字体默认 font-size: 14px; 2.颜色默认color: #8b939d;color: #ffffff
-            $(".inner_footer .footLinks a").css("color",$('#footer_linktext_colorpicker').val());
+            $(".inner_footer .footLinks a").css("color",$('#footer_linktext_colorpicker').colorpicker("getValue"));
             $(".inner_footer .footLinks a").hover(function(){
-                $(this).css("color",$('#footer_linkhover_colorpicker').val());
+                $(this).css("color", $('#footer_linkhover_colorpicker').colorpicker("getValue"));
             },function(){
-                $(this).css("color",$('#footer_linktext_colorpicker').val());
+                $(this).css("color",$('#footer_linktext_colorpicker').colorpicker("getValue").val());
             });
             var size = $footer_textSlider.slider('option', 'value');
             $(".inner_footer .footLinks a").css("font-size",size);
@@ -1068,296 +1491,7 @@ seajs.use(['componentutils','jquery','editutils','baseSettingUtils','initUtils',
         });
 
 
-        /**
-         * 初始化背景颜色改变框(菜单栏)
-         */
-        $('#menu_colorpicker').ace_colorpicker();
 
-        $('#menu_colorpicker').change(function() {
-            $("#webMenu").css("background-color",$(this).val());
-        });
-
-        /**
-         * 初始化背景颜色改变框(菜单栏->背景)
-         */
-        $('#menu_bg_colorpicker').ace_colorpicker();
-
-        $('#menu_bg_colorpicker').change(function() {
-            $("#webMenu .inner_menu ul").css("background-color",$(this).val());
-        });
-
-        /**
-         * 初始化背景颜色改变框(菜单栏->字体 )
-         */
-        $('#menu_font_colorpicker').ace_colorpicker();
-
-        $('#menu_font_colorpicker').change(function() {
-            debugger
-            $("#webMenu .inner_menu ul li a").css("color",$(this).val());
-        });
-
-        /**
-         * 初始化背景颜色改变框(菜单栏->选中颜色)
-         */
-        $('#menu_selectItem_colorpicker').ace_colorpicker();
-
-        $('#menu_selectItem_colorpicker').change(function() {
-            $color = $(this).val();
-            $("#webMenu .inner_menu ul li a").hover(
-                //当鼠标放上去的时候,程序处理
-                function(){
-                    $(this).css("background-color",$color);
-                },
-                //当鼠标离开的时候,程序处理
-                function(){
-                    $(this).css("background-color",$('#menu_bg_colorpicker').val());
-                });
-        });
-
-
-        /**
-         * 初始化  logo编辑框(修改图片圆角)
-         */
-        var $menu_widthSlider = $("#menuModal_width.ui-slider-blue");
-        $menu_widthSlider.css({ width: '90%', 'float': 'left', margin: '15px 15px 15px 0' }).each(function() {
-            // read initial values from markup and remove that
-            var value = parseInt($(this).text(), 10);
-            $(this).empty().slider({
-                value: value,
-                range: "min",
-                min: 20,
-                max: 100,
-                animate: true,
-                slide: function(event, ui) {
-                    $("#webMenu .inner_menu").css("width",ui.value + "%");
-                }
-            });
-        });
-
-		///////////////////////////////////////////////////////////////////////////////////////
-		// 编辑页面 中所有单选按钮的初始化
-
-
-        /**
-         * 横幅->宽度
-         */
-        $(":radio[name='banner_width']").click(function() {
-            switch($(this).val()) {
-				case "default":
-                    $("#leftSidebar_banner .setting_width .content").hide();
-                    // 宽度100%
-                    editUtils.setWidth($("#webBanner"),"100%");
-                    break;
-                case "custom":
-                    $("#leftSidebar_banner .setting_width .content").show();
-                    editUtils.setWidth($("#webBanner"),$banner_widthSpinner.val());
-                    break;
-                default:
-                    alert("出错啦！");
-                    break;
-            }
-        });
-
-        /**
-         * 横幅->高度
-         */
-        $(":radio[name='banner_height']").click(function() {
-            switch($(this).val()) {
-                case "default":
-                    $("#leftSidebar_banner .setting_height .content").hide();
-                    // 宽度100%
-                    editUtils.setHeight($("#webBanner"),"100%");
-                    break;
-                case "custom":
-                    $("#leftSidebar_banner .setting_height .content").show();
-                    editUtils.setHeight($("#webBanner"),$banner_heightSpinner.val()+"px");
-                    break;
-                default:
-                    alert("出错啦！");
-                    break;
-            }
-        });
-
-
-        /**
-         * 顶部->背景
-         */
-        $(":radio[name='header_bg']").click(function() {
-            switch($(this).val()) {
-                case "default":
-                    $("#leftSidebar_header .setting_bg .content").hide();
-                    editUtils.setBgColor($("#webHeader"),"#E4E6E9");
-                    editUtils.setBgImg($("#webHeader"),"");
-                    break;
-                case "custom":
-                    $("#leftSidebar_header .setting_bg .content").show();
-                    var imgSrc = $("#header_bg_img img").attr("src");
-                    if (imgSrc != undefined){
-                        editUtils.setBgImg($("#webHeader"),imgSrc);
-                    } else {
-                        $("#header_bg_img").hide();
-                        $("#header_bg_img img").removeAttr("src");
-                        $("select[name='header_bg_showStyle'] option:first-child").prop("selected", 'selected');
-                    }
-                    break;
-                default:
-                    alert("出错啦！");
-                    break;
-            }
-        });
-
-
-        /**
-         * 顶部--背景--自定义显示方式
-         */
-        $("select[name='header_bg_showStyle']").change(function(){
-            var val = $(this).val();
-            if (val == "no"){
-                $("#header_bg_img").hide();
-                $("#header_bg_img img").removeAttr("src");
-                editUtils.setBgImg($("#webHeader"),"");
-                editUtils.setBgSize($("#webHeader"),"");
-                editUtils.setBgRepeat($("#webHeader"),"");
-            }
-            else if (val == "no-repeat" || val == "repeat-y" || val =="repeat-x"){
-                editUtils.setBgRepeat($("#webHeader"),val);
-                editUtils.setBgSize($("#webHeader"),"");
-            } else{
-                editUtils.setBgSize($("#webHeader"),val);
-                editUtils.setBgRepeat($("#webHeader"),"");
-            }
-        });
-
-
-        /**
-         * 顶部->高度
-         */
-        $(":radio[name='header_height']").click(function() {
-            switch($(this).val()) {
-                case "default":
-                    $("#leftSidebar_header .setting_height .content").hide();
-                    // 宽度100%
-                    editUtils.setHeight($("#webHeader"),"100px");
-                    break;
-                case "custom":
-                    $("#leftSidebar_header .setting_height .content").show();
-                    editUtils.setHeight($("#webHeader"),$header_heightSpinner.val()+"px");
-                    break;
-                default:
-                    alert("出错啦！");
-                    break;
-            }
-        });
-
-        /**
-         * 顶部->边框
-         */
-        $(":radio[name='header_border']").click(function() {
-            switch($(this).val()) {
-                case "hide":
-                    $("#leftSidebar_header .setting_border .content").hide();
-                    $("#webHeader").css("border-bottom","");
-                    break;
-				case "custom":
-                    $("#leftSidebar_header .setting_border .content").show();
-					var color = $('#header_border_colorpicker').val();
-					debugger
-					var width = $border_heightSlider.slider('option', 'value');
-					var style = $("select[name='header_border_showStyle']").val();
-                    $("#webHeader").css("border-bottom",width+"px  "+style+" "+color);
-                    break;
-                default:
-                    alert("出错啦！");
-                    break;
-            }
-        });
-
-        /**
-         * 顶部--背景--自定义显示方式
-         */
-        $("select[name='header_border_showStyle']").change(function(){
-        	debugger
-            $("#webHeader").css("border-bottom-style",$(this).val());
-        });
-
-
-        /**
-         * 底部->高度
-         */
-        $(":radio[name='footer_height']").click(function() {
-        	debugger
-            switch($(this).val()) {
-                case "default":
-                    $("#leftSidebar_footer .setting_height .content").hide();
-                    // 宽度100%
-                    editUtils.setHeight($("#webFooter"),"100px");
-                    break;
-                case "custom":
-                    $("#leftSidebar_footer .setting_height .content").show();
-                    editUtils.setHeight($("#webFooter"),$footer_heightSpinner.val()+"px");
-                    break;
-                default:
-                    alert("出错啦！");
-                    break;
-            }
-        });
-
-
-        /**
-         * 底部->背景
-         */
-        $(":radio[name='footer_bg']").click(function() {
-            switch($(this).val()) {
-                case "default":
-                    $("#leftSidebar_footer .setting_bg .content").hide();
-                    editUtils.setBgColor($("#webFooter"),"#222222");
-                    break;
-                case "custom":
-                    $("#leftSidebar_footer .setting_bg .content").show();
-                    editUtils.setBgColor($("#webFooter"), $('#footer_border_colorpicker').val());
-                    break;
-                default:
-                    alert("出错啦！");
-                    break;
-            }
-        });
-
-        /**
-         * 底部->栏目字体---大小
-         */
-        $(":radio[name='footer_linktext']").click(function() {
-            switch($(this).val()) {
-                case "default":
-                    $("#leftSidebar_footer .setting_linktext .content").hide();
-                    // 1字体默认 font-size: 14px; 2.颜色默认color: #8b939d;color: #ffffff
-                    $(".inner_footer .footLinks a").css("color","#8b939d");
-                    $(".inner_footer .footLinks a").hover(function(){
-                        $(this).css("color","#ffffff");
-                    },function(){
-                        $(this).css("color","#8b939d");
-                    });
-                    $(".inner_footer .footLinks a").css("font-size","14px");
-                    break;
-                case "custom":
-                    $("#leftSidebar_footer .setting_linktext .content").show();
-                    // 1字体默认 font-size: 14px; 2.颜色默认color: #8b939d;color: #ffffff
-                    $(".inner_footer .footLinks a").css("color",$('#footer_linktext_colorpicker').val());
-                    $(".inner_footer .footLinks a").hover(function(){
-                        $(this).css("color",$('#footer_linkhover_colorpicker').val());
-                    },function(){
-                        $(this).css("color",$('#footer_linktext_colorpicker').val());
-                    });
-                    var size = $footer_textSlider.slider('option', 'value');
-                    $(".inner_footer .footLinks a").css("font-size",size);
-                    break;
-                default:
-                    alert("出错啦！");
-                    break;
-            }
-        });
-
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////////
 	});
 
 });

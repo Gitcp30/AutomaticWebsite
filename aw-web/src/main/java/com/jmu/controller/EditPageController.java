@@ -71,6 +71,12 @@ public class EditPageController {
         return map;
     }
 
+    /**
+     *  更新基础配置
+     * @param baseSettingMap
+     * @param session
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "updateBaseSettings",method = RequestMethod.POST)
     public AjaxResponse updateBaseSettings(@RequestBody Map<String,BaseSetting> baseSettingMap, HttpSession session){

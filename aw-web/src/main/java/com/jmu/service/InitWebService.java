@@ -8,5 +8,5 @@ import com.jmu.common.AjaxResponse;
  */
 public interface InitWebService {
 
-    public AjaxResponse addWebBaseSetting(String companyId,String modifier);
+    public AjaxResponse initWeb(String companyId,String modifier);
 }

@@ -7,10 +7,7 @@ import com.jmu.service.BaseSettingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Description: 基础设置服务实现类
@@ -47,6 +44,7 @@ public class BaseSettingServiceImpl implements BaseSettingService {
         for (String key : baseSettingMap.keySet()) {
             BaseSetting baseSetting = baseSettingMap.get(key);
             baseSetting.setModifier(modifier);
+            baseSetting.setModifyTime(new Date());
             baseSettings.add(baseSetting);
         }
         if (!baseSettings.isEmpty()){

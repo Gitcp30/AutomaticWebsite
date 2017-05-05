@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
@@ -80,9 +79,9 @@ public class AdminController {
      * @return
      */
     @RequestMapping(value = "/pass",method= RequestMethod.GET)
-    public String auditingPass(@RequestParam("companyId") String  companyId){
-        /*initWebService.addWebBaseSetting(companyId,"111");*/
-        Map map = baseSettingService.getBaseSettings(companyId);
+    public String auditingPass(){
+        initWebService.initWeb("222","111");
+        Map map = baseSettingService.getBaseSettings("222");
         return "web/edit/edit";
     }
 

@@ -272,9 +272,6 @@
             background: url(${ctx}/assets/image/bannerIcon.png) no-repeat -14px -199px;
         }
 
-        #mainContent{
-            background-color: #E4E6E9;
-        }
 
     </style>
 </head>
@@ -736,13 +733,19 @@
                             <div class="widget-body">
                                 <div class="widget-main">
                                     <div class="row">
-                                        <div class="col-xs-6 col-sm-6">
+                                        <div class="col-xs-4 col-sm-4">
                                             <label>
                                                 <input name="header_bg" type="radio" class="ace" value="default"/>
                                                 <span class="lbl">默认</span>
                                             </label>
                                         </div>
-                                        <div class="col-xs-6 col-sm-6">
+                                        <div class="col-xs-4 col-sm-4">
+                                            <label>
+                                                <input name="header_bg" type="radio" class="ace" value="hide"/>
+                                                <span class="lbl">隐藏</span>
+                                            </label>
+                                        </div>
+                                        <div class="col-xs-4 col-sm-4">
                                             <label>
                                                 <input name="header_bg" type="radio" class="ace" value="custom"
                                                        checked="true"/>
@@ -752,12 +755,14 @@
                                     </div>
                                     <div class="row content">
                                         <div class="col-xs-4 col-md-4">
-                                            <label for="header_bg_colorpicker">颜色： </label>
+                                            <label>颜色： </label>
                                         </div>
-                                        <div class="col-xs-6 col-md-6">
-                                            <select id="header_bg_colorpicker" class="hide"></select>
+                                        <div class="col-xs-5 col-md-5">
+                                            <div id="header_bg_colorpicker" data-format="alias" class="input-group colorpicker-component">
+                                                <input type="text" value="primary" class="form-control" />
+                                                <span class="input-group-addon"><i></i></span>
+                                            </div>
                                         </div>
-
                                     </div>
                                     <div class="row content">
                                         <div class="col-xs-4 col-md-4">
@@ -780,7 +785,6 @@
                                         <div class="col-xs-4 col-md-4"><label>显示方式：</label></div>
                                         <div class="col-xs-6 col-md-6">
                                             <select class="form-control" name="header_bg_showStyle">
-                                                <option value=""></option>
                                                 <option value="no">不使用背景图片</option>
                                                 <option value="no-repeat">不平铺</option>
                                                 <option value="repeat-x">按X轴平铺</option>
@@ -818,38 +822,14 @@
                                     </div>
                                     <div class="row content">
                                         <div class="col-xs-4 col-md-4">
-                                            <label for="header_border_colorpicker">颜色： </label>
+                                            <label>颜色： </label>
                                         </div>
-                                        <div class="col-xs-6 col-md-6">
-                                            <select id="header_border_colorpicker" class="hide">
-                                                <option value="#ac725e">#ac725e</option>
-                                                <option value="#d06b64">#d06b64</option>
-                                                <option value="#f83a22">#f83a22</option>
-                                                <option value="#fa573c">#fa573c</option>
-                                                <option value="#ff7537">#ff7537</option>
-                                                <option value="#ffad46" selected="">#ffad46</option>
-                                                <option value="#42d692">#42d692</option>
-                                                <option value="#16a765">#16a765</option>
-                                                <option value="#7bd148">#7bd148</option>
-                                                <option value="#b3dc6c">#b3dc6c</option>
-                                                <option value="#fbe983">#fbe983</option>
-                                                <option value="#fad165">#fad165</option>
-                                                <option value="#92e1c0">#92e1c0</option>
-                                                <option value="#9fe1e7">#9fe1e7</option>
-                                                <option value="#9fc6e7">#9fc6e7</option>
-                                                <option value="#4986e7">#4986e7</option>
-                                                <option value="#9a9cff">#9a9cff</option>
-                                                <option value="#b99aff">#b99aff</option>
-                                                <option value="#c2c2c2">#c2c2c2</option>
-                                                <option value="#cabdbf">#cabdbf</option>
-                                                <option value="#cca6ac">#cca6ac</option>
-                                                <option value="#f691b2">#f691b2</option>
-                                                <option value="#cd74e6">#cd74e6</option>
-                                                <option value="#a47ae2">#a47ae2</option>
-                                                <option value="#555">#555</option>
-                                            </select>
+                                        <div class="col-xs-5 col-md-5">
+                                            <div id="header_border_colorpicker" data-format="alias" class="input-group colorpicker-component">
+                                                <input type="text" value="primary" class="form-control" />
+                                                <span class="input-group-addon"><i></i></span>
+                                            </div>
                                         </div>
-
                                     </div>
                                     <div class="row content">
                                         <div class="col-xs-4 col-md-4">
@@ -1084,38 +1064,14 @@
                                     </div>
                                     <div class="row content">
                                         <div class="col-xs-4 col-md-4">
-                                            <label for="footer_bg_colorpicker">颜色：</label>
+                                            <label for="footer_bg_colorpicker">颜色： </label>
                                         </div>
-                                        <div class="col-xs-6 col-md-6">
-                                            <select id="footer_bg_colorpicker" class="hide">
-                                                <option value="#ac725e">#ac725e</option>
-                                                <option value="#d06b64">#d06b64</option>
-                                                <option value="#f83a22">#f83a22</option>
-                                                <option value="#fa573c">#fa573c</option>
-                                                <option value="#ff7537">#ff7537</option>
-                                                <option value="#ffad46" selected="">#ffad46</option>
-                                                <option value="#42d692">#42d692</option>
-                                                <option value="#16a765">#16a765</option>
-                                                <option value="#7bd148">#7bd148</option>
-                                                <option value="#b3dc6c">#b3dc6c</option>
-                                                <option value="#fbe983">#fbe983</option>
-                                                <option value="#fad165">#fad165</option>
-                                                <option value="#92e1c0">#92e1c0</option>
-                                                <option value="#9fe1e7">#9fe1e7</option>
-                                                <option value="#9fc6e7">#9fc6e7</option>
-                                                <option value="#4986e7">#4986e7</option>
-                                                <option value="#9a9cff">#9a9cff</option>
-                                                <option value="#b99aff">#b99aff</option>
-                                                <option value="#c2c2c2">#c2c2c2</option>
-                                                <option value="#cabdbf">#cabdbf</option>
-                                                <option value="#cca6ac">#cca6ac</option>
-                                                <option value="#f691b2">#f691b2</option>
-                                                <option value="#cd74e6">#cd74e6</option>
-                                                <option value="#a47ae2">#a47ae2</option>
-                                                <option value="#555">#555</option>
-                                            </select>
+                                        <div class="col-xs-5 col-md-5">
+                                            <div id="footer_bg_colorpicker" data-format="alias" class="input-group colorpicker-component">
+                                                <input type="text" value="primary" class="form-control" />
+                                                <span class="input-group-addon"><i></i></span>
+                                            </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -1145,75 +1101,28 @@
                                         </div>
                                     </div>
                                     <div class="row content">
-                                        <div class="col-xs-4 col-md-4">
-                                            <label for="footer_linktext_colorpicker">颜色：</label>
-                                        </div>
-                                        <div class="col-xs-6 col-md-6">
-                                            <select id="footer_linktext_colorpicker" class="hide">
-                                                <option value="#ac725e">#ac725e</option>
-                                                <option value="#d06b64">#d06b64</option>
-                                                <option value="#f83a22">#f83a22</option>
-                                                <option value="#fa573c">#fa573c</option>
-                                                <option value="#ff7537">#ff7537</option>
-                                                <option value="#ffad46" selected="">#ffad46</option>
-                                                <option value="#42d692">#42d692</option>
-                                                <option value="#16a765">#16a765</option>
-                                                <option value="#7bd148">#7bd148</option>
-                                                <option value="#b3dc6c">#b3dc6c</option>
-                                                <option value="#fbe983">#fbe983</option>
-                                                <option value="#fad165">#fad165</option>
-                                                <option value="#92e1c0">#92e1c0</option>
-                                                <option value="#9fe1e7">#9fe1e7</option>
-                                                <option value="#9fc6e7">#9fc6e7</option>
-                                                <option value="#4986e7">#4986e7</option>
-                                                <option value="#9a9cff">#9a9cff</option>
-                                                <option value="#b99aff">#b99aff</option>
-                                                <option value="#c2c2c2">#c2c2c2</option>
-                                                <option value="#cabdbf">#cabdbf</option>
-                                                <option value="#cca6ac">#cca6ac</option>
-                                                <option value="#f691b2">#f691b2</option>
-                                                <option value="#cd74e6">#cd74e6</option>
-                                                <option value="#a47ae2">#a47ae2</option>
-                                                <option value="#555">#555</option>
-                                            </select>
-                                        </div>
 
+                                        <div class="col-xs-4 col-md-4">
+                                            <label>文字颜色： </label>
+                                        </div>
+                                        <div class="col-xs-5 col-md-5">
+                                            <div id="footer_linktext_colorpicker" data-format="alias" class="input-group colorpicker-component">
+                                                <input type="text" value="primary" class="form-control" />
+                                                <span class="input-group-addon"><i></i></span>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="row content">
-                                        <div class="col-xs-4 col-md-4">
-                                            <label for="footer_linkhover_colorpicker">悬浮颜色：</label>
-                                        </div>
-                                        <div class="col-xs-6 col-md-6">
-                                            <select id="footer_linkhover_colorpicker" class="hide">
-                                                <option value="#ac725e">#ac725e</option>
-                                                <option value="#d06b64">#d06b64</option>
-                                                <option value="#f83a22">#f83a22</option>
-                                                <option value="#fa573c">#fa573c</option>
-                                                <option value="#ff7537">#ff7537</option>
-                                                <option value="#ffad46" selected="">#ffad46</option>
-                                                <option value="#42d692">#42d692</option>
-                                                <option value="#16a765">#16a765</option>
-                                                <option value="#7bd148">#7bd148</option>
-                                                <option value="#b3dc6c">#b3dc6c</option>
-                                                <option value="#fbe983">#fbe983</option>
-                                                <option value="#fad165">#fad165</option>
-                                                <option value="#92e1c0">#92e1c0</option>
-                                                <option value="#9fe1e7">#9fe1e7</option>
-                                                <option value="#9fc6e7">#9fc6e7</option>
-                                                <option value="#4986e7">#4986e7</option>
-                                                <option value="#9a9cff">#9a9cff</option>
-                                                <option value="#b99aff">#b99aff</option>
-                                                <option value="#c2c2c2">#c2c2c2</option>
-                                                <option value="#cabdbf">#cabdbf</option>
-                                                <option value="#cca6ac">#cca6ac</option>
-                                                <option value="#f691b2">#f691b2</option>
-                                                <option value="#cd74e6">#cd74e6</option>
-                                                <option value="#a47ae2">#a47ae2</option>
-                                                <option value="#555">#555</option>
-                                                <option value="#ffffff">#ffffff</option>
-                                            </select>
-                                        </div>
 
+                                        <div class="col-xs-4 col-md-4">
+                                            <label>悬浮颜色： </label>
+                                        </div>
+                                        <div class="col-xs-5 col-md-5">
+                                            <div id="footer_linkhover_colorpicker" data-format="alias" class="input-group colorpicker-component">
+                                                <input type="text" value="primary" class="form-control" />
+                                                <span class="input-group-addon"><i></i></span>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="row content">
                                         <div class="col-xs-4 col-md-4">
@@ -2011,135 +1920,46 @@
                 <div id="menuModal_menustyle" class="tab-pane">
                     <div class="row">
                         <div class="col-xs-2 col-md-2">
-                            <label for="menu_colorpicker">菜单栏颜色</label>
+                            <label>菜单栏颜色： </label>
                         </div>
-                        <div class="col-xs-4 col-md-4">
-                            <select id="menu_colorpicker" class="hide">
-                                <option value="#ac725e">#ac725e</option>
-                                <option value="#d06b64">#d06b64</option>
-                                <option value="#f83a22">#f83a22</option>
-                                <option value="#fa573c">#fa573c</option>
-                                <option value="#ff7537">#ff7537</option>
-                                <option value="#ffad46" selected="">#ffad46</option>
-                                <option value="#42d692">#42d692</option>
-                                <option value="#16a765">#16a765</option>
-                                <option value="#7bd148">#7bd148</option>
-                                <option value="#b3dc6c">#b3dc6c</option>
-                                <option value="#fbe983">#fbe983</option>
-                                <option value="#fad165">#fad165</option>
-                                <option value="#92e1c0">#92e1c0</option>
-                                <option value="#9fe1e7">#9fe1e7</option>
-                                <option value="#9fc6e7">#9fc6e7</option>
-                                <option value="#4986e7">#4986e7</option>
-                                <option value="#9a9cff">#9a9cff</option>
-                                <option value="#b99aff">#b99aff</option>
-                                <option value="#c2c2c2">#c2c2c2</option>
-                                <option value="#cabdbf">#cabdbf</option>
-                                <option value="#cca6ac">#cca6ac</option>
-                                <option value="#f691b2">#f691b2</option>
-                                <option value="#cd74e6">#cd74e6</option>
-                                <option value="#a47ae2">#a47ae2</option>
-                                <option value="#555">#555</option>
-                            </select>
+                        <div class="col-xs-3 col-md-3">
+                            <div id="menu_colorpicker" data-format="alias" class="input-group colorpicker-component">
+                                <input type="text" value="primary" class="form-control" />
+                                <span class="input-group-addon"><i></i></span>
+                            </div>
                         </div>
                         <div class="col-xs-2 col-md-2">
-                            <label for="menu_bg_colorpicker">背景颜色</label>
+                            <label>背景颜色： </label>
                         </div>
-                        <div class="col-xs-4 col-md-4">
-                            <select id="menu_bg_colorpicker" class="hide">
-                                <option value="#ac725e">#ac725e</option>
-                                <option value="#d06b64">#d06b64</option>
-                                <option value="#f83a22">#f83a22</option>
-                                <option value="#fa573c">#fa573c</option>
-                                <option value="#ff7537">#ff7537</option>
-                                <option value="#ffad46" selected="">#ffad46</option>
-                                <option value="#42d692">#42d692</option>
-                                <option value="#16a765">#16a765</option>
-                                <option value="#7bd148">#7bd148</option>
-                                <option value="#b3dc6c">#b3dc6c</option>
-                                <option value="#fbe983">#fbe983</option>
-                                <option value="#fad165">#fad165</option>
-                                <option value="#92e1c0">#92e1c0</option>
-                                <option value="#9fe1e7">#9fe1e7</option>
-                                <option value="#9fc6e7">#9fc6e7</option>
-                                <option value="#4986e7">#4986e7</option>
-                                <option value="#9a9cff">#9a9cff</option>
-                                <option value="#b99aff">#b99aff</option>
-                                <option value="#c2c2c2">#c2c2c2</option>
-                                <option value="#cabdbf">#cabdbf</option>
-                                <option value="#cca6ac">#cca6ac</option>
-                                <option value="#f691b2">#f691b2</option>
-                                <option value="#cd74e6">#cd74e6</option>
-                                <option value="#a47ae2">#a47ae2</option>
-                                <option value="#555">#555</option>
-                            </select>
+                        <div class="col-xs-3 col-md-3">
+                            <div id="menu_bg_colorpicker" data-format="alias" class="input-group colorpicker-component">
+                                <input type="text" value="primary" class="form-control" />
+                                <span class="input-group-addon"><i></i></span>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
+
                         <div class="col-xs-2 col-md-2">
-                            <label for="menu_font_colorpicker">文字颜色</label>
+                            <label>文字颜色： </label>
                         </div>
-                        <div class="col-xs-4 col-md-4">
-                            <select id="menu_font_colorpicker" class="hide">
-                                <option value="#ac725e">#ac725e</option>
-                                <option value="#d06b64">#d06b64</option>
-                                <option value="#f83a22">#f83a22</option>
-                                <option value="#fa573c">#fa573c</option>
-                                <option value="#ff7537">#ff7537</option>
-                                <option value="#ffad46" selected="">#ffad46</option>
-                                <option value="#42d692">#42d692</option>
-                                <option value="#16a765">#16a765</option>
-                                <option value="#7bd148">#7bd148</option>
-                                <option value="#b3dc6c">#b3dc6c</option>
-                                <option value="#fbe983">#fbe983</option>
-                                <option value="#fad165">#fad165</option>
-                                <option value="#92e1c0">#92e1c0</option>
-                                <option value="#9fe1e7">#9fe1e7</option>
-                                <option value="#9fc6e7">#9fc6e7</option>
-                                <option value="#4986e7">#4986e7</option>
-                                <option value="#9a9cff">#9a9cff</option>
-                                <option value="#b99aff">#b99aff</option>
-                                <option value="#c2c2c2">#c2c2c2</option>
-                                <option value="#cabdbf">#cabdbf</option>
-                                <option value="#cca6ac">#cca6ac</option>
-                                <option value="#f691b2">#f691b2</option>
-                                <option value="#cd74e6">#cd74e6</option>
-                                <option value="#a47ae2">#a47ae2</option>
-                                <option value="#555">#555</option>
-                            </select>
+                        <div class="col-xs-3 col-md-3">
+                            <div id="menu_font_colorpicker" data-format="alias" class="input-group colorpicker-component">
+                                <input type="text" value="primary" class="form-control" />
+                                <span class="input-group-addon"><i></i></span>
+                            </div>
                         </div>
+
                         <div class="col-xs-2 col-md-2">
-                            <label for="menu_selectItem_colorpicker">选中颜色</label>
+                            <label>选中颜色： </label>
                         </div>
-                        <div class="col-xs-4 col-md-4">
-                            <select id="menu_selectItem_colorpicker" class="hide">
-                                <option value="#ac725e">#ac725e</option>
-                                <option value="#d06b64">#d06b64</option>
-                                <option value="#f83a22">#f83a22</option>
-                                <option value="#fa573c">#fa573c</option>
-                                <option value="#ff7537">#ff7537</option>
-                                <option value="#ffad46" selected="">#ffad46</option>
-                                <option value="#42d692">#42d692</option>
-                                <option value="#16a765">#16a765</option>
-                                <option value="#7bd148">#7bd148</option>
-                                <option value="#b3dc6c">#b3dc6c</option>
-                                <option value="#fbe983">#fbe983</option>
-                                <option value="#fad165">#fad165</option>
-                                <option value="#92e1c0">#92e1c0</option>
-                                <option value="#9fe1e7">#9fe1e7</option>
-                                <option value="#9fc6e7">#9fc6e7</option>
-                                <option value="#4986e7">#4986e7</option>
-                                <option value="#9a9cff">#9a9cff</option>
-                                <option value="#b99aff">#b99aff</option>
-                                <option value="#c2c2c2">#c2c2c2</option>
-                                <option value="#cabdbf">#cabdbf</option>
-                                <option value="#cca6ac">#cca6ac</option>
-                                <option value="#f691b2">#f691b2</option>
-                                <option value="#cd74e6">#cd74e6</option>
-                                <option value="#a47ae2">#a47ae2</option>
-                                <option value="#555">#555</option>
-                            </select>
+                        <div class="col-xs-3 col-md-3">
+                            <div id="menu_selectItem_colorpicker" data-format="alias" class="input-group colorpicker-component">
+                                <input type="text" value="primary" class="form-control" />
+                                <span class="input-group-addon"><i></i></span>
+                            </div>
                         </div>
+
                     </div>
                     <div class="row">
                         <div class="col-xs-2 col-md-2">
