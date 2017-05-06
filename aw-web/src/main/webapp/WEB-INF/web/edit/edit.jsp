@@ -1341,11 +1341,10 @@
                             <div class="col-sm-12">
                                 <ul id="bannerModal_common_selectedIMG" class="ace-thumbnails">
                                     <!--<li class="ui-state-disabled" style="border: 1px dashed black;">+</li>-->
-                                    <c:forEach items="${requestScope.sysPics}" var="pic">
-                                        <c:if test="${pic.isSelected == true}">
+                                    <c:forEach items="${requestScope.webBannerImgList}" var="pic">
                                         <li>
                                             <div class="selectImg">
-                                                <img src="${ctx}${pic.pictureUrl}" />
+                                                <img src="${ctx}${pic.bannerPic}" imghref="${pic.picUrl}" />
                                                 <div class="text">
                                                     <div class="inner">
                                                         <a href="#">
@@ -1358,7 +1357,6 @@
                                                 </div>
                                             </div>
                                         </li>
-                                        </c:if>
                                     </c:forEach>
                                 </ul>
                             </div>

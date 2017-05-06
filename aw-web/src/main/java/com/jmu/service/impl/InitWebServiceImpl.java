@@ -78,7 +78,7 @@ public class InitWebServiceImpl implements InitWebService {
                 List<WebBannerImg> webBannerImgList = new ArrayList<WebBannerImg>();
                 String[] imgs = webBanner.getBsValue().split(",");
                 for(int i=0;i<imgs.length;i++){
-                    webBannerImgList.add(new WebBannerImg(UUID.randomUUID().toString().replace("-", ""),user.getCompanyId(),imgs[i],"#",user.getUserId()));
+                    webBannerImgList.add(new WebBannerImg(UUID.randomUUID().toString().replace("-", ""),user.getCompanyId(),imgs[i],"#",user.getUserId(),i));
                 }
                 webBannerImgMapper.deleteByCompanyId(user.getCompanyId());
                 webBannerImgMapper.batchInsert(webBannerImgList);
@@ -236,9 +236,9 @@ public class InitWebServiceImpl implements InitWebService {
 
     private void addBannerImg(String companyId,String modifier){
         List<WebBannerImg> webBannerImgList = new ArrayList<WebBannerImg>();
-        WebBannerImg banner1 = new WebBannerImg(UUID.randomUUID().toString().replace("-", ""),companyId,"/pic/sys/PictureLibrary/banner-3.jpg","#",modifier);
-        WebBannerImg banner2 = new WebBannerImg(UUID.randomUUID().toString().replace("-", ""),companyId,"/pic/sys/PictureLibrary/banner-4.jpg","#",modifier);
-        WebBannerImg banner3 = new WebBannerImg(UUID.randomUUID().toString().replace("-", ""),companyId,"/pic/sys/PictureLibrary/banner-5.jpg","#",modifier);
+        WebBannerImg banner1 = new WebBannerImg(UUID.randomUUID().toString().replace("-", ""),companyId,"/pic/sys/PictureLibrary/banner-3.jpg","#",modifier,1);
+        WebBannerImg banner2 = new WebBannerImg(UUID.randomUUID().toString().replace("-", ""),companyId,"/pic/sys/PictureLibrary/banner-4.jpg","#",modifier,2);
+        WebBannerImg banner3 = new WebBannerImg(UUID.randomUUID().toString().replace("-", ""),companyId,"/pic/sys/PictureLibrary/banner-5.jpg","#",modifier,3);
         webBannerImgList.add(banner1);
         webBannerImgList.add(banner2);
         webBannerImgList.add(banner3);

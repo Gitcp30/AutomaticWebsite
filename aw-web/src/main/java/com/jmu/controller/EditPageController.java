@@ -47,6 +47,8 @@ public class EditPageController {
 
         List list = sysPictureService.getAll("sys",user);
         List<WebColumn> webColumnList = webColumnService.getSelectByCompanyId(user.getCompanyId(),(short)0);
+        List<WebBannerImg> webBannerImgList = webBannerImgService.findAll(user.getCompanyId());
+        map.put("webBannerImgList",webBannerImgList);
         map.put("sysPics",list);
         map.put("sysMenuColumns",webColumnList);
         return "web/edit/edit";

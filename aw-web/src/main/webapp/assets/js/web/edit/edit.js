@@ -1528,7 +1528,6 @@ seajs.use(['componentutils', 'jquery', 'editutils', 'baseSettingUtils', 'initUti
                 var img = $(this).attr("src").replace(ctx, "");
                 imgs += img + ",";
             });
-
             if (imgs == "") {
                 alert("必须选择一张图片");
                 return;

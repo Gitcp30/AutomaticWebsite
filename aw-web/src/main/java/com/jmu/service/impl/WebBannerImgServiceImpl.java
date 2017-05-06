@@ -24,7 +24,7 @@ public class WebBannerImgServiceImpl implements WebBannerImgService {
     @Override
     public BaseSetting findAllByCompanyId(String companyId) {
 
-        BaseSetting bannerImgs = new BaseSetting();
+        BaseSetting bannerImg = new BaseSetting();
 
         List<WebBannerImg> webBannerImgList = webBannerImgMapper.selectByCompanyId(companyId);
         StringBuffer imgBuffer = new StringBuffer();
@@ -33,10 +33,10 @@ public class WebBannerImgServiceImpl implements WebBannerImgService {
             imgBuffer.append(img.getBannerPic()+",");
         }
         if(!imgBuffer.equals("")){
-            bannerImgs.setBaseSettingId(webBannerImgList.get(0).getBannerImgId());
-            bannerImgs.setBsValue(imgBuffer.toString());
+            bannerImg.setBaseSettingId(webBannerImgList.get(0).getBannerImgId());
+            bannerImg.setBsValue(imgBuffer.toString());
         }
-        return bannerImgs;
+        return bannerImg;
     }
 
     @Override

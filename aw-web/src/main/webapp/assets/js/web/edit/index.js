@@ -219,24 +219,35 @@ seajs.use(['jquery', 'lodash','componentutils','baseSettingUtils', 'gridstack', 
             }
         });
 
+        // 横幅信息
+        var banner_pattern_Data = baseSettingMap['banner_pattern'];
+        var banner_animation_Data = baseSettingMap['banner_animation'];
+        var bannerModal_interTimeSpinner_Data = baseSettingMap['bannerModal_interTimeSpinner'];
+        var bannerModal_delayTimeSpinner_Data = baseSettingMap['bannerModal_delayTimeSpinner'];
 
-
-
+        switch (banner_pattern_Data.bsValue) {
+            case "numSilde":
+                $("#webBanner #slideBox a.prev,#webBanner #slideBox a.next").hide();
+                $("#webBanner #slideBox .hd").show();
+                break;
+            case "arrowSilde":
+                $("#webBanner #slideBox .hd").hide();
+                $("#webBanner #slideBox a.prev,#webBanner #slideBox a.next").show();
+                break;
+            default:
+                alert("选择横幅样式错误！");
+                break;
+        }
 
         /**
          * 初始化横幅
          */
-        $(".slideBox").slide({mainCell: ".bd ul", effect: "top", autoPlay: true, delayTime: 500, interTime: 2500});
-        /**
-         * 底部编辑栏点击确定
-         */
-        $("a[data-target=#footerModal]").on("click", function () {
-            /*var copyrightHtml = $("#webFooter div.footCpy").html();
-            $("#copyright-editor").html(copyrightHtml);*/
-        });
+        $(".slideBox").slide({ mainCell: ".bd ul", effect: banner_animation_Data.bsValue,autoPlay:true, delayTime:bannerModal_delayTimeSpinner_Data.bsValue,interTime:bannerModal_interTimeSpinner_Data.bsValue});
 
 
 
+
+        //////////////////////////////////////////////////////////////////////////////
 
         // 第一种布局
         var serialized_data = [
@@ -298,6 +309,7 @@ seajs.use(['jquery', 'lodash','componentutils','baseSettingUtils', 'gridstack', 
             var aa = gridMethod.save_grid();
         });
 
+        // 删除模块
         $("#webContainer .grid-stack .editLayer").on("click",function () {
             var self = this;
             var parent = $(this).parent();
