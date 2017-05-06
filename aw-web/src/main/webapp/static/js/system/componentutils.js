@@ -75,11 +75,12 @@ define(function(require, exports) {
 
     // admin主页的底部链接
     exports.footerLink = function(data){
+	    debugger
             Template7.registerPartial(
                 'begin',
-                '{{#each links}}' +
+                '{{#each aaa}}' +
                 '<span>' +
-                '<a hidefocus="true" href="#">{{this}}</a>'+
+                '<a hidefocus="true" href="#">{{name}}</a>'+
                 '</span>' +
        			 '{{/each}}'
             );

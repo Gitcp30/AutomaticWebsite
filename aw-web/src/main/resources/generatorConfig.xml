@@ -71,7 +71,7 @@
 			   enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
 
 
-		<table tableName="SYS_PICTURE"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+		<table tableName="web_header"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
 			   enableSelectByExample="false" selectByExampleQueryId="false"></table>
 	</context>
 </generatorConfiguration>

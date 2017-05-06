@@ -1,6 +1,9 @@
 package com.jmu.service;
 
 import com.jmu.common.AjaxResponse;
+import com.jmu.domain.BaseSetting;
+
+import java.util.Map;
 
 /**
  * 页面初始化
@@ -9,4 +12,6 @@ import com.jmu.common.AjaxResponse;
 public interface InitWebService {
 
     public AjaxResponse initWeb(String companyId,String modifier);
+
+    public AjaxResponse updateWeb(Map<String,BaseSetting> updateSettings, String userId);
 }

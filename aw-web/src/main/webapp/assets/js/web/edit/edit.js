@@ -66,7 +66,7 @@ seajs.use(['componentutils','jquery','editutils','baseSettingUtils','initUtils',
 debugger
             $.ajax({
                 type: "POST",
-                url: ctx + "/web/edit/updateBaseSettings",
+                url: ctx + "/web/edit/updateSettings",
                 data: JSON.stringify(baseSettingUtils.updateBsMap),
                 contentType: "application/json",
                 cache: false,
@@ -80,7 +80,6 @@ debugger
                     alert("获取系统配置出错了");
                 }
             });
-		    debugger
         });
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -812,7 +811,7 @@ debugger
         var menu_selectItem_colorpicker_Data = baseSettingMap['menu_selectItem_colorpicker'];
         // 5.5菜单栏长度
         var menu_widthSlider_Data = baseSettingMap['menu_widthSlider'];
-debugger
+
         // 初始化背景颜色改变框(菜单栏)
         $('#menu_colorpicker').colorpicker({
             color: menu_colorpicker_Data.bsValue,
@@ -918,9 +917,7 @@ debugger
 
 
 
-        /**
-         * 初始化  修改菜单栏长度
-         */
+        //  初始化  修改菜单栏长度
         var $menu_widthSlider = $("#menuModal_width.ui-slider-blue");
         $menu_widthSlider.css({ width: '90%', 'float': 'left', margin: '15px 15px 15px 0' }).each(function() {
             $(this).empty().slider({
@@ -939,8 +936,246 @@ debugger
         });
 
 
+        // 头部logo
+        var opacity_logoSlider_Data = baseSettingMap['opacity_logoSlider'];
+        var logoPic_Data = baseSettingMap['logoPic'];
+        var radius_logoSlider_Data = baseSettingMap['radius_logoSlider'];
+        var webTitle_Data = baseSettingMap['webTitle'];
+
+        $("#goloModal_pic .logoPic img").attr("src",ctx+logoPic_Data.bsValue);
+        $("#webLogo .weblogo-content img").attr("src",ctx+logoPic_Data.bsValue);
+
+        $("#goloModal_pic .logoPic img").css("opacity",opacity_logoSlider_Data.bsValue/100);
+        $("#webLogo .weblogo-content img").css("opacity",opacity_logoSlider_Data.bsValue/100);
+
+        $("#goloModal_pic .logoPic img").css("border-radius",radius_logoSlider_Data.bsValue + "%");
+        $("#webLogo .weblogo-content img").css("border-radius",radius_logoSlider_Data.bsValue + "%");
+
+        // 透明度
+        var $opacity_logoSlider = $("#logoModal_opacity.ui-slider-blue");
+        $opacity_logoSlider.css({ width: '90%', 'float': 'left', margin: '15px 15px 15px 0' }).each(function() {
+            var value = parseInt($(this).text(), 10);
+            $(this).empty().slider({
+                value: opacity_logoSlider_Data.bsValue,
+                range: "min",
+                min: 0,
+                max: 100,
+                animate: true,
+                slide: function(event, ui) {
+                    $("#goloModal_pic .logoPic img").css("opacity",ui.value/100);
+                    $("#webLogo .weblogo-content img").css("opacity",ui.value/100);
+                    updateBS("opacity_logoSlider",ui.value);
+                }
+            });
+        });
+
+        // 初始化  logo编辑框(修改图片圆角)
+        var $radius_logoSlider = $("#logoModal_radius.ui-slider-blue");
+        $radius_logoSlider.css({ width: '90%', 'float': 'left', margin: '15px 15px 15px 0' }).each(function() {
+            $(this).empty().slider({
+                value: radius_logoSlider_Data.bsValue,
+                range: "min",
+                min: 0,
+                max: 50,
+                animate: true,
+                slide: function(event, ui) {
+                    $("#goloModal_pic .logoPic img").css("border-radius",ui.value + "%");
+                    $("#webLogo .weblogo-content img").css("border-radius",ui.value + "%");
+                    updateBS("radius_logoSlider",ui.value);
+                }
+            });
+        });
+
+        $("#goloModal_pic .logoPic img").on("click",function(){
+            pic_state = "SET_LOGO";
+            $("#picModal").modal("show");
+        });
+
+        $("#title-editor").html(webTitle_Data.bsValue);
+        // 顶部title编辑框
+        $('#title-editor').ace_wysiwyg({
+            toolbar:
+                [ 'font',
+                    null,
+                    'fontSize',
+                    null,
+                    {name:'bold', className:'btn-info'},
+                    {name:'italic', className:'btn-info'},
+                    {name:'underline', className:'btn-info'},
+                    null,
+                    'foreColor',
+                    null,
+                    {name:'undo', className:'btn-grey'},
+                    {name:'redo', className:'btn-grey'}
+                ],
+            'wysiwyg': {
+                fileUploadError: function(){}
+            }
+        }).prev().addClass('wysiwyg-style2');
+
+        // 设置标题信息
+        $("#titlegoModal_footer_commitbtn").on("click",function(){
+            var titleHtml = $("#title-editor").html();
+            $("#webTitle span").html(titleHtml);
+            updateBS("webTitle",titleHtml);
+        });
 
 
+
+
+        // 菜单栏---设置栏目
+        $('#menuModal_menu .dd').nestable();
+
+        $('#menuModal_menu .dd-handle a').on('mousedown', function(e){
+            e.stopPropagation();
+        });
+
+        /**
+         * 选中栏目
+         */
+        $("#menuModal_menu li .action-buttons").find("a:first").on("click",function(){
+            var $i  = $(this).find("i");
+            if ($i.hasClass("fa-check")){
+                $i.removeClass("fa-check").addClass("fa-close").parent().removeClass("green").addClass("red");
+            } else {
+                $i.removeClass("fa-close").addClass("fa-check").parent().removeClass("red").addClass("green");
+            }
+
+
+        });
+
+        /**
+         * 提交结果
+         */
+        $("#menuModal_footer_commitbtn").on("click",function(){
+
+            $("#webMenu .inner_menu ul").empty();
+
+            // 获取选中的栏目
+            $("#menuModal_menu .dd-list li").map(function(){
+                var $li = $(this).find(".fa-check");
+                if ($li.length == 1){
+                   var text = $(this).find(".dd2-content .row div:first").text();
+                    $("#webMenu .inner_menu ul").append('<li><a href="'+ctx+$(this).attr("data-href")+'">'+text+'</a></li>');
+                }
+            });
+            // 初始化样式
+            initMenuStyle();
+            // 保存更新
+            var id = $.map($("#menuModal_menu .dd-list li"),function(item){
+                var $li = $(item).find(".fa-check");
+                if ($li.length == 1){
+                    return $(item).attr("data-id");
+                }
+            });
+            var menus = id.join("/");
+            updateBS("webMenu",menus);
+
+        });
+
+
+        function initMenuStyle() {
+            $("#webMenu").css("background-color",menu_colorpicker_Data.bsValue);
+            $("#webMenu .inner_menu ul").css("background-color",menu_bg_colorpicker_Data.bsValue);
+            $("#webMenu .inner_menu ul li a").css("color",menu_font_colorpicker_Data.bsValue);
+            $("#webMenu .inner_menu ul li a").hover(
+                //当鼠标放上去的时候,程序处理
+                function(){
+                    $(this).css("background-color",menu_selectItem_colorpicker_Data.bsValue);
+                },
+                //当鼠标离开的时候,程序处理
+                function(){
+                    $(this).css("background-color",menu_bg_colorpicker_Data.bsValue);
+                }
+            );
+        }
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        //底部栏目编辑框
+        $('#copyright-editor').ace_wysiwyg({
+            toolbar:
+                [
+                    'font',
+                    null,
+                    'fontSize',
+                    null,
+                    {name:'bold', className:'btn-info'},
+                    {name:'italic', className:'btn-info'},
+                    {name:'underline', className:'btn-info'},
+                    null,
+                    {name:'justifyleft', className:'btn-primary'},
+                    {name:'justifycenter', className:'btn-primary'},
+                    {name:'justifyright', className:'btn-primary'},
+                    {name:'justifyfull', className:'btn-inverse'},
+                    null,
+                    'foreColor',
+                    null,
+                    {name:'undo', className:'btn-grey'},
+                    {name:'redo', className:'btn-grey'}
+                ],
+            'wysiwyg': {
+                fileUploadError: function(){}
+            }
+        }).prev().addClass('wysiwyg-style2');
+
+
+
+        $("#copyright-editor").html(baseSettingMap['webCopyRight'].bsValue);
+
+        /**
+         * 设置Copyright信息
+         */
+        $("#footerModal_footer_commitbtn").on("click",function(){
+            var copyrightHtml = $("#copyright-editor").html();
+            $("#webFooter div.footCpy").html(copyrightHtml);
+
+
+            $("#webFooter .footLinks").empty();
+            /*var link = $('select[name="footer_column"] option:selected').map(function(){
+                $("#webFooter .footLinks").append('<span><a hidefocus="true" href="'+$(this).attr("OpHref")+'">'+$(this).val()+'</a></span>');
+                return $(this).attr("OpId");
+            });*/
+
+            var link = $.map($('select[name="footer_column"] option:selected'),function(item){
+                $("#webFooter .footLinks").append('<span><a hidefocus="true" href="'+$(item).attr("OpHref")+'">'+$(item).val()+'</a></span>');
+                return $(item).attr("OpId");
+            });
+            setLinkTestStyle();
+            // 保存更新
+            var links = link.join("/");
+            var crHtml = copyrightHtml.replace("©","&copy; ");
+            updateBS("webCopyRight",crHtml);
+            updateBS("webLink",links);
+        });
+
+        // 设置底部--链接字体样式
+        function setLinkTestStyle(){
+            $("#webFooter .inner_footer .footLinks a").css("font-size",footer_textSlider_Data.bsValue + "px");
+            $("#webFooter .inner_footer .footLinks a").css("color",footer_linktext_colorpicker_Data.bsValue);
+            $("#webFooter .inner_footer .footLinks a").hover(function(){
+                $(this).css("color",footer_linkhover_colorpicker_Data.bsValue);
+            },function(){
+                $(this).css("color",footer_linktext_colorpicker_Data.bsValue);
+            });
+
+        }
+
+
+        /**
+         *  选择栏目
+         * @type {jQuery}
+         */
+        var footer_column = $('select[name="footer_column"]').bootstrapDualListbox({
+            nonSelectedListLabel: '待选栏目',
+            selectedListLabel: '已选栏目',
+            infoText:false,
+            showFilterInputs:false,
+        });
+        // 设置按钮样式
+        var container = footer_column.bootstrapDualListbox('getContainer');
+        container.find('.btn').addClass('btn-white btn-info btn-bold');
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -976,7 +1211,7 @@ debugger
 
 
         /**
-         * 图片编辑框---素材库  待选画廊选中图片
+         * 图片编辑框---素材库 选中图片
          */
 
         $("#picModal_sys .toSelectGallery .text").on("click","a[data-target='toadd']",function() {
@@ -994,9 +1229,13 @@ debugger
         });
 
         /**
-         * 取消选中图片
-         * @param $obj
+         *  图片编辑框---素材库  待选画廊取消选中图片
          */
+        $("#picModal_sys .toSelectGallery .text").on("click","a[data-target='tocancel']",function() {
+            cancelSelectPic($(this));
+        });
+
+        // 取消选中图片方法
         function cancelSelectPic($obj){
             // 1删除添加“使用”标记
             // 获取父节点li
@@ -1008,15 +1247,10 @@ debugger
             $obj.attr('data-target','toadd');
         }
 
-        /**
-         *  图片编辑框---素材库  待选画廊取消选中图片
-         */
-        $("#picModal_sys .toSelectGallery .text").on("click","a[data-target='tocancel']",function() {
-            cancelSelectPic($(this));
-        });
+
 
         /**
-         * 图片编辑框提交修改，
+         * 图片编辑框提交修改
          */
         $("#picModal_footer_commitbtn").on("click",function(){
             // 获取选中的图片
@@ -1046,14 +1280,15 @@ debugger
                 case "SET_LOGO":
                     $("#goloModal_pic .logoPic img").attr("src",img);
                     $("#webLogo .weblogo-content img").attr("src",img);
+                    // 保存更新
+                    img = img.replace(ctx,"");
+                    updateBS('logoPic',img);
                     break;
 
                 default:alert("错误");break;
             }
 
             $("#picModal").modal('hide');
-
-
         });
 
 
@@ -1292,203 +1527,9 @@ debugger
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        //底部栏目编辑框
-        $('#copyright-editor').ace_wysiwyg({
-            toolbar:
-                [
-                    'font',
-                    null,
-                    'fontSize',
-                    null,
-                    {name:'bold', className:'btn-info'},
-                    {name:'italic', className:'btn-info'},
-                    {name:'underline', className:'btn-info'},
-                    null,
-                    {name:'justifyleft', className:'btn-primary'},
-                    {name:'justifycenter', className:'btn-primary'},
-                    {name:'justifyright', className:'btn-primary'},
-                    {name:'justifyfull', className:'btn-inverse'},
-                    null,
-                    'foreColor',
-                    null,
-                    {name:'undo', className:'btn-grey'},
-                    {name:'redo', className:'btn-grey'}
-                ],
-            'wysiwyg': {
-                fileUploadError: function(){}
-            }
-        }).prev().addClass('wysiwyg-style2');
 
-        /**
-         * 设置Copyright信息
-         */
-        $("#footerModal_footer_commitbtn").on("click",function(){
-            var copyrightHtml = $("#copyright-editor").html();
-            $("#webFooter div.footCpy").html(copyrightHtml);
-            var content = {links:$('select[name="footer_column"]').val()};
-            var html = componentUtils.footerLink(content);
-
-            $("#webFooter .footLinks").empty().html(html);
-            setLinkTestStyle();
-        });
-
-        /**
-         * 设置底部--链接字体为custom
-         */
-        function setLinkTestStyle(){
-            var val =$("input:radio[name='footer_linktext']:checked").val();
-        if(val == "custom"){
-            $("#leftSidebar_footer .setting_linktext .content").show();
-            // 1字体默认 font-size: 14px; 2.颜色默认color: #8b939d;color: #ffffff
-            $(".inner_footer .footLinks a").css("color",$('#footer_linktext_colorpicker').colorpicker("getValue"));
-            $(".inner_footer .footLinks a").hover(function(){
-                $(this).css("color", $('#footer_linkhover_colorpicker').colorpicker("getValue"));
-            },function(){
-                $(this).css("color",$('#footer_linktext_colorpicker').colorpicker("getValue").val());
-            });
-            var size = $footer_textSlider.slider('option', 'value');
-            $(".inner_footer .footLinks a").css("font-size",size);
-
-        }
-
-    }
-
-        /**
-         *  选择栏目
-         * @type {jQuery}
-         */
-        var footer_column = $('select[name="footer_column"]').bootstrapDualListbox({
-            nonSelectedListLabel: '待选栏目',
-            selectedListLabel: '已选栏目',
-            infoText:false,
-            showFilterInputs:false,
-        });
-        // 设置按钮样式
-        var container = footer_column.bootstrapDualListbox('getContainer');
-        container.find('.btn').addClass('btn-white btn-info btn-bold');
-
-        ////////////////////////////////////////////////////////////////////////////////////////
-
-        // logo编辑框
-
-        /**
-         * 初始化  logo编辑框(修改图片透明度)
-         */
-        var $opacity_logoSlider = $("#logoModal_opacity.ui-slider-blue");
-        $opacity_logoSlider.css({ width: '90%', 'float': 'left', margin: '15px 15px 15px 0' }).each(function() {
-            // read initial values from markup and remove that
-            var value = parseInt($(this).text(), 10);
-            $(this).empty().slider({
-                value: value,
-                range: "min",
-                min: 0,
-                max: 100,
-                animate: true,
-                slide: function(event, ui) {
-                    $("#goloModal_pic .logoPic img").css("opacity",ui.value/100);
-                    $("#webLogo .weblogo-content img").css("opacity",ui.value/100);
-                }
-            });
-        });
-
-
-        /**
-         * 初始化  logo编辑框(修改图片圆角)
-         */
-        var $radius_logoSlider = $("#logoModal_radius.ui-slider-blue");
-        $radius_logoSlider.css({ width: '90%', 'float': 'left', margin: '15px 15px 15px 0' }).each(function() {
-            // read initial values from markup and remove that
-            var value = parseInt($(this).text(), 10);
-            $(this).empty().slider({
-                value: value,
-                range: "min",
-                min: 0,
-                max: 50,
-                animate: true,
-                slide: function(event, ui) {
-                    $("#goloModal_pic .logoPic img").css("border-radius",ui.value + "%");
-                    $("#webLogo .weblogo-content img").css("border-radius",ui.value + "%");
-                }
-            });
-        });
-
-        $("#goloModal_pic .logoPic img").on("click",function(){
-            pic_state = "SET_LOGO";
-            $("#picModal").modal("show");
-        });
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-        // 顶部title编辑框
-        $('#title-editor').ace_wysiwyg({
-            toolbar:
-                [
-                    'font',
-                    null,
-                    'fontSize',
-                    null,
-                    {name:'bold', className:'btn-info'},
-                    {name:'italic', className:'btn-info'},
-                    {name:'underline', className:'btn-info'},
-                    null,
-                    'foreColor',
-                    null,
-                    {name:'undo', className:'btn-grey'},
-                    {name:'redo', className:'btn-grey'}
-                ],
-            'wysiwyg': {
-                fileUploadError: function(){}
-            }
-        }).prev().addClass('wysiwyg-style2');
-
-        /**
-         * 设置标题信息
-         */
-        $("#titlegoModal_footer_commitbtn").on("click",function(){
-            var titleHtml = $("#title-editor").html();
-            $("#webTitle span").html(titleHtml);
-        });
-
-        ///////////////////////////////////////////////////////////////////////////////////////
-
-        // 菜单栏---设置栏目
-        $('#menuModal_menu .dd').nestable();
-
-        $('#menuModal_menu .dd-handle a').on('mousedown', function(e){
-            e.stopPropagation();
-        });
-
-        /**
-         * 选中栏目
-         */
-        $("#menuModal_menu li .action-buttons").find("a:first").on("click",function(){
-                var $i  = $(this).find("i");
-                if ($i.hasClass("fa-check")){
-                    $i.removeClass("fa-check").addClass("fa-close").parent().removeClass("green").addClass("red");
-                } else {
-                    $i.removeClass("fa-close").addClass("fa-check").parent().removeClass("red").addClass("green");
-                }
-        });
-
-        /**
-         * 提交结果
-         */
-        $("#menuModal_footer_commitbtn").on("click",function(){
-            // 获取选中的栏目
-            var text = $("#menuModal_menu .dd-list li").map(function(){
-                var $li = $(this).find(".fa-check");
-                if ($li.length == 1){
-                    return $(this).find(".dd2-content .row div:first").text();
-                }
-            });
-            $("#webMenu .inner_menu ul").empty();
-            debugger
-            text.each(function(index,value){
-                $("#webMenu .inner_menu ul").append('<li><a href="#">'+value+'</a></li>');
-            });
-
-        });
 
 
 

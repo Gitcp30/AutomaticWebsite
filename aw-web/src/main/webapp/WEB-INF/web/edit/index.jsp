@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 
@@ -204,12 +205,12 @@
 
         /**logo**/
         #webLogo{
-            height: 80px;
-            width: 280px;
+            /*height: 80px;
+            width: 280px;*/
             position: relative;
-            opacity: 1;
+            /*opacity: 1;
             left: 235px;
-            top:12px;
+            top:12px;*/
         }
 
         #webLogo:hover .editLayer {
@@ -264,9 +265,9 @@
         /**标题**/
         #webTitle {
             display: inline;
-
+/*
             top:-70px;
-            left: 648px;
+            left: 648px;*/
         }
         #webTitle:hover .editLayer {
             display: block;
@@ -338,7 +339,7 @@
             <!-- logo-->
             <div id="webLogo" class="ui-widget-content">
                 <div class="weblogo-content">
-                   <img src="${ctx}/pic/sys/default/jmu-logo.png" />
+                   <img src="#" />
                 </div>
                 <!--悬浮编辑栏-->
                 <div class="editLayer">
@@ -349,7 +350,7 @@
             </div>
             <!-- 标题-->
             <div id="webTitle" class="ui-widget-content">
-                   <span><font size="7" color="#f83a22">集美大学</font></span>
+                   <span></span>
                 <!--悬浮编辑栏-->
                 <div class="editLayer">
                     <ul>
@@ -363,10 +364,14 @@
     <div id="webMenu">
         <div class="inner_menu">
                <ul class="nav nav-pills nav-justified">
-                   <li style="background-color: #cc0010;"><a href="#">首页</a></li>
-                   <li><a href="#">新闻</a></li>
-                   <li><a href="#">留言板</a></li>
-                   <li><a href="#">关于我们</a></li>
+                   <c:forEach items="${requestScope.webColumnList}" var="menuCol">
+                       <%--<li style="background-color: #cc0010;"><a href="#">首页</a></li>--%>
+                       <c:if test="${menuCol.isMenu== true}">
+                           <li><a hidefocus="true" href="${menuCol.url}">${menuCol.columnName}</a></li>
+                       </c:if>
+                   </c:forEach>
+
+
                </ul>
         </div>
         <!--悬浮编辑栏-->
@@ -425,19 +430,14 @@
     <div id="webFooter">
         <div class="inner_footer">
             <div class="footLinks">
-                <span><a hidefocus="true" href="#">关于我们</a></span>
-                <span><a hidefocus="true" href="#" title="网站建设帮助">帮助中心</a></span>
-                <span><a hidefocus="true" href="#" title="本站支持哪些支付方式">支付方式</a></span>
-                <span><a hidefocus="true" href="#" target="_blank" rel="nofollow">服务条款</a></span>
-                <span><a hidefocus="true" href="#" rel="nofollow">法律声明</a></span>
-                <span><a hidefocus="true" href="#" title="本站支持哪些支付方式">支付方式</a></span>
-                <span><a hidefocus="true" href="#" target="_blank" rel="nofollow">服务条款</a></span>
-                <span><a hidefocus="true" href="#" rel="nofollow">法律声明</a></span>
+                <c:forEach items="${requestScope.webColumnList}" var="linkCol">
+                    <c:if test="${linkCol.isFooterLink== true}">
+                        <span><a hidefocus="true" href="${linkCol.url}">${linkCol.columnName}</a></span>
+                    </c:if>
+                </c:forEach>
             </div>
             <div class="footCpy">
-                <font color="#cabdbf" size="2">
-                    Copyright © 2010-2017 福建省厦门集美大学
-                </font>
+                ${webFooter.copyrightText}
             </div>
         </div>
         <!--悬浮编辑栏-->

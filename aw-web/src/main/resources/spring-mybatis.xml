@@ -128,6 +128,7 @@
 
             <tx:method name="grant*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
             <tx:method name="un*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+            <tx:method name="init*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
 
             <tx:method name="*" propagation="REQUIRED" read-only="true"/>
         </tx:attributes>

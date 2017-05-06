@@ -2,12 +2,15 @@ package com.jmu.service.impl;
 
 import com.jmu.common.AjaxResponse;
 import com.jmu.dao.BaseSettingMapper;
+import com.jmu.dao.WebFooterMapper;
 import com.jmu.domain.BaseSetting;
+import com.jmu.domain.WebFooter;
+import com.jmu.domain.WebHeader;
 import com.jmu.service.InitWebService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @Description: 初始化公司编辑页面
@@ -20,14 +23,59 @@ public class InitWebServiceImpl implements InitWebService {
 
     @Autowired
     private BaseSettingMapper baseSettingMapper;
-
+    @Autowired
+    private WebFooterMapper webFooterMapper;
 
     @Override
     public AjaxResponse initWeb(String companyId,String modifier) {
 
         addWebBaseSetting(companyId,modifier);
+        addWebFooter(companyId,modifier);
         return AjaxResponse.success();
 
+    }
+
+    @Override
+    public AjaxResponse updateWeb(Map<String, BaseSetting> updateSettings, String userId) {
+
+        // 提取底部菜单栏配置并更新
+        WebFooter webFooter = new WebFooter();
+        BaseSetting webMenu = updateSettings.get("webMenu");
+        BaseSetting webLink = updateSettings.get("webLink");
+        BaseSetting webCopyRight = updateSettings.get("webCopyRight");
+        updateSettings.remove("webMenu");
+        updateSettings.remove("webLink");
+        updateSettings.remove("webCopyRight");
+
+        if(webMenu != null){
+            webFooter.setFooterId(webMenu.getBaseSettingId());
+            webFooter.setMenuSelectIds(webMenu.getBsValue());
+        }
+        if(webLink != null){
+            webFooter.setFooterId(webLink.getBaseSettingId());
+            webFooter.setLinkSelectIds(webLink.getBsValue());
+        }
+        if(webCopyRight != null){
+            webFooter.setFooterId(webCopyRight.getBaseSettingId());
+            webFooter.setCopyrightText(webCopyRight.getBsValue());
+        }
+        if(webFooter.getFooterId() != null){
+            webFooterMapper.updateByPrimaryKeySelective(webFooter);
+        }
+
+
+        // 获取基础配置并更新
+        List<BaseSetting> baseSettings = new ArrayList<BaseSetting>();
+        for (String key : updateSettings.keySet()) {
+            BaseSetting baseSetting = updateSettings.get(key);
+            baseSetting.setModifier(userId);
+            baseSetting.setModifyTime(new Date());
+            baseSettings.add(baseSetting);
+        }
+        if (!baseSettings.isEmpty()){
+            baseSettingMapper.batchUpdateByPrimaryKey(baseSettings);
+        }
+        return AjaxResponse.success();
     }
 
     /**
@@ -36,7 +84,7 @@ public class InitWebServiceImpl implements InitWebService {
      * @param modifier
      */
     private void addWebBaseSetting(String companyId,String modifier){
-        BaseSetting[] BaseSettings = new BaseSetting[41];
+        BaseSetting[] BaseSettings = new BaseSetting[51];
         // 基础信息
         // 1.1背景-背景
         BaseSettings[0] = new BaseSetting(UUID.randomUUID().toString().replace("-", ""),companyId,"bg-bg","bg_bg","default","#mainContent","",modifier);
@@ -106,16 +154,67 @@ public class InitWebServiceImpl implements InitWebService {
         BaseSettings [39] = new BaseSetting(UUID.randomUUID().toString().replace("-", ""),companyId,"menu","menu_selectItem_colorpicker","#cc0010","#webMenu .inner_menu ul li a:hover","background-color",modifier);
         // 5.1菜单栏长度
         BaseSettings [40] = new BaseSetting(UUID.randomUUID().toString().replace("-", ""),companyId,"menu","menu_widthSlider","80","#webMenu .inner_menu","width",modifier);
+        // 头部信息
+        // 1.1logo透明度
+        BaseSettings [41] = new BaseSetting(UUID.randomUUID().toString().replace("-", ""),companyId,"logo","opacity_logoSlider","100","#goloModal_pic .logoPic img","opacity",modifier);
+        // 1.2logo路径
+        BaseSettings [42] = new BaseSetting(UUID.randomUUID().toString().replace("-", ""),companyId,"logo","logoPic","/pic/sys/default/jmu-logo.png","#goloModal_pic .logoPic img","src",modifier);
+        // 1.3logo弧度
+        BaseSettings [43] = new BaseSetting(UUID.randomUUID().toString().replace("-", ""),companyId,"logo","radius_logoSlider","0","#goloModal_pic .logoPic img","border-radius",modifier);
+        // 1.4logo位置x
+        BaseSettings [44] = new BaseSetting(UUID.randomUUID().toString().replace("-", ""),companyId,"logo","logo_x","238","#goloModal_pic .logoPic img","left",modifier);
+        // 1.5logo位置y
+        BaseSettings [45] = new BaseSetting(UUID.randomUUID().toString().replace("-", ""),companyId,"logo","logo_y","12","#goloModal_pic .logoPic img","top",modifier);
+        // 1.6logo高度
+        BaseSettings [46] = new BaseSetting(UUID.randomUUID().toString().replace("-", ""),companyId,"logo","logo_height","75","#goloModal_pic .logoPic img","height",modifier);
+        // 1.7logo宽度
+        BaseSettings [47] = new BaseSetting(UUID.randomUUID().toString().replace("-", ""),companyId,"logo","logo_width","280","#goloModal_pic .logoPic img","width",modifier);
+        // 1.8标题
+        BaseSettings [48] = new BaseSetting(UUID.randomUUID().toString().replace("-", ""),companyId,"title","webTitle","<font size=\"7\" color=\"#f83a22\">集美大学</font>","#webTitle","html",modifier);
+        // 1.4标题位置x
+        BaseSettings [49] = new BaseSetting(UUID.randomUUID().toString().replace("-", ""),companyId,"title","title_x","650","#webTitle","left",modifier);
+        // 1.5标题位置y
+        BaseSettings [50] = new BaseSetting(UUID.randomUUID().toString().replace("-", ""),companyId,"title","title_y","-65","#webTitle","top",modifier);
+
+
+
+
 
         for(int i=0;i<BaseSettings.length;i++){
             baseSettingMapper.insertSelective(BaseSettings[i]);
         }
     }
 
+    /**
+     * 初始化网站底部栏
+     * @param companyId
+     * @param modifier
+     */
+    private void addWebFooter(String companyId,String modifier){
+        WebFooter webFooter = new WebFooter();
+        webFooter.setFooterId(UUID.randomUUID().toString().replace("-", ""));
+        webFooter.setCompanyId(companyId);
+        webFooter.setCopyrightText("<font color=\"#cabdbf\" size=\"2\">Copyright &copy; 2010-2017 福建省厦门集美大学</font>");
+        webFooter.setModifier(modifier);
+        webFooter.setLinkSelectIds("e09b490d6a364dd99b4046d827d74f04/ef7334b835da42fd9d79e2b834e62b65/4465a5934f4f4c04aa6ec3fee693f411/27d102bcb9da4c5486046560f3fbe0ac");
+        webFooter.setMenuSelectIds("e09b490d6a364dd99b4046d827d74f04/ef7334b835da42fd9d79e2b834e62b65/4465a5934f4f4c04aa6ec3fee693f411/27d102bcb9da4c5486046560f3fbe0ac");
+        webFooterMapper.insertSelective(webFooter);
+
+    }
+
+
+    private void addWebHeader(String companyId,String modifier){
+        WebHeader webHeader = new WebHeader();
+        webHeader.setHeaderId(UUID.randomUUID().toString().replace("-", ""));
+        webHeader.setCompanyId(companyId);
+        webHeader.setModifier(modifier);
+
+    }
+
 
 
     /**
-     * 初始化网站菜单栏目
+     * 初始化网站菜单栏目(系统)
      * @param companyId
      * @param modifier
      */

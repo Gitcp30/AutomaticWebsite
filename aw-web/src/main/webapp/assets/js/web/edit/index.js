@@ -16,6 +16,16 @@ seajs.use(['jquery', 'lodash','componentutils','baseSettingUtils', 'gridstack', 
 
     $(function () {
 
+
+        //  侧边栏初始化
+
+        function updateBS(key,value) {
+            // 保存更新
+            baseSettingUtils.baseSettingMap[key]['bsValue'] = value;
+            baseSettingUtils.updateBsMap[key] = baseSettingUtils.baseSettingMap[key];
+        }
+
+
         // 基础数据
         var baseSettingMap  = baseSettingUtils.baseSettingMap;
         // 1.1背景-背景
@@ -154,12 +164,59 @@ seajs.use(['jquery', 'lodash','componentutils','baseSettingUtils', 'gridstack', 
         $("#webMenu .inner_menu").css("width",menu_widthSlider_Data.bsValue + "%");
 
 
+        // 头部logo
+        var opacity_logoSlider_Data = baseSettingMap['opacity_logoSlider'];
+        var logoPic_Data = baseSettingMap['logoPic'];
+        var radius_logoSlider_Data = baseSettingMap['radius_logoSlider'];
+        var logo_x_Data = baseSettingMap['logo_x'];
+        var logo_y_Data = baseSettingMap['logo_y'];
+        var logo_height_Data = baseSettingMap['logo_height'];
+        var logo_width_Data = baseSettingMap['logo_width'];
+        var webTitle_Data = baseSettingMap['webTitle'];
+        var title_x_Data = baseSettingMap['title_x'];
+        var title_y_Data = baseSettingMap['title_y'];
+
+        $("#webLogo .weblogo-content img").attr("src",ctx+logoPic_Data.bsValue);
+        $("#webLogo .weblogo-content img").css("opacity",opacity_logoSlider_Data.bsValue/100);
+        $("#webLogo .weblogo-content img").css("border-radius",radius_logoSlider_Data.bsValue + "%");
+        $("#webLogo").css("left",logo_x_Data.bsValue+"px");
+        $("#webLogo").css("top",logo_y_Data.bsValue+"px");
+        $("#webLogo").css("height",logo_height_Data.bsValue);
+        $("#webLogo").css("width",logo_width_Data.bsValue);
+
+        $("#webTitle span").html(webTitle_Data.bsValue);
+        debugger
+        $("#webTitle").css("left",title_x_Data.bsValue+"px");
+        $("#webTitle").css("top",title_y_Data.bsValue+"px");
 //////////////////////////////////////////////////////////////////////////////
 
+        // logo设置
+        $("#webLogo").draggable({
+            containment: ".inner_header", scroll: false,
+            opacity: 0.35,
+            stop: function (event, ui) {
+                updateBS("logo_x",ui.position.left);
+                updateBS("logo_y",ui.position.top);
 
+            }
+        });
+        $("#webLogo").resizable({
+            stop: function(event, ui) {
+                debugger
+                updateBS("logo_height",ui.size.height);
+                updateBS("logo_width",ui.size.width);
+            }
+        });
 
-
-
+        // title设置
+        $("#webTitle").draggable({
+            containment: ".inner_header", scroll: false,
+            opacity: 0.35,
+            stop: function (event, ui) {
+                updateBS("title_x",ui.position.left);
+                updateBS("title_y",ui.position.top);
+            }
+        });
 
 
 
@@ -173,32 +230,12 @@ seajs.use(['jquery', 'lodash','componentutils','baseSettingUtils', 'gridstack', 
          * 底部编辑栏点击确定
          */
         $("a[data-target=#footerModal]").on("click", function () {
-            var copyrightHtml = $("#webFooter div.footCpy").html();
-            $("#copyright-editor").html(copyrightHtml);
+            /*var copyrightHtml = $("#webFooter div.footCpy").html();
+            $("#copyright-editor").html(copyrightHtml);*/
         });
 
 
-        /**
-         * logo设置
-         */
-        $("#webLogo").draggable({
-            containment: ".inner_header", scroll: false,
-            opacity: 0.35,
-            stop: function (event, ui) {
-                //   debugger
-            }
-        });
-        $("#webLogo").resizable();
 
-        /*
-         * title设置
-         */
-        $("#webTitle").draggable({
-            containment: ".inner_header", scroll: false,
-            stop: function (event, ui) {
-                //   debugger
-            }
-        });
 
         // 第一种布局
         var serialized_data = [

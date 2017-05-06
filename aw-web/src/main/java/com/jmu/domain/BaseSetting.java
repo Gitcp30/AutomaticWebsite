@@ -79,6 +79,11 @@ public class BaseSetting implements Serializable {
     public BaseSetting() {
     }
 
+    public BaseSetting(String baseSettingId, String bsValue) {
+        this.baseSettingId = baseSettingId;
+        this.bsValue = bsValue;
+    }
+
     public BaseSetting(String baseSettingId, String companyId, String type, String bsName, String bsValue, String bsTarget, String bsCss, String modifier) {
         this.baseSettingId = baseSettingId;
         this.companyId = companyId;

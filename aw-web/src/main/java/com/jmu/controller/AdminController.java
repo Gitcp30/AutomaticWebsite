@@ -3,6 +3,7 @@ package com.jmu.controller;
 import com.jmu.domain.User;
 import com.jmu.service.BaseSettingService;
 import com.jmu.service.InitWebService;
+import com.jmu.service.WebColumnService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,8 @@ public class AdminController {
     private InitWebService initWebService;
     @Autowired
     private BaseSettingService baseSettingService;
+    @Autowired
+    private WebColumnService webColumnService;
 
     /**
      *  进入admin界面
@@ -84,6 +87,17 @@ public class AdminController {
         Map map = baseSettingService.getBaseSettings("222");
         return "web/edit/edit";
     }
+
+
+    @RequestMapping(value = "/addWebColumn",method= RequestMethod.GET)
+    public String addWebColumn(){
+        webColumnService.addWebMenuItem("system","admin");
+        return "web/edit/edit";
+    }
+
+
+
+
 
 
     /**

@@ -1198,8 +1198,8 @@
                                                                data-rel="picModal_colorbox">
                                                                 <i class="ace-icon fa fa-search-plus"></i>
                                                             </a>
-                                                            <a href="#" data-target="tocancel">
-                                                                <i class="ace-icon fa fa-trash-o"></i>
+                                                            <a href="#" data-target="toadd">
+                                                                <i class="ace-icon fa  fa-check-square-o"></i>
                                                             </a>
                                                         </div>
                                                     </div>
@@ -1575,22 +1575,23 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <select multiple="multiple" size="10" name="footer_column" style="height: 220px;">
-                                <option value="首页">首页</option>
-                                <option value="关于我们">关于我们</option>
-                                <option value="联系我们" selected="selected">联系我们</option>
-                                <option value="留言板">留言板</option>
-                                <option value="会员登录">会员登录</option>
-                                <option value="会员注册" selected="selected">会员注册</option>
-                                <option value="新闻动态">新闻动态</option>
-                                <option value="产品展示">产品展示</option>
-                                <option value="法律声明">法律声明</option>
+                                <c:forEach items="${requestScope.sysMenuColumns}" var="menuCol">
+                                    <c:choose>
+                                    <c:when test="${menuCol.isFooterLink== true}">
+                                        <option value="${menuCol.columnName}" OpId="${menuCol.columnId}" OpHref="${menuCol.url}" selected="selected">${menuCol.columnName}</option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option value="${menuCol.columnName}" OpId="${menuCol.columnId}" OpHref="${menuCol.url}">${menuCol.columnName}</option>
+                                    </c:otherwise>
+                                </c:choose>
+                                </c:forEach>
                             </select>
                         </div>
                     </div>
                 </div>
                 <!-- 版权信息-->
                 <div id="footerModal_copyright" class="tab-pane">
-                    <div class="wysiwyg-editor" id="copyright-editor"></div>
+                    <div class="wysiwyg-editor" id="copyright-editor">${webFooter.copyrightText}</div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -1629,9 +1630,8 @@
                 <div id="goloModal_pic" class="tab-pane in active">
                     <div class="row">
                         <div class="col-xs-12 col-sm-5">
-                            <div class="logoPic" style="height: 150px;border: 1px dashed gray">
-                                <img src="${ctx}/assets/image/pic7.jpg" height="100%" width="100%"
-                                     style=" border-radius:0%;">
+                            <div class="logoPic">
+                                <img src="#" height="150" width="130"/>
                             </div>
                         </div>
 
@@ -1688,7 +1688,7 @@
                 </ul>
             </div>
             <div class="tab-content" style="border: 0;">
-                <!--设置图片-->
+
                 <div id="titleModal_title" class="tab-pane in active">
                     <div class="wysiwyg-editor" id="title-editor"></div>
                 </div>
@@ -1735,7 +1735,7 @@
                         <div class="col-sm-12">
                             <div class="dd dd-draghandle">
                                 <ol class="dd-list">
-                                    <li class="dd-item dd2-item" data-id="13">
+                                   <%-- <li class="dd-item dd2-item" data-id="13">
                                         <div class="dd-handle dd2-handle">
                                             <i class="normal-icon ace-icon fa fa-user red bigger-130"></i>
 
@@ -1760,21 +1760,42 @@
                                             </div>
 
                                         </div>
-                                    </li>
-                                    <li class="dd-item dd2-item" data-id="14">
+                                    </li>--%>
+                                   <c:forEach items="${requestScope.sysMenuColumns}" var="menuCol">
+                                    <li class="dd-item dd2-item" data-id="${menuCol.columnId}" data-href="${menuCol.url}">
                                         <div class="dd-handle dd2-handle">
-                                            <i class="normal-icon ace-icon fa fa-cogs blue bigger-130"></i>
-
-                                            <i class="drag-icon ace-icon fa fa-arrows bigger-125"></i>
+                                            <c:if test="${menuCol.columnType == 0 }">
+                                                <i class="normal-icon ace-icon fa fa-cogs blue bigger-130"></i>
+                                                <i class="drag-icon ace-icon fa fa-arrows bigger-125"></i>
+                                            </c:if>
+                                            <c:if test="${menuCol.columnType == 1 }">
+                                                <i class="normal-icon ace-icon fa fa-user red bigger-130"></i>
+                                                <i class="drag-icon ace-icon fa fa-arrows bigger-125"></i>
+                                            </c:if>
                                         </div>
                                         <div class="dd2-content">
                                             <div class="row">
-                                                <div class="col-sm-4">留言板</div>
-                                                <div class="col-sm-4">用户栏目</div>
+                                                <div class="col-sm-4">${menuCol.columnName}</div>
+                                                <c:if test="${menuCol.columnType == 0 }">
+                                                    <div class="col-sm-4">系统栏目</div>
+                                                </c:if>
+                                                <c:if test="${menuCol.columnType == 1 }">
+                                                    <div class="col-sm-4">用户栏目</div>
+                                                </c:if>
                                                 <div class="col-sm-3 pull-right action-buttons">
-                                                    <a class="red" href="#">
-                                                        <i class="ace-icon fa fa-close bigger-110"></i>
-                                                    </a>
+                                                    <c:choose>
+                                                        <c:when test="${menuCol.isMenu== true}">
+                                                            <a class="green" href="#">
+                                                                <i class="ace-icon fa fa-check bigger-110"></i>
+                                                            </a>
+
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <a class="red" href="#">
+                                                                <i class="ace-icon fa fa-close bigger-110"></i>
+                                                            </a>
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                     <a class="blue" href="#" data-toggle="modal" data-target="#bannerModal">
                                                         <i class="ace-icon fa fa-pencil bigger-130"></i>
                                                     </a>
@@ -1786,131 +1807,7 @@
                                             </div>
                                         </div>
                                     </li>
-                                    <li class="dd-item dd2-item" data-id="14">
-                                        <div class="dd-handle dd2-handle">
-                                            <i class="normal-icon ace-icon fa fa-cogs blue bigger-130"></i>
-
-                                            <i class="drag-icon ace-icon fa fa-arrows bigger-125"></i>
-                                        </div>
-                                        <div class="dd2-content">
-                                            <div class="row">
-                                                <div class="col-sm-4">关于我们</div>
-                                                <div class="col-sm-4">用户栏目</div>
-                                                <div class="col-sm-3 pull-right action-buttons">
-                                                    <a class="red" href="#">
-                                                        <i class="ace-icon fa fa-close bigger-110"></i>
-                                                    </a>
-                                                    <a class="blue" href="#" data-toggle="modal" data-target="#bannerModal">
-                                                        <i class="ace-icon fa fa-pencil bigger-130"></i>
-                                                    </a>
-
-                                                    <a class="red" href="#">
-                                                        <i class="ace-icon fa fa-trash-o bigger-130"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="dd-item dd2-item" data-id="14">
-                                        <div class="dd-handle dd2-handle">
-                                            <i class="normal-icon ace-icon fa fa-cogs blue bigger-130"></i>
-
-                                            <i class="drag-icon ace-icon fa fa-arrows bigger-125"></i>
-                                        </div>
-                                        <div class="dd2-content">
-                                            <div class="row">
-                                                <div class="col-sm-4">联系我们</div>
-                                                <div class="col-sm-4">用户栏目</div>
-                                                <div class="col-sm-3 pull-right action-buttons">
-                                                    <a class="red" href="#">
-                                                        <i class="ace-icon fa fa-close bigger-110"></i>
-                                                    </a>
-                                                    <a class="blue" href="#" data-toggle="modal" data-target="#bannerModal">
-                                                        <i class="ace-icon fa fa-pencil bigger-130"></i>
-                                                    </a>
-
-                                                    <a class="red" href="#">
-                                                        <i class="ace-icon fa fa-trash-o bigger-130"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="dd-item dd2-item" data-id="14">
-                                        <div class="dd-handle dd2-handle">
-                                            <i class="normal-icon ace-icon fa fa-cogs blue bigger-130"></i>
-
-                                            <i class="drag-icon ace-icon fa fa-arrows bigger-125"></i>
-                                        </div>
-                                        <div class="dd2-content">
-                                            <div class="row">
-                                                <div class="col-sm-4">会员登录</div>
-                                                <div class="col-sm-4">用户栏目</div>
-                                                <div class="col-sm-3 pull-right action-buttons">
-                                                    <a class="red" href="#">
-                                                        <i class="ace-icon fa fa-close bigger-110"></i>
-                                                    </a>
-                                                    <a class="blue" href="#" data-toggle="modal" data-target="#bannerModal">
-                                                        <i class="ace-icon fa fa-pencil bigger-130"></i>
-                                                    </a>
-
-                                                    <a class="red" href="#">
-                                                        <i class="ace-icon fa fa-trash-o bigger-130"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="dd-item dd2-item" data-id="14">
-                                        <div class="dd-handle dd2-handle">
-                                            <i class="normal-icon ace-icon fa fa-cogs blue bigger-130"></i>
-
-                                            <i class="drag-icon ace-icon fa fa-arrows bigger-125"></i>
-                                        </div>
-                                        <div class="dd2-content">
-                                            <div class="row">
-                                                <div class="col-sm-4">新闻资讯</div>
-                                                <div class="col-sm-4">用户栏目</div>
-                                                <div class="col-sm-3 pull-right action-buttons">
-                                                    <a class="red" href="#">
-                                                        <i class="ace-icon fa fa-close bigger-110"></i>
-                                                    </a>
-                                                    <a class="blue" href="#" data-toggle="modal" data-target="#bannerModal">
-                                                        <i class="ace-icon fa fa-pencil bigger-130"></i>
-                                                    </a>
-
-                                                    <a class="red" href="#">
-                                                        <i class="ace-icon fa fa-trash-o bigger-130"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="dd-item dd2-item" data-id="14">
-                                        <div class="dd-handle dd2-handle">
-                                            <i class="normal-icon ace-icon fa fa-cogs blue bigger-130"></i>
-
-                                            <i class="drag-icon ace-icon fa fa-arrows bigger-125"></i>
-                                        </div>
-                                        <div class="dd2-content">
-                                            <div class="row">
-                                                <div class="col-sm-4">产品展示</div>
-                                                <div class="col-sm-4">用户栏目</div>
-                                                <div class="col-sm-3 pull-right action-buttons">
-                                                    <a class="red" href="#">
-                                                        <i class="ace-icon fa fa-close bigger-110"></i>
-                                                    </a>
-                                                    <a class="blue" href="#" data-toggle="modal" data-target="#bannerModal">
-                                                        <i class="ace-icon fa fa-pencil bigger-130"></i>
-                                                    </a>
-
-                                                    <a class="red" href="#">
-                                                        <i class="ace-icon fa fa-trash-o bigger-130"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
+                                   </c:forEach>
                                 </ol>
                             </div>
                         </div>
