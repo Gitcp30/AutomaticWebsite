@@ -34,6 +34,8 @@ public class EditPageController {
     private WebFooterService webFooterService;
     @Autowired
     private InitWebService initWebService;
+    @Autowired
+    private WebBannerImgService webBannerImgService;
 
     /**
      *  进入编辑界面
@@ -43,7 +45,7 @@ public class EditPageController {
     public String editPage(Map<String, Object> map,HttpSession session){
         User user = (User) session.getAttribute("currentUser");
 
-        List list = sysPictureService.getAll("sys");
+        List list = sysPictureService.getAll("sys",user);
         List<WebColumn> webColumnList = webColumnService.getSelectByCompanyId(user.getCompanyId(),(short)0);
         map.put("sysPics",list);
         map.put("sysMenuColumns",webColumnList);
@@ -59,8 +61,12 @@ public class EditPageController {
         User user = (User) session.getAttribute("currentUser");
         List<WebColumn> webColumnList = webColumnService.getSelectByCompanyId(user.getCompanyId(),(short)0);
         WebFooter webFooter =webFooterService.findByCompanyId(user.getCompanyId());
+        List<WebBannerImg> webBannerImgList = webBannerImgService.findAll(user.getCompanyId());
+
+
         map.put("webColumnList",webColumnList);
         map.put("webFooter",webFooter);
+        map.put("webBannerImgList",webBannerImgList);
         return "web/edit/index";
     }
 
@@ -89,6 +95,10 @@ public class EditPageController {
         map.put("webMenu",webMenuBaseSetting);
         map.put("webLink",webLinkBaseSetting);
         map.put("webCopyRight",webCopyRightBaseSetting);
+
+        // 设置横幅配置信息
+        BaseSetting bannerImg = webBannerImgService.findAllByCompanyId(company.getCompanyId());
+        map.put("bannerImg",bannerImg);
         return map;
     }
 
@@ -104,7 +114,7 @@ public class EditPageController {
     public AjaxResponse updateSettings(@RequestBody Map<String,BaseSetting> updateSettings, HttpSession session){
         // seesion获取公司ID
         User user = (User) session.getAttribute("currentUser");
-        return initWebService.updateWeb(updateSettings,user.getUserId());
+        return initWebService.updateWeb(updateSettings,user);
     }
 
 

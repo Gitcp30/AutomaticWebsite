@@ -2,10 +2,12 @@ package com.jmu.service.impl;
 
 import com.jmu.common.AjaxResponse;
 import com.jmu.dao.BaseSettingMapper;
+import com.jmu.dao.WebBannerImgMapper;
 import com.jmu.dao.WebFooterMapper;
 import com.jmu.domain.BaseSetting;
+import com.jmu.domain.User;
+import com.jmu.domain.WebBannerImg;
 import com.jmu.domain.WebFooter;
-import com.jmu.domain.WebHeader;
 import com.jmu.service.InitWebService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,42 +27,62 @@ public class InitWebServiceImpl implements InitWebService {
     private BaseSettingMapper baseSettingMapper;
     @Autowired
     private WebFooterMapper webFooterMapper;
+    @Autowired
+    private WebBannerImgMapper webBannerImgMapper;
 
     @Override
     public AjaxResponse initWeb(String companyId,String modifier) {
 
         addWebBaseSetting(companyId,modifier);
         addWebFooter(companyId,modifier);
+        addBannerImg(companyId,modifier);
         return AjaxResponse.success();
 
     }
 
     @Override
-    public AjaxResponse updateWeb(Map<String, BaseSetting> updateSettings, String userId) {
+    public AjaxResponse updateWeb(Map<String, BaseSetting> updateSettings, User user) {
 
         // 提取底部菜单栏配置并更新
         WebFooter webFooter = new WebFooter();
         BaseSetting webMenu = updateSettings.get("webMenu");
         BaseSetting webLink = updateSettings.get("webLink");
         BaseSetting webCopyRight = updateSettings.get("webCopyRight");
-        updateSettings.remove("webMenu");
-        updateSettings.remove("webLink");
-        updateSettings.remove("webCopyRight");
+
 
         if(webMenu != null){
             webFooter.setFooterId(webMenu.getBaseSettingId());
             webFooter.setMenuSelectIds(webMenu.getBsValue());
+            updateSettings.remove("webMenu");
         }
         if(webLink != null){
             webFooter.setFooterId(webLink.getBaseSettingId());
             webFooter.setLinkSelectIds(webLink.getBsValue());
+            updateSettings.remove("webLink");
         }
         if(webCopyRight != null){
             webFooter.setFooterId(webCopyRight.getBaseSettingId());
             webFooter.setCopyrightText(webCopyRight.getBsValue());
+            updateSettings.remove("webCopyRight");
         }
         if(webFooter.getFooterId() != null){
             webFooterMapper.updateByPrimaryKeySelective(webFooter);
+        }
+
+        // 更新横幅
+        BaseSetting webBanner = updateSettings.get("bannerImg");
+
+        if(webBanner != null){
+            updateSettings.remove("bannerImg");
+            if(webBanner.getBsValue() != ""){
+                List<WebBannerImg> webBannerImgList = new ArrayList<WebBannerImg>();
+                String[] imgs = webBanner.getBsValue().split(",");
+                for(int i=0;i<imgs.length;i++){
+                    webBannerImgList.add(new WebBannerImg(UUID.randomUUID().toString().replace("-", ""),user.getCompanyId(),imgs[i],"#",user.getUserId()));
+                }
+                webBannerImgMapper.deleteByCompanyId(user.getCompanyId());
+                webBannerImgMapper.batchInsert(webBannerImgList);
+            }
         }
 
 
@@ -68,7 +90,7 @@ public class InitWebServiceImpl implements InitWebService {
         List<BaseSetting> baseSettings = new ArrayList<BaseSetting>();
         for (String key : updateSettings.keySet()) {
             BaseSetting baseSetting = updateSettings.get(key);
-            baseSetting.setModifier(userId);
+            baseSetting.setModifier(user.getUserId());
             baseSetting.setModifyTime(new Date());
             baseSettings.add(baseSetting);
         }
@@ -84,7 +106,7 @@ public class InitWebServiceImpl implements InitWebService {
      * @param modifier
      */
     private void addWebBaseSetting(String companyId,String modifier){
-        BaseSetting[] BaseSettings = new BaseSetting[51];
+        BaseSetting[] BaseSettings = new BaseSetting[55];
         // 基础信息
         // 1.1背景-背景
         BaseSettings[0] = new BaseSetting(UUID.randomUUID().toString().replace("-", ""),companyId,"bg-bg","bg_bg","default","#mainContent","",modifier);
@@ -176,6 +198,15 @@ public class InitWebServiceImpl implements InitWebService {
         // 1.5标题位置y
         BaseSettings [50] = new BaseSetting(UUID.randomUUID().toString().replace("-", ""),companyId,"title","title_y","-65","#webTitle","top",modifier);
 
+        // 横幅基本配置
+        // 1.1横幅样式
+        BaseSettings [51] = new BaseSetting(UUID.randomUUID().toString().replace("-", ""),companyId,"banner","banner_pattern","arrowSilde","#bannerModal_pattern .imgBorder","",modifier);
+        // 1.2横幅滚动
+        BaseSettings [52] = new BaseSetting(UUID.randomUUID().toString().replace("-", ""),companyId,"banner","banner_animation","fold","#bannerModal_animation","effect",modifier);
+        // 1.3横幅展示时间
+        BaseSettings [53] = new BaseSetting(UUID.randomUUID().toString().replace("-", ""),companyId,"banner","bannerModal_interTimeSpinner","2500","#banner","interTime",modifier);
+        // 1.4动画切换时间
+        BaseSettings [54] = new BaseSetting(UUID.randomUUID().toString().replace("-", ""),companyId,"banner","bannerModal_delayTimeSpinner","500","#banner","delayTime",modifier);
 
 
 
@@ -203,24 +234,18 @@ public class InitWebServiceImpl implements InitWebService {
     }
 
 
-    private void addWebHeader(String companyId,String modifier){
-        WebHeader webHeader = new WebHeader();
-        webHeader.setHeaderId(UUID.randomUUID().toString().replace("-", ""));
-        webHeader.setCompanyId(companyId);
-        webHeader.setModifier(modifier);
+    private void addBannerImg(String companyId,String modifier){
+        List<WebBannerImg> webBannerImgList = new ArrayList<WebBannerImg>();
+        WebBannerImg banner1 = new WebBannerImg(UUID.randomUUID().toString().replace("-", ""),companyId,"/pic/sys/PictureLibrary/banner-3.jpg","#",modifier);
+        WebBannerImg banner2 = new WebBannerImg(UUID.randomUUID().toString().replace("-", ""),companyId,"/pic/sys/PictureLibrary/banner-4.jpg","#",modifier);
+        WebBannerImg banner3 = new WebBannerImg(UUID.randomUUID().toString().replace("-", ""),companyId,"/pic/sys/PictureLibrary/banner-5.jpg","#",modifier);
+        webBannerImgList.add(banner1);
+        webBannerImgList.add(banner2);
+        webBannerImgList.add(banner3);
+        webBannerImgMapper.batchInsert(webBannerImgList);
 
     }
 
-
-
-    /**
-     * 初始化网站菜单栏目(系统)
-     * @param companyId
-     * @param modifier
-     */
-    private void addWebMenuItem(String companyId,String modifier){
-
-    }
 
 
 }

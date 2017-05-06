@@ -1,5 +1,7 @@
 package com.jmu.service;
 
+import com.jmu.domain.User;
+
 import java.util.List;
 
 /**
@@ -7,5 +9,5 @@ import java.util.List;
  */
 public interface SysPictureService {
 
-    List getAll(String companyId);
+    List getAll(String companyId,User user);
 }

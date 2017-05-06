@@ -188,6 +188,7 @@ seajs.use(['jquery', 'lodash','componentutils','baseSettingUtils', 'gridstack', 
         debugger
         $("#webTitle").css("left",title_x_Data.bsValue+"px");
         $("#webTitle").css("top",title_y_Data.bsValue+"px");
+
 //////////////////////////////////////////////////////////////////////////////
 
         // logo设置

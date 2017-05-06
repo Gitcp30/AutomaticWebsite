@@ -1287,148 +1287,46 @@
                                 <!-- PAGE CONTENT BEGINS -->
                                 <div class="toSelectGallery">
                                     <ul class="ace-thumbnails clearfix">
-                                        <!-- 第一种表现形式（暂时不用）-->
-                                        <!--<li>
-                                            <a href="assets/images/gallery/thumb-1.jpg" title="Photo Title" data-rel="colorbox">
-                                                <img width="120" height="80" alt="150x150" src="assets/images/gallery/thumb-1.jpg" />
-                                                <div class="tags">
-                                                    <span class="label-holder">
-                                                        <span class="label label-success arrowed">使用</span>
-                                                    </span>
-                                                </div>
-                                            </a>
-                                            <div class="tools tools-top">
-                                                <a href="#">
-                                                    <i class="ace-icon fa fa-link"></i>
-                                                </a>
-
-                                                <a href="#">
-                                                    <i class="ace-icon fa fa-paperclip"></i>
-                                                </a>
-
-                                                <a href="#">
-                                                    <i class="ace-icon fa fa-pencil"></i>
-                                                </a>
-
-                                                <a href="#">
-                                                    <i class="ace-icon fa fa-times red"></i>
-                                                </a>
-                                            </div>
-
-                                        </li>-->
-                                        <li>
-                                            <div>
-                                                <img width="140" height="80" alt="150x150"
-                                                     src="${ctx}/static/images/gallery/image-1.jpg"/>
-                                                <!--右下角使用标签 -->
-                                                <div class="tags">
-															<span class="label-holder">
+                                        <c:forEach items="${requestScope.sysPics}" var="pic">
+                                            <li>
+                                                <div>
+                                                    <img width="140" height="80" alt="150x150"
+                                                         src="${ctx}${pic.pictureUrl}"/>
+                                                    <!--右下角使用标签 -->
+                                                    <div class="tags">
+															<c:if test="${pic.isSelected == true}">
+                                                                <span class="label-holder">
 																<span class="label label-success arrowed">使用</span>
-															</span>
-                                                </div>
-                                                <!-- 鼠标悬浮操作-->
-                                                <div class="text">
-                                                    <div class="inner">
-                                                        <!--<span>Some Title!</span>-->
-                                                        <br/>
-                                                        <a href="${ctx}/static/images/gallery/image-1.jpg"
-                                                           data-rel="colorbox">
-                                                            <i class="ace-icon fa fa-search-plus"></i>
-                                                        </a>
-                                                        <a href="#" data-target="todelete">
-                                                            <i class="ace-icon fa fa-trash-o"></i>
-                                                        </a>
+                                                            </c:if>
+                                                    </div>
+                                                    <!-- 鼠标悬浮操作-->
+                                                    <div class="text">
+                                                        <div class="inner">
+                                                            <!--<span>Some Title!</span>-->
+                                                            <br/>
+                                                            <c:choose>
+                                                                <c:when test="${pic.isSelected == true}">
+                                                                    <a href="${ctx}${pic.pictureUrl}"data-rel="colorbox">
+                                                                        <i class="ace-icon fa fa-search-plus"></i>
+                                                                    </a>
+                                                                    <a href="#" data-target="todelete">
+                                                                        <i class="ace-icon fa fa-trash-o"></i>
+                                                                    </a>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <a href="${ctx}${pic.pictureUrl}" data-rel="colorbox">
+                                                                        <i class="ace-icon fa fa-search-plus"></i>
+                                                                    </a>
+                                                                    <a href="#" data-target="toadd">
+                                                                        <i class="ace-icon fa  fa-check-square-o"></i>
+                                                                    </a>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div>
-                                                <img width="140" height="80" alt="150x150"
-                                                     src="${ctx}/static/images/gallery/image-2.jpg"/>
-                                                <!--右下角使用标签 -->
-                                                <div class="tags"></div>
-                                                <!-- 鼠标悬浮操作-->
-                                                <div class="text">
-                                                    <div class="inner">
-                                                        <!--<span>Some Title!</span>-->
-                                                        <br/>
-                                                        <a href="${ctx}/static/images/gallery/image-2.jpg"
-                                                           data-rel="colorbox">
-                                                            <i class="ace-icon fa fa-search-plus"></i>
-                                                        </a>
-                                                        <a href="#" data-target="toadd">
-                                                            <i class="ace-icon fa  fa-check-square-o"></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div>
-                                                <img width="140" height="80" alt="150x150"
-                                                     src="${ctx}/static/images/gallery/image-3.jpg"/>
-                                                <!--右下角使用标签 -->
-                                                <div class="tags"></div>
-                                                <!-- 鼠标悬浮操作-->
-                                                <div class="text">
-                                                    <div class="inner">
-                                                        <!--<span>Some Title!</span>-->
-                                                        <br/>
-                                                        <a href="${ctx}/static/images/gallery/image-3.jpg"
-                                                           data-rel="colorbox">
-                                                            <i class="ace-icon fa fa-search-plus"></i>
-                                                        </a>
-                                                        <a href="#" data-target="toadd">
-                                                            <i class="ace-icon fa  fa-check-square-o"></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div>
-                                                <img width="140" height="80" alt="150x150"
-                                                     src="${ctx}/static/images/gallery/image-4.jpg"/>
-                                                <!--右下角使用标签 -->
-                                                <div class="tags"></div>
-                                                <!-- 鼠标悬浮操作-->
-                                                <div class="text">
-                                                    <div class="inner">
-                                                        <!--<span>Some Title!</span>-->
-                                                        <br/>
-                                                        <a href="${ctx}/static/images/gallery/image-4.jpg"
-                                                           data-rel="colorbox">
-                                                            <i class="ace-icon fa fa-search-plus"></i>
-                                                        </a>
-                                                        <a href="#" data-target="toadd">
-                                                            <i class="ace-icon fa  fa-check-square-o"></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div>
-                                                <img width="140" height="80" alt="150x150"
-                                                     src="${ctx}/static/images/gallery/image-5.jpg"/>
-                                                <!--右下角使用标签 -->
-                                                <div class="tags"></div>
-                                                <!-- 鼠标悬浮操作-->
-                                                <div class="text">
-                                                    <div class="inner">
-                                                        <!--<span>Some Title!</span>-->
-                                                        <br/>
-                                                        <a href="assets/images/gallery/image-5.jpg" data-rel="colorbox">
-                                                            <i class="ace-icon fa fa-search-plus"></i>
-                                                        </a>
-                                                        <a href="#" data-target="toadd">
-                                                            <i class="ace-icon fa  fa-check-square-o"></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
+                                            </li>
+                                        </c:forEach>
 
                                     </ul>
                                 </div>
@@ -1443,6 +1341,25 @@
                             <div class="col-sm-12">
                                 <ul id="bannerModal_common_selectedIMG" class="ace-thumbnails">
                                     <!--<li class="ui-state-disabled" style="border: 1px dashed black;">+</li>-->
+                                    <c:forEach items="${requestScope.sysPics}" var="pic">
+                                        <c:if test="${pic.isSelected == true}">
+                                        <li>
+                                            <div class="selectImg">
+                                                <img src="${ctx}${pic.pictureUrl}" />
+                                                <div class="text">
+                                                    <div class="inner">
+                                                        <a href="#">
+                                                            <i class="ace-icon fa fa-link"></i>
+                                                        </a>
+                                                        <a href="#" data-target="todelete">
+                                                            <i class="ace-icon fa fa-trash-o"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        </c:if>
+                                    </c:forEach>
                                 </ul>
                             </div>
                         </div>
@@ -1462,7 +1379,7 @@
                     <div id="bannerModal_pattern" class="tab-pane" style="height:100px;">
                         <div class="switch-style-panel">
                             <div class="slide">
-                                <div id="numSilde" class="imgBorder imgBorderDown">
+                                <div id="numSilde" class="imgBorder">
                                     <div class="slide_img"></div>
                                     <div class="f-checked"></div>
                                 </div>
@@ -1479,7 +1396,7 @@
                     </div>
                     <div id="bannerModal_animation" class="tab-pane" style="height: 150px;">
                         <div class="animationSetting">
-                            <div class="effect imgBorderDown" data-effect="fold">
+                            <div class="effect" data-effect="fold">
                                 <div class="imgBorder" effectid="0">
                                     <div class="effect_img effect_img0"></div>
                                 </div>
@@ -1535,7 +1452,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button id="bannerModal_footer_commitbtn" type="button" class="btn btn-primary" data-dismiss="modal">
+                <button id="bannerModal_footer_commitbtn" type="button" class="btn btn-primary">
                     提交更改
                 </button>
             </div>

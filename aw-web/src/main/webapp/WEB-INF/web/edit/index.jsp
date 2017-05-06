@@ -123,7 +123,7 @@
             right: 5px;
             bottom: 5px;
             z-index: 1;
-            display: none;
+            /*display: none;*/
         }
 
         .slideBox .hd ul {
@@ -386,25 +386,19 @@
         <div id="slideBox" class="slideBox">
             <div class="hd">
                 <ul>
-                    <li>1</li>
-                    <li>2</li>
-                    <li>3</li>
+                    <c:forEach items="${requestScope.webBannerImgList}" var="bannerImg" varStatus="idx">
+                        <li>${idx.index+1}</li>
+                    </c:forEach>
                 </ul>
             </div>
             <div class="bd">
                 <ul style="margin: 0;">
-                    <li>
-                        <a href="#" target="_blank"><img
-                                src="${ctx}/pic/sys/default/banner-1.png"/></a>
-                    </li>
-                    <li>
-                        <a href="#" target="_blank"><img
-                                src="${ctx}/pic/sys/default/banner-2.png"/></a>
-                    </li>
-                    <li>
-                        <a href="#" target="_blank"><img
-                                src="${ctx}/pic/sys/default/banner-3.png"/></a>
-                    </li>
+                    <c:forEach items="${requestScope.webBannerImgList}" var="bannerImg">
+                        <li>
+                            <a href="${bannerImg.picUrl}" target="_blank">
+                                <img  src="${ctx}${bannerImg.bannerPic}"/></a>
+                        </li>
+                    </c:forEach>
                 </ul>
             </div>
 

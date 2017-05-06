@@ -85,7 +85,7 @@ public class AdminController {
     public String auditingPass(){
         initWebService.initWeb("222","111");
         Map map = baseSettingService.getBaseSettings("222");
-        return "web/edit/edit";
+        return "web/edit/aaa";
     }
 
 
