@@ -93,7 +93,7 @@ define(function(require, exports) {
      * @returns {string}
      */
         exports.memberLogin = function(){
-     	return  '<div class="row user_login">'
+     	return  '<div class="row user_login" componentId="component_login">'
                +'<div class="col-sm-12" style="border-right:1px solid #ddd;">'
               + '<div class="well col-sm-12">'
 			  + '<h3>用户登录</h3>'
@@ -120,7 +120,7 @@ define(function(require, exports) {
 			debugger
             Template7.registerPartial(
                 'begin',
-                '<div class="row bulletinBoard">'+
+                '<div class="row bulletinBoard" componentId="component_bulletinBoard">'+
                 '<div class="col-xs-12">'+
                 '<div class="panel panel-default">'+
                 '<div class="panel-heading"> <span class="glyphicon glyphicon-list-alt"></span><b>公告板</b></div>'+

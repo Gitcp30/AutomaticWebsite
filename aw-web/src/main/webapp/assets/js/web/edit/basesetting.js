@@ -9,7 +9,6 @@ define(function(require, exports, module) {
 
     exports.updateBsMap = {};
 
-
     exports.getBaseSettings = function () {
         var basesettingMap = '';
             $.ajax({

@@ -4,14 +4,6 @@
 seajs.use(['jquery', 'lodash','componentutils','baseSettingUtils', 'gridstack', 'jquery.SuperSlide','jquery.newsbox'], function ($, _,componentUtils,baseSettingUtils) {
 
 
-    var options = {
-        auto: false,
-        float: true,
-        vertical_margin: 0,
-        cell_height: 10,
-        always_show_resize_handle: false
-
-    };
 
 
     $(function () {
@@ -249,19 +241,118 @@ seajs.use(['jquery', 'lodash','componentutils','baseSettingUtils', 'gridstack', 
 
         //////////////////////////////////////////////////////////////////////////////
 
+        $(".styleDesignBtnContainer button.btn-info").on("click", function () {
+            getContentData();
+            debugger
+            $.ajax({
+                type: "POST",
+                url: ctx + "/web/edit/updateSettings",
+                data: JSON.stringify(baseSettingUtils.updateBsMap),
+                contentType: "application/json",
+                cache: false,
+                success: function (res) {
+                    if (res == null) {
+                        alert("获取系统配置出错了");
+                    } else {
+                        basesettingMap = res;
+                    }
+                }, error: function () {
+                    alert("获取系统配置出错了");
+                }
+            });
+        });
+
+        function getContentData() {
+           var data =  gridMethod.save_grid();
+           $.each(data,function (index,obj) {
+               baseSettingUtils.updateBsMap["qw"+index] = obj;
+           });
+        }
+
+
+
+        //////////////////////////////////////////////////////////////////////////////
+        var options = {
+            auto: false,
+            float: true,
+            vertical_margin: 0,
+            cell_height: 10,
+            always_show_resize_handle: false
+
+        };
+
+
         // 第一种布局
-        var serialized_data = [
-            {x: 0, y: 0, width: 3, height: 30},
-            {x: 4, y: 0, width: 9, height: 30},
-        ];
+        var serialized_data =[];
+        var currentHref ="";
+        var aaa = document.URL;
+        var href = aaa.replace("editPage","getContent");
+        $.ajax({
+            type: "GET",
+            url: href,
+            dataType:"json",
+            async: false,
+            cache: false,
+            success: function (res) {
+                serialized_data = res.data;
+                currentHref = serialized_data[0].comumnId;
+            }, error: function () {
+                alert("获取系统配置出错了");
+    }
+        });
 
 
-/*
-        var serialized_data = [
-            {x: 0, y: 0, width: 12, height: 30},
-        ];*/
+        var html = '<div class="editLayer"><ul> <li><a>删除</a></li><li><a>修改内容</a></li></ul> </div>';
 
-        var html = '<div class="editLayer"><ul> <li><a>删除</a></li></ul> </div>';
+
+        function contentType(node) {
+            switch (node.componentId) {
+                case "default":
+                    return '<div componentId="default"  class="addNewModule"></div>';
+                    break;
+                case "component_login":
+                    return componentUtils.memberLogin();
+                    break;
+                case "component_bulletinBoard":
+                    var context = {
+                        news: [
+                            {
+                                time: '2017/05/06',
+                                title: '地球炸啦'
+                            },
+                            {
+                                time: '2017/05/06',
+                                title: '哈哈哈哈'
+                            },
+                            {
+                                time: '2017/05/06',
+                                title: '哈哈哈哈'
+                            },
+                            {
+                                time: '2017/05/06',
+                                title: '哈哈哈哈'
+                            },
+                            {
+                                time: '2017/05/06',
+                                title: '哈哈哈哈'
+                            },
+                            {
+                                time: '2017/05/06',
+                                title: '哈哈哈哈'
+                            }
+                        ]
+                    };
+                    return componentUtils.bulletinBoard(context);
+                    break;
+                case "component_messageBoard":
+                    return componentUtils.messageBoard();
+                    break;
+                default:
+                    alert("出错啦！");
+                    break;
+            }
+        };
+
 
 
         $('.grid-stack').gridstack(options);
@@ -269,30 +360,49 @@ seajs.use(['jquery', 'lodash','componentutils','baseSettingUtils', 'gridstack', 
 
         var gridMethod = {
             load_grid: function (data) {
+                debugger
                 demoGrid.remove_all();
                 var items = GridStackUI.Utils.sort(data);
                 _.each(items, function (node) {
-                    demoGrid.add_widget($('<div><div class="grid-stack-item-content"><div class="addNewModule"></div></div>'+html),
-                        node.x, node.y, node.width, node.height);
+                    var content = contentType(node);
+                    demoGrid.add_widget($('<div><div class="grid-stack-item-content">'+content+'</div>'+html),node.positionX, node.positionY, node.sizeWidth, node.sizeHeight);
 
+                    if(node.componentId == 'component_bulletinBoard'){
+                         $(".grid-stack-item-content").find(".bulletinBoard-content").bootstrapNews({
+                             newsPerPage: 5,
+                             autoplay: true,
+                             pauseOnHover: true,
+                             direction: 'up',
+                             newsTickerInterval: 4000,
+                             onToDo: function () {
+                                //console.log(this);
+                             }
+                         });
+                    }
                 });
             },
             save_grid: function () {
-                var data = _.map($('.grid-stack > .grid-stack-item:visible'), function (el) {
+                var data = _.map($('.grid-stack > .grid-stack-item:visible'), function (el,index) {
                     el = $(el);
+                    debugger
                     var node = el.data('_gridstack_node');
                     return {
-                        x: node.x,
-                        y: node.y,
-                        width: node.width,
-                        height: node.height
+                        positionX: node.x,
+                        positionY: node.y,
+                        sizeWidth: node.width,
+                        sizeHeight: node.height,
+                        componentId:el.find(".grid-stack-item-content div:first").attr("componentId"),
+                        comumnId:currentHref
                     };
                 });
-                return JSON.stringify(data, null, ' ');
+                return data;
             },
-            add_widget:function(){
-                demoGrid.add_widget($('<div><div class="grid-stack-item-content">1adddada</div>'+html),
-                   8, 8, 2, 2);
+            add_widget:function(data){
+                $.each(data,function (value) {
+                    demoGrid.add_widget($('<div><div class="grid-stack-item-content">1adddada</div>'+html),
+                        data.x, data.y, data.width,data.height);
+                });
+
             },
             delete_widget:function () {
                 demoGrid.remove_widget();
@@ -304,15 +414,16 @@ seajs.use(['jquery', 'lodash','componentutils','baseSettingUtils', 'gridstack', 
         gridMethod.load_grid(serialized_data);
 
         $("#getData").on("click",function () {
-            var aa = gridMethod.save_grid();
-            gridMethod.add_widget();
-            var aa = gridMethod.save_grid();
+           // var aa = gridMethod.save_grid();
+            gridMethod.add_widget(serialized_data);
+           // var aa = gridMethod.save_grid();
         });
 
         // 删除模块
-        $("#webContainer .grid-stack .editLayer").on("click",function () {
+        $("#webContainer .grid-stack .editLayer li:first").on("click",function () {
+            debugger
             var self = this;
-            var parent = $(this).parent();
+            var parent = $(this).parent().parent().parent();
             demoGrid.remove_widget(parent);
             return ;
         });

@@ -3,12 +3,12 @@ package com.jmu.service.impl;
 import com.jmu.common.AjaxResponse;
 import com.jmu.dao.BaseSettingMapper;
 import com.jmu.dao.WebBannerImgMapper;
+import com.jmu.dao.WebContentMapper;
 import com.jmu.dao.WebFooterMapper;
-import com.jmu.domain.BaseSetting;
-import com.jmu.domain.User;
-import com.jmu.domain.WebBannerImg;
-import com.jmu.domain.WebFooter;
+import com.jmu.domain.*;
+import com.jmu.domain.vo.WebSettingVo;
 import com.jmu.service.InitWebService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +29,8 @@ public class InitWebServiceImpl implements InitWebService {
     private WebFooterMapper webFooterMapper;
     @Autowired
     private WebBannerImgMapper webBannerImgMapper;
+    @Autowired
+    private WebContentMapper webContentMapper;
 
     @Override
     public AjaxResponse initWeb(String companyId,String modifier) {
@@ -41,39 +43,39 @@ public class InitWebServiceImpl implements InitWebService {
     }
 
     @Override
-    public AjaxResponse updateWeb(Map<String, BaseSetting> updateSettings, User user) {
+    public AjaxResponse updateWeb(Map<String, WebSettingVo> webSettingVo, User user) {
 
         // 提取底部菜单栏配置并更新
         WebFooter webFooter = new WebFooter();
-        BaseSetting webMenu = updateSettings.get("webMenu");
-        BaseSetting webLink = updateSettings.get("webLink");
-        BaseSetting webCopyRight = updateSettings.get("webCopyRight");
+        WebSettingVo webMenu = webSettingVo.get("webMenu");
+        WebSettingVo webLink = webSettingVo.get("webLink");
+        WebSettingVo webCopyRight = webSettingVo.get("webCopyRight");
 
 
         if(webMenu != null){
             webFooter.setFooterId(webMenu.getBaseSettingId());
             webFooter.setMenuSelectIds(webMenu.getBsValue());
-            updateSettings.remove("webMenu");
+            webSettingVo.remove("webMenu");
         }
         if(webLink != null){
             webFooter.setFooterId(webLink.getBaseSettingId());
             webFooter.setLinkSelectIds(webLink.getBsValue());
-            updateSettings.remove("webLink");
+            webSettingVo.remove("webLink");
         }
         if(webCopyRight != null){
             webFooter.setFooterId(webCopyRight.getBaseSettingId());
             webFooter.setCopyrightText(webCopyRight.getBsValue());
-            updateSettings.remove("webCopyRight");
+            webSettingVo.remove("webCopyRight");
         }
         if(webFooter.getFooterId() != null){
             webFooterMapper.updateByPrimaryKeySelective(webFooter);
         }
 
         // 更新横幅
-        BaseSetting webBanner = updateSettings.get("bannerImg");
+        WebSettingVo webBanner = webSettingVo.get("bannerImg");
 
         if(webBanner != null){
-            updateSettings.remove("bannerImg");
+            webSettingVo.remove("bannerImg");
             if(webBanner.getBsValue() != ""){
                 List<WebBannerImg> webBannerImgList = new ArrayList<WebBannerImg>();
                 String[] imgs = webBanner.getBsValue().split(",");
@@ -85,11 +87,37 @@ public class InitWebServiceImpl implements InitWebService {
             }
         }
 
+        // 更新内容区域信息
+        List<WebContent> webContents = new ArrayList<WebContent>();
+
+
+        Iterator<Map.Entry<String, WebSettingVo>> it = webSettingVo.entrySet().iterator();
+        while(it.hasNext()){
+            Map.Entry<String, WebSettingVo> entry=it.next();
+            WebSettingVo webSetting = entry.getValue();
+            if(webSetting.getComumnId() !=null){
+                WebContent content = new WebContent();
+                BeanUtils.copyProperties(webSetting,content);
+                content.setContentId(UUID.randomUUID().toString().replace("-", ""));
+                content.setCompanyId(user.getCompanyId());
+                content.setModifier(user.getUserId());
+                webContents.add(content);
+                it.remove();
+            }
+
+        }
+        webContentMapper.deleteByCompanyId(user.getCompanyId());
+        if(!webContents.isEmpty()){
+            webContentMapper.batchInsert(webContents);
+        }
+
 
         // 获取基础配置并更新
         List<BaseSetting> baseSettings = new ArrayList<BaseSetting>();
-        for (String key : updateSettings.keySet()) {
-            BaseSetting baseSetting = updateSettings.get(key);
+        for (String key : webSettingVo.keySet()) {
+            WebSettingVo webSetting = webSettingVo.get(key);
+            BaseSetting baseSetting = new BaseSetting();
+            BeanUtils.copyProperties(webSetting,baseSetting);
             baseSetting.setModifier(user.getUserId());
             baseSetting.setModifyTime(new Date());
             baseSettings.add(baseSetting);

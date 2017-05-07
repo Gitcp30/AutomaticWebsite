@@ -33,8 +33,8 @@ seajs.config({
 		"constants":"js/system/constants.js",
 		"componentutils":"js/system/componentutils.js",
 		"method-extend":"js/system/method-extends.js",
-		"baseSettingUtils":"../assets/js/web/edit/basesetting.js",
-        "initUtils":"../assets/js/web/edit/initUtils.js",
+		"baseSettingUtils":"../../../assets/js/web/edit/basesetting.js",
+        "initUtils":"../../../assets/js/web/edit/initUtils.js",
 	}
 })	
 

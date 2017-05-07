@@ -2,13 +2,11 @@ package com.jmu.controller;
 
 import com.jmu.common.AjaxResponse;
 import com.jmu.domain.*;
+import com.jmu.domain.vo.WebSettingVo;
 import com.jmu.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -36,13 +34,15 @@ public class EditPageController {
     private InitWebService initWebService;
     @Autowired
     private WebBannerImgService webBannerImgService;
+    @Autowired
+    private WebContentService webContentService;
 
     /**
      *  进入编辑界面
      * @return
      */
-    @RequestMapping(value = "",method= RequestMethod.GET)
-    public String editPage(Map<String, Object> map,HttpSession session){
+    @RequestMapping(value = "/editPage/{url}",method= RequestMethod.GET)
+    public String editPage(@PathVariable("url")String url ,Map<String, Object> map,HttpSession session){
         User user = (User) session.getAttribute("currentUser");
 
         List list = sysPictureService.getAll("sys",user);
@@ -64,7 +64,6 @@ public class EditPageController {
         List<WebColumn> webColumnList = webColumnService.getSelectByCompanyId(user.getCompanyId(),(short)0);
         WebFooter webFooter =webFooterService.findByCompanyId(user.getCompanyId());
         List<WebBannerImg> webBannerImgList = webBannerImgService.findAll(user.getCompanyId());
-
 
         map.put("webColumnList",webColumnList);
         map.put("webFooter",webFooter);
@@ -104,19 +103,51 @@ public class EditPageController {
         return map;
     }
 
+    @ResponseBody
+    @RequestMapping(value = "getContent/{url}",method = RequestMethod.GET)
+    public AjaxResponse getWebContent(@PathVariable("url")String url ,HttpSession session){
+        User user = (User) session.getAttribute("currentUser");
+        // 获取内容
+        /*{x: 0, y: 0, width: 3, height: 30},
+        {x: 4, y: 0, width: 9, height: 30},*/
+        List<WebContent> webContentList = webContentService.findContent(url,user.getCompanyId());
+        if(webContentList.isEmpty()){
+            WebContent w = new WebContent();
+            w.setComumnId("a");
+            w.setPositionX(0);
+            w.setPositionY(0);
+            w.setSizeWidth(3);
+            w.setSizeHeight(30);
+            w.setComponentId("component_login");
+            w.setComumnId(url);
+            WebContent w2 = new WebContent();
+            w2.setComumnId("a");
+            w2.setPositionX(4);
+            w2.setPositionY(0);
+            w2.setSizeWidth(9);
+            w2.setSizeHeight(30);
+            w2.setComponentId("component_bulletinBoard");
+            w2.setComumnId(url);
+            webContentList.add(w);
+            webContentList.add(w2);
+        }
+        AjaxResponse ajaxResponse = new AjaxResponse();
+        ajaxResponse.setData(webContentList);
+        return ajaxResponse;
+    }
+
 
     /**
      *  更新配置
-     * @param updateSettings
      * @param session
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "updateSettings",method = RequestMethod.POST)
-    public AjaxResponse updateSettings(@RequestBody Map<String,BaseSetting> updateSettings, HttpSession session){
+    public AjaxResponse updateSettings(@RequestBody Map<String,WebSettingVo> webSettingMap, HttpSession session){
         // seesion获取公司ID
         User user = (User) session.getAttribute("currentUser");
-        return initWebService.updateWeb(updateSettings,user);
+        return initWebService.updateWeb(webSettingMap,user);
     }
 
 

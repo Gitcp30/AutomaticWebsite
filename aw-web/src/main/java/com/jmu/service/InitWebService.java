@@ -1,8 +1,8 @@
 package com.jmu.service;
 
 import com.jmu.common.AjaxResponse;
-import com.jmu.domain.BaseSetting;
 import com.jmu.domain.User;
+import com.jmu.domain.vo.WebSettingVo;
 
 import java.util.Map;
 
@@ -14,5 +14,5 @@ public interface InitWebService {
 
     public AjaxResponse initWeb(String companyId,String modifier);
 
-    public AjaxResponse updateWeb(Map<String,BaseSetting> updateSettings, User user);
+    public AjaxResponse updateWeb(Map<String,WebSettingVo> WebSettingVo, User user);
 }

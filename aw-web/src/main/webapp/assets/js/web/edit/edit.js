@@ -57,30 +57,8 @@ seajs.use(['componentutils', 'jquery', 'editutils', 'baseSettingUtils', 'initUti
         });
 
 
-        $(".styleDesignBtnContainer button.btn-info").on("click", function () {
-            var aa = baseSettingUtils.updateBsMap;
-            debugger
-            $.ajax({
-                type: "POST",
-                url: ctx + "/web/edit/updateSettings",
-                data: JSON.stringify(baseSettingUtils.updateBsMap),
-                contentType: "application/json",
-                cache: false,
-                success: function (res) {
-                    if (res == null) {
-                        alert("获取系统配置出错了");
-                    } else {
-                        basesettingMap = res;
-                    }
-                }, error: function () {
-                    alert("获取系统配置出错了");
-                }
-            });
-        });
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //  侧边栏初始化
-
         function updateBS(key, value) {
             // 保存更新
             baseSettingUtils.baseSettingMap[key]['bsValue'] = value;

@@ -349,11 +349,7 @@
                 </ul>
                 <div class="tab-content">
                     <div id="pageLayout_standard" class="tab-pane in active">
-                        <p>pageLayout_standard</p>
-                        <p>1</p>
-                        <p>1</p>
-                        <p>1</p>
-                        <p>1</p>
+                          <button id="getData">getData</button>
                     </div>
 
                     <div id="pageLayout_free" class="tab-pane">
