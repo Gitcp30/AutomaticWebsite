@@ -43,7 +43,7 @@ public class InitWebServiceImpl implements InitWebService {
     }
 
     @Override
-    public AjaxResponse updateWeb(Map<String, WebSettingVo> webSettingVo, User user) {
+    public AjaxResponse updateWeb(Map<String, WebSettingVo> webSettingVo, User user,String url) {
 
         // 提取底部菜单栏配置并更新
         WebFooter webFooter = new WebFooter();
@@ -106,7 +106,7 @@ public class InitWebServiceImpl implements InitWebService {
             }
 
         }
-        webContentMapper.deleteByCompanyId(user.getCompanyId());
+        webContentMapper.deleteByCompanyId(url,user.getCompanyId());
         if(!webContents.isEmpty()){
             webContentMapper.batchInsert(webContents);
         }

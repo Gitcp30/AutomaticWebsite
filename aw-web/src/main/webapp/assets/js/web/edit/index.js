@@ -120,7 +120,7 @@ seajs.use(['jquery', 'lodash','componentutils','baseSettingUtils', 'gridstack', 
         var footer_linkhover_colorpicker_Data = baseSettingMap['footer_linkhover_colorpicker'];
         var footer_textSlider_Data = baseSettingMap['footer_textSlider'];
         $(".inner_footer .footLinks a").css("font-size",footer_textSlider_Data.bsValue + "px");
-        debugger
+
         $("#webFooter .inner_footer .footLinks a").css("color",footer_linktext_colorpicker_Data.bsValue);
             $("#webFooter .inner_footer .footLinks a").hover(function(){
                 $(this).css("color",footer_linkhover_colorpicker_Data.bsValue);
@@ -177,7 +177,6 @@ seajs.use(['jquery', 'lodash','componentutils','baseSettingUtils', 'gridstack', 
         $("#webLogo").css("width",logo_width_Data.bsValue);
 
         $("#webTitle span").html(webTitle_Data.bsValue);
-        debugger
         $("#webTitle").css("left",title_x_Data.bsValue+"px");
         $("#webTitle").css("top",title_y_Data.bsValue+"px");
 
@@ -195,7 +194,6 @@ seajs.use(['jquery', 'lodash','componentutils','baseSettingUtils', 'gridstack', 
         });
         $("#webLogo").resizable({
             stop: function(event, ui) {
-                debugger
                 updateBS("logo_height",ui.size.height);
                 updateBS("logo_width",ui.size.width);
             }
@@ -246,7 +244,7 @@ seajs.use(['jquery', 'lodash','componentutils','baseSettingUtils', 'gridstack', 
             debugger
             $.ajax({
                 type: "POST",
-                url: ctx + "/web/edit/updateSettings",
+                url: ctx + "/web/edit/updateSettings/"+currentHref,
                 data: JSON.stringify(baseSettingUtils.updateBsMap),
                 contentType: "application/json",
                 cache: false,
@@ -302,7 +300,7 @@ seajs.use(['jquery', 'lodash','componentutils','baseSettingUtils', 'gridstack', 
         });
 
 
-        var html = '<div class="editLayer"><ul> <li><a>删除</a></li><li><a>修改内容</a></li></ul> </div>';
+        var html = '<div class="editLayer"><ul> <li><a>删除</a></li></ul> </div>';
 
 
         function contentType(node) {
@@ -360,15 +358,14 @@ seajs.use(['jquery', 'lodash','componentutils','baseSettingUtils', 'gridstack', 
 
         var gridMethod = {
             load_grid: function (data) {
-                debugger
                 demoGrid.remove_all();
                 var items = GridStackUI.Utils.sort(data);
                 _.each(items, function (node) {
                     var content = contentType(node);
-                    demoGrid.add_widget($('<div><div class="grid-stack-item-content">'+content+'</div>'+html),node.positionX, node.positionY, node.sizeWidth, node.sizeHeight);
-
+                   var model=  demoGrid.add_widget($('<div><div class="grid-stack-item-content">'+content+'</div>'+html),node.positionX, node.positionY, node.sizeWidth, node.sizeHeight);
+debugger
                     if(node.componentId == 'component_bulletinBoard'){
-                         $(".grid-stack-item-content").find(".bulletinBoard-content").bootstrapNews({
+                        $(model).find(".grid-stack-item-content .bulletinBoard-content").bootstrapNews({
                              newsPerPage: 5,
                              autoplay: true,
                              pauseOnHover: true,
@@ -384,7 +381,6 @@ seajs.use(['jquery', 'lodash','componentutils','baseSettingUtils', 'gridstack', 
             save_grid: function () {
                 var data = _.map($('.grid-stack > .grid-stack-item:visible'), function (el,index) {
                     el = $(el);
-                    debugger
                     var node = el.data('_gridstack_node');
                     return {
                         positionX: node.x,
@@ -398,9 +394,9 @@ seajs.use(['jquery', 'lodash','componentutils','baseSettingUtils', 'gridstack', 
                 return data;
             },
             add_widget:function(data){
-                $.each(data,function (value) {
-                    demoGrid.add_widget($('<div><div class="grid-stack-item-content">1adddada</div>'+html),
-                        data.x, data.y, data.width,data.height);
+                $.each(data,function (index,value) {
+                    demoGrid.add_widget($('<div><div class="grid-stack-item-content"><div componentId="default"  class="addNewModule"></div></div>'+html),
+                        value.x, value.y, value.width,value.height);
                 });
 
             },
@@ -413,32 +409,29 @@ seajs.use(['jquery', 'lodash','componentutils','baseSettingUtils', 'gridstack', 
 
         gridMethod.load_grid(serialized_data);
 
-        $("#getData").on("click",function () {
-           // var aa = gridMethod.save_grid();
-            gridMethod.add_widget(serialized_data);
-           // var aa = gridMethod.save_grid();
-        });
-
         // 删除模块
-        $("#webContainer .grid-stack .editLayer li:first").on("click",function () {
-            debugger
-            var self = this;
-            var parent = $(this).parent().parent().parent();
+        $("#webContainer ").on("click",".grid-stack .editLayer",function () {
+            var parent = $(this).parent();
             demoGrid.remove_widget(parent);
             return ;
         });
 
+        // 内容区域添加模块
+        $("#webContainer .addModel.editLayer").on("click",function () {
+            var add_data = [{x: 0, y: 0, width: 12, height: 20}];
+            gridMethod.add_widget(add_data);
+        });
 
         var content;
         /**
          * 点击添加图片
          */
 
-        $("#webContainer .grid-stack-item-content .addNewModule").on("click",function () {
+        $("#webContainer").on("click",".grid-stack-item-content .addNewModule",function () {
+            debugger
             content = $(this).parent();
             $("#componentModal").modal("show");
         });
-
 
         /**
          * 组件->添加

@@ -48,6 +48,11 @@
             margin: 0 auto;
             overflow: hidden;
             width: 80%;
+            position: relative;
+        }
+
+        #webContainer:hover >.editLayer {
+            display: block;
         }
 
         #webFooter {
@@ -367,7 +372,7 @@
                    <c:forEach items="${requestScope.webColumnList}" var="menuCol">
                        <%--<li style="background-color: #cc0010;"><a href="#">首页</a></li>--%>
                        <c:if test="${menuCol.isMenu== true}">
-                           <li><a hidefocus="true" href="${menuCol.url}">${menuCol.columnName}</a></li>
+                           <li><a hidefocus="true" href="${ctx}/web/edit/editPage${menuCol.url}">${menuCol.columnName}</a></li>
                        </c:if>
                    </c:forEach>
 
@@ -418,6 +423,12 @@
     <!--内容区域 -->
     <div id="webContainer">
         <div class="grid-stack">
+        </div>
+        <!--悬浮编辑栏-->
+        <div class="editLayer addModel">
+            <ul>
+                <li><a href="#">添加</a></li>
+            </ul>
         </div>
     </div>
     <!--底部 -->

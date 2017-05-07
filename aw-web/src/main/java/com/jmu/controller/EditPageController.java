@@ -143,11 +143,11 @@ public class EditPageController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "updateSettings",method = RequestMethod.POST)
-    public AjaxResponse updateSettings(@RequestBody Map<String,WebSettingVo> webSettingMap, HttpSession session){
+    @RequestMapping(value = "updateSettings/{url}",method = RequestMethod.POST)
+    public AjaxResponse updateSettings(@PathVariable("url")String url ,@RequestBody Map<String,WebSettingVo> webSettingMap, HttpSession session){
         // seesion获取公司ID
         User user = (User) session.getAttribute("currentUser");
-        return initWebService.updateWeb(webSettingMap,user);
+        return initWebService.updateWeb(webSettingMap,user,url);
     }
 
 

@@ -539,7 +539,6 @@ seajs.use(['componentutils', 'jquery', 'editutils', 'baseSettingUtils', 'initUti
         // 初始化  滑动条(内容->宽度)
         var $content_widthSlider = $("#leftSidebar_content .setting_width .ui-slider-blue");
         $content_widthSlider.css({width: '90%', 'float': 'left', margin: '15px 15px 15px 0'}).each(function () {
-            debugger
             $(this).empty().slider({
                 value: content_widthSlider_Data.bsValue,
                 range: "min",
@@ -877,7 +876,6 @@ seajs.use(['componentutils', 'jquery', 'editutils', 'baseSettingUtils', 'initUti
             }
         }).on('changeColor', function (e) {
             $('#menu_font_colorpicker').colorpicker('hide');
-            debugger
             $("#webMenu .inner_menu ul li a").css("color", e.color.toHex());
             // 保存更新
             updateBS('menu_font_colorpicker', e.color.toHex());
@@ -929,7 +927,6 @@ seajs.use(['componentutils', 'jquery', 'editutils', 'baseSettingUtils', 'initUti
                 slide: function (event, ui) {
                     $("#webMenu .inner_menu").css("width", ui.value + "%");
                     // 保存更新
-                    debugger
                     updateBS('menu_widthSlider', ui.value);
                 }
             });
@@ -1237,7 +1234,6 @@ seajs.use(['componentutils', 'jquery', 'editutils', 'baseSettingUtils', 'initUti
             // 1删除添加“使用”标记
             // 获取父节点li
             var $parentLi = $obj.parents("li:first");
-            debugger
             $parentLi.find('.tags:first').empty();
             // 2 删除fa-trash-o.改为fa-check-square-o
             $obj.find("i").removeClass("fa-trash-o").addClass("fa-check-square-o");
@@ -1528,7 +1524,6 @@ seajs.use(['componentutils', 'jquery', 'editutils', 'baseSettingUtils', 'initUti
 
             if (bannerImg_Data.bsValue != null) {
                 var banner = bannerImg_Data.bsValue.split(",");
-                debugger
 
                 $.map(banner,function (item,index) {
                     if(item != ""){

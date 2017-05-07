@@ -14,5 +14,5 @@ public interface InitWebService {
 
     public AjaxResponse initWeb(String companyId,String modifier);
 
-    public AjaxResponse updateWeb(Map<String,WebSettingVo> WebSettingVo, User user);
+    public AjaxResponse updateWeb(Map<String,WebSettingVo> WebSettingVo, User user,String url);
 }
