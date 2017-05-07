@@ -15,4 +15,6 @@ public interface WebColumnService {
     List<WebColumn> findAllByType(Short columnType);
 
     List<WebColumn> getSelectByCompanyId(String companyId,short type);
+
+    Boolean isEffectiveLink(String url);
 }

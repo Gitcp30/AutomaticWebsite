@@ -6,6 +6,15 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
+    <link rel="stylesheet" href="${ctx}/static/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="${ctx}/static/font-awesome/4.5.0/css/font-awesome.min.css"/>
+
+    <!-- text fonts -->
+    <link rel="stylesheet" href="${ctx}/static/css/fonts.googleapis.com.css"/>
+    <!-- ace styles -->
+    <link rel="stylesheet" href="${ctx}/static/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style"/>
+    <link rel="stylesheet" href="${ctx}/static/css/jquery-ui.min.css"/>
+    <!-- 多选样式-->
     <link rel="stylesheet" href="${ctx}/static/css/gridstack.css"/>
     <link rel="stylesheet" href="${ctx}/static/css/newsbox.css"/>
     <link rel="stylesheet" href="${ctx}/assets/css/user/usersite.css"/>
@@ -40,9 +49,7 @@
             position: relative;
         }
 
-        #webBanner:hover .editLayer {
-            display: block;
-        }
+
 
         #webContainer {
             margin: 0 auto;
@@ -51,9 +58,7 @@
             position: relative;
         }
 
-        #webContainer:hover >.editLayer {
-            display: block;
-        }
+
 
         #webFooter {
             margin: 0 auto;
@@ -64,9 +69,6 @@
             height: 80px;
         }
 
-        #webFooter:hover .editLayer {
-            display: block;
-        }
 
         #webFooter .inner_footer {
             margin: 0 auto;
@@ -93,9 +95,7 @@
 
         .inner_footer .footCpy {
             text-align: center;
-            /* line-height: 25px;
-             color: #8b939d;
-             height: 25px;*/
+
         }
 
         /* css 重置 */
@@ -210,52 +210,9 @@
 
         /**logo**/
         #webLogo{
-            /*height: 80px;
-            width: 280px;*/
             position: relative;
-            /*opacity: 1;
-            left: 235px;
-            top:12px;*/
         }
 
-        #webLogo:hover .editLayer {
-            display: block;
-        }
-
-        #webLogo:hover {
-            border: 1px dashed blue;
-        }
-
-        .editLayer{
-            height: 24px;
-            display: none;
-            position: absolute;
-            top:0;
-        }
-
-        .editLayer ul{
-            margin: 0;
-            list-style: none;
-        }
-        .editLayer ul li{
-            float: left;
-            width: 60px;
-            height: 24px;
-            text-align: center;
-            line-height: 24px;
-        }
-        .editLayer ul li a{
-            display: block;
-            width: 100%;
-            height: 100%;
-            text-decoration: none;
-            background-color: #4f97df;
-            color:#fff;
-            font-size: 12px;
-        }
-        .editLayer ul li a:hover{
-            text-decoration:underline;
-        }
 
 
         #webLogo  .weblogo-content{
@@ -270,24 +227,15 @@
         /**标题**/
         #webTitle {
             display: inline;
-/*
-            top:-70px;
-            left: 648px;*/
-        }
-        #webTitle:hover .editLayer {
-            display: block;
+            position: relative;
         }
 
-        #webTitle:hover {
-           /* border: 1px dashed blue;*/
-        }
 
         /**菜单栏**/
         #webMenu{
             height: 50px;
             position: relative;
             overflow: hidden;
-            background-color: #e60012;
         }
 
         #webMenu:hover .editLayer {
@@ -322,20 +270,10 @@
             border: 1px dashed #3298fe;
         }
 
-        #webContainer .grid-stack-item-content .addNewModule{
-            background: url(${ctx}/assets/image/mbg01.png) -611px -189px no-repeat;
-            height: 54px;
-            width: 206px;
-            margin: 0 auto;
-            cursor: pointer;
-
-        }
-
-        
     </style>
 </head>
 
-<body id="indexBody">
+<body>
 
 <div class="content">
     <!--头部 -->
@@ -346,22 +284,10 @@
                 <div class="weblogo-content">
                    <img src="#" />
                 </div>
-                <!--悬浮编辑栏-->
-                <div class="editLayer">
-                    <ul>
-                        <li><a href="#" data-toggle="modal" data-target="#logoModal" >编辑</a></li>
-                    </ul>
-                </div>
             </div>
             <!-- 标题-->
             <div id="webTitle" class="ui-widget-content">
                    <span></span>
-                <!--悬浮编辑栏-->
-                <div class="editLayer">
-                    <ul>
-                        <li><a href="#" data-toggle="modal" data-target="#titleModal" >编辑</a></li>
-                    </ul>
-                </div>
             </div>
         </div>
     </div>
@@ -369,21 +295,13 @@
     <div id="webMenu">
         <div class="inner_menu">
                <ul class="nav nav-pills nav-justified">
-                   <c:forEach items="${requestScope.webColumnList}" var="menuCol">
+                   <c:forEach items="${requestScope.sysMenuColumns}" var="menuCol">
                        <%--<li style="background-color: #cc0010;"><a href="#">首页</a></li>--%>
                        <c:if test="${menuCol.isMenu== true}">
-                           <li><a hidefocus="true" href="${ctx}/web/edit/editPage/${menuCol.url}">${menuCol.columnName}</a></li>
+                           <li><a hidefocus="true" href="${menuCol.url}">${menuCol.columnName}</a></li>
                        </c:if>
                    </c:forEach>
-
-
                </ul>
-        </div>
-        <!--悬浮编辑栏-->
-        <div class="editLayer">
-            <ul>
-                <li><a href="#" data-toggle="modal" data-target="#menuModal" >编辑</a></li>
-            </ul>
         </div>
     </div>
     <!--横幅-->
@@ -412,30 +330,19 @@
             <a class="next" href="javascript:void(0)"></a>
 
         </div>
-        <!--悬浮编辑栏-->
-        <div class="editLayer">
-            <ul>
-                <li><a href="#" data-toggle="modal" data-target="#bannerModal" >编辑</a></li>
-            </ul>
-        </div>
+
     </div>
 
     <!--内容区域 -->
     <div id="webContainer">
         <div class="grid-stack">
         </div>
-        <!--悬浮编辑栏-->
-        <div class="editLayer addModel">
-            <ul>
-                <li><a href="#">添加</a></li>
-            </ul>
-        </div>
     </div>
     <!--底部 -->
     <div id="webFooter">
         <div class="inner_footer">
             <div class="footLinks">
-                <c:forEach items="${requestScope.webColumnList}" var="linkCol">
+                <c:forEach items="${requestScope.sysMenuColumns}" var="linkCol">
                     <c:if test="${linkCol.isFooterLink== true}">
                         <span><a hidefocus="true" href="${linkCol.url}">${linkCol.columnName}</a></span>
                     </c:if>
@@ -445,94 +352,15 @@
                 ${webFooter.copyrightText}
             </div>
         </div>
-        <!--悬浮编辑栏-->
-        <div class="editLayer">
-            <ul>
-                <li><a href="#" data-toggle="modal" data-target="#footerModal" >编辑</a></li>
-            </ul>
-        </div>
     </div>
 </div>
 
-
-
-<!-- 组件编辑模态框（Modal） -->
-<div class="modal fade" id="componentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="width: 600px;">
-        <div class="modal-content">
-            <div class="table-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                    <span class="white" style="font-size: 30px;">&times;</span>
-                </button>
-                <div class="nav"><i class="ace-icon glyphicon glyphicon-th-list white"></i> 组件列表</div>
-            </div>
-            <div>
-                <ul class="nav nav-tabs padding-20 tab-color-blue background-blue" style="border: 0;">
-                    <li class="active">
-                        <a data-toggle="tab" href="#componentModal_login">登录</a>
-                    </li>
-
-                    <li>
-                        <a data-toggle="tab" href="#componentModal_bulletinBoard">公告栏</a>
-                    </li>
-
-
-                    <li>
-                        <a data-toggle="tab" href="#componentModal_messageBoard">留言板</a>
-                    </li>
-
-                </ul>
-            </div>
-            <div class="tab-content" style="border: 0;">
-                <!--登录-->
-                <div id="componentModal_login" class="tab-pane in active">
-                    <div class="row">
-                        <div class="col-xs-4 col-sm-4">
-                            <label>
-                                <input name="componentModal_component" type="radio" class="ace" value="component_login"/>
-                                <span class="lbl">登录</span>
-                            </label>
-                        </div>
-                        <div class="col-xs-4 col-sm-4">
-                            <label>
-                                <input name="componentModal_component" type="radio" class="ace" value="component_bulletinBoard"/>
-                                <span class="lbl">公告</span>
-                            </label>
-                        </div>
-                        <div class="col-xs-4 col-sm-4">
-                            <label>
-                                <input name="componentModal_component" type="radio" class="ace" value="component_messageBoard"
-                                       checked="true"/>
-                                <span class="lbl">留言板</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <!-- 公告栏-->
-                <div id="componentModal_bulletinBoard" class="tab-pane">
-                    2
-                </div>
-
-                <!-- 留言板-->
-                <div id="componentModal_messageBoard" class="tab-pane">
-                    3
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button id="componentModal_footer_commitbtn" type="button" class="btn btn-primary" data-dismiss="modal">
-                    保存
-                </button>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
-
-
-<script src="${ctx}/assets/js/web/edit/index.js"></script>
+<script src="${ctx}/static/js/sea/sea3.js"></script>
+<script src="${ctx}/static/js/sea/config.js"></script>
+<script type="text/javascript">
+    var ctx = "${ctx}";
+</script>
+<script src="${ctx}/assets/js/web/public/index.js"></script>
 </body>
 
 </html>

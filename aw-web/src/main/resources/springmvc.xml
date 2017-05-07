@@ -56,6 +56,7 @@
             <mvc:mapping path="/**"/>
             <mvc:exclude-mapping path="/login"/>
             <mvc:exclude-mapping path="/register/**" />
+            <mvc:exclude-mapping path="/qw/**" />
             <mvc:exclude-mapping path="/assets/**" />
             <mvc:exclude-mapping path="/static/**" />
             <mvc:exclude-mapping path="/validatecode/**" />

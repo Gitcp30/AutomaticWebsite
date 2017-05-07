@@ -13,4 +13,6 @@ public interface WebColumnMapper extends BaseMapper<WebColumn> {
 
     List<WebColumn> selectByType(Short columnType);
 
+    List<WebColumn> selectByUrl(String url);
+
 }

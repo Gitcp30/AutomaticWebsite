@@ -95,4 +95,10 @@ public class WebColumnServiceImpl implements WebColumnService {
 
         return webColumnList;
     }
+
+    @Override
+    public Boolean isEffectiveLink(String url) {
+       List<WebColumn> webColumnList =  webColumnMapper.selectByUrl(url);
+        return !webColumnList.isEmpty();
+    }
 }

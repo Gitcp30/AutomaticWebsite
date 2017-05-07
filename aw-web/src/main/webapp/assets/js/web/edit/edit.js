@@ -124,10 +124,33 @@ seajs.use(['componentutils', 'jquery', 'editutils', 'baseSettingUtils', 'initUti
         }
         $(":radio[name='bg_width'][value='" + bg_width_Data.bsValue + "']").prop("checked", "checked");
 
+
+
         // 背景->宽度
         $(":radio[name='bg_width']").on("click", function () {
-            initUtils.bgWidthEvent($(this).val(), $widthSpinner);
+           // initUtils.bgWidthEvent($(this).val(), $widthSpinner);
+            switch($(this).val()) {
+                case "default":
+                    $("#leftSidebar_background .setting_width .content").hide();
+                    // 宽度100%
+                    setIndexBgSize("100");
+                    // 保存更新
+                    updateBS("bg_width","default");
+                    break;
+                case "custom":
+                    $("#leftSidebar_background .setting_width .content").show();
+                    setIndexBgSize($widthSpinner.val());
+                    // 保存更新
+                    updateBS("bg_width","custom");
+                    break;
+                default:
+                    alert("出错啦！");
+                    break;
+            }
         });
+
+
+
 
 
         // 初始化  滑动条(背景->宽度)
@@ -175,6 +198,7 @@ seajs.use(['componentutils', 'jquery', 'editutils', 'baseSettingUtils', 'initUti
             updateBS("banner_widthSlider", value);
             updateBS("banner_widthSpinner", value);
             updateBS("content_widthSlider", value);
+            updateBanner();
         }
 
 
@@ -382,22 +406,22 @@ seajs.use(['componentutils', 'jquery', 'editutils', 'baseSettingUtils', 'initUti
                     $("#leftSidebar_banner .setting_width .content").hide();
                     // 宽度100%
                     editUtils.setWidth($("#webBanner"), "100%");
-                    // 更新横幅状态
-                    updateBanner();
                     // 保存更新
                     updateBS('banner_width', "default");
                     updateBS('banner_widthSlider', "100");
                     updateBS('banner_widthSpinner', "100");
+                    // 更新横幅状态
+                    updateBanner();
                     break;
                 case "custom":
                     $("#leftSidebar_banner .setting_width .content").show();
                     editUtils.setWidth($("#webBanner"), $banner_widthSpinner.val() + "%");
-                    // 更新横幅状态
-                    updateBanner();
                     // 保存更新
                     updateBS('banner_width', "custom");
                     updateBS('banner_widthSlider', $banner_widthSpinner.val());
                     updateBS('banner_widthSpinner', $banner_widthSpinner.val());
+                    // 更新横幅状态
+                    updateBanner();
                     break;
                 default:
                     alert("出错啦！");
@@ -417,10 +441,10 @@ seajs.use(['componentutils', 'jquery', 'editutils', 'baseSettingUtils', 'initUti
                 slide: function (event, ui) {
                     $banner_widthSpinner.val(ui.value);
                     editUtils.setWidth($("#webBanner"), ui.value + "%");
-                    updateBanner();
                     // 保存更新
                     updateBS('banner_widthSlider', ui.value);
                     updateBS('banner_widthSpinner', ui.value);
+                    updateBanner();
                 }
             });
         });
@@ -440,10 +464,10 @@ seajs.use(['componentutils', 'jquery', 'editutils', 'baseSettingUtils', 'initUti
 
                 $banner_widthSlider.slider("value", $banner_widthSpinner.val());
                 editUtils.setWidth($("#webBanner"), $banner_widthSpinner.val() + "%");
-                updateBanner();
                 // 保存更新
                 updateBS('banner_widthSlider', $banner_widthSpinner.val());
                 updateBS('banner_widthSpinner', $banner_widthSpinner.val());
+                updateBanner();
             });
 
 
@@ -465,22 +489,21 @@ seajs.use(['componentutils', 'jquery', 'editutils', 'baseSettingUtils', 'initUti
                     $("#leftSidebar_banner .setting_height .content").hide();
                     // 宽度100%
                     editUtils.setHeight($("#webBanner"), "350px");
-                    // 更新横幅状态
-                    updateBanner(undefined, "350px");
                     // 保存更新
                     updateBS('banner_height', "default");
                     updateBS('banner_heightSlider', "350");
                     updateBS('banner_heightSpinner', "350");
+                    // 更新横幅状态
+                    updateBanner();
                     break;
                 case "custom":
                     $("#leftSidebar_banner .setting_height .content").show();
                     editUtils.setHeight($("#webBanner"), $banner_heightSpinner.val() + "px");
-                    // 更新横幅状态
-                    updateBanner(undefined, $banner_heightSpinner.val() + "px");
                     // 保存更新
                     updateBS('banner_height', "custom");
                     updateBS('banner_heightSlider', $banner_heightSpinner.val());
-                    updateBS('banner_heightSpinner', $banner_heightSpinner.val());
+                    updateBS('banner_heightSpinner', $banner_heightSpinner.val());// 更新横幅状态
+                    updateBanner();
                     break;
                 default:
                     alert("出错啦！");
@@ -502,10 +525,10 @@ seajs.use(['componentutils', 'jquery', 'editutils', 'baseSettingUtils', 'initUti
                 slide: function (event, ui) {
                     $banner_heightSpinner.val(ui.value);
                     editUtils.setHeight($("#webBanner"), ui.value + "px");
-                    updateBanner(undefined, ui.value + "px");
                     // 保存更新
                     updateBS('banner_heightSlider', ui.value);
                     updateBS('banner_heightSpinner', ui.value);
+                    updateBanner();
                 }
             });
         });
@@ -525,10 +548,10 @@ seajs.use(['componentutils', 'jquery', 'editutils', 'baseSettingUtils', 'initUti
             .on('changed.fu.spinbox', function () {
                 $banner_heightSlider.slider("value", $banner_heightSpinner.val());
                 editUtils.setHeight($("#webBanner"), $banner_heightSpinner.val() + "px");
-                updateBanner(undefined, $banner_heightSpinner.val() + "px");
                 // 保存更新
                 updateBS('banner_heightSlider', $banner_heightSpinner.val());
                 updateBS('banner_heightSpinner', $banner_heightSpinner.val());
+                updateBanner();
 
             });
 
@@ -1516,7 +1539,8 @@ seajs.use(['componentutils', 'jquery', 'editutils', 'baseSettingUtils', 'initUti
          * @param setWidth
          * @param setHeight
          */
-        function updateBanner(setWidth, setHeight) {
+        function updateBanner() {
+            debugger
             $("#slideBox .bd").empty();
             $("#slideBox .bd").append('<ul style="margin: 0;"></ul>');
 
@@ -1532,12 +1556,16 @@ seajs.use(['componentutils', 'jquery', 'editutils', 'baseSettingUtils', 'initUti
                         $("#slideBox .hd ul").append('<li>'+(index+1)+'</li>');
                     }
                 });
-                if (setWidth != undefined) {
+                /*if (setWidth != undefined) {
                     $(".slideBox .bd li").css("width",setWidth);
                 }
                 if(setHeight != undefined){
                     $(".slideBox .bd li").css("height",setHeight);
-                }
+                }*/
+debugger
+                $("#webBanner").css("width",banner_widthSlider_Data.bsValue+"%");
+                $("#webBanner").css("height",banner_heightSlider_Data.bsValue+"px");
+                $(".slideBox .bd li").css("height",banner_heightSlider_Data.bsValue+"px");
                 $(".slideBox").slide({ mainCell: ".bd ul", effect: banner_animation_Data.bsValue,autoPlay:true, delayTime:bannerModal_delayTimeSpinner_Data.bsValue,interTime:bannerModal_interTimeSpinner_Data.bsValue});
 
             } else {

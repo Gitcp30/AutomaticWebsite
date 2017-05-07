@@ -123,24 +123,7 @@ define(function(require, exports, module) {
      * @param $widthSpinner
      */
     exports.bgWidthEvent = function (val,$widthSpinner) {
-        switch(val) {
-            case "default":
-                $("#leftSidebar_background .setting_width .content").hide();
-                // 宽度100%
-                setIndexBgSize("100");
-                // 保存更新
-                updateBS("bg_width","default");
-                break;
-            case "custom":
-                $("#leftSidebar_background .setting_width .content").show();
-                setIndexBgSize($widthSpinner.val());
-                // 保存更新
-                updateBS("bg_width","custom");
-                break;
-            default:
-                alert("出错啦！");
-                break;
-        }
+
     }
 
     /**
