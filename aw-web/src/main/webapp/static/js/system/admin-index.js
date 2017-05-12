@@ -3,12 +3,17 @@
  */
 
     define(function(require, exports, module) {
-        var $  = require('jquery');
-        var componentUtils = require('componentutils');
+
+        var $ = require('jquery');
         require('bootstrap');
         require('bootstrap-table');
         require('ace-elements');
         require('ace');
+        // 自定义方法
+        require('phoenix.table');
+        var componentUtils = require('componentutils');
+
+
 
 
     $(function() {

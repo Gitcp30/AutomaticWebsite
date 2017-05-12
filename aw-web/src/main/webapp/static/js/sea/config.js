@@ -35,6 +35,8 @@ seajs.config({
 		"constants":"js/system/constants.js",
 		"componentutils":"js/system/componentutils.js",
 		"phoenix":"js/system/phoenix.js",
+		"phoenix.table":"js/system/phoenix.table.js",
+		"phoenix.form":"js/system/phoenix.form.js",
 	}
 })	
 

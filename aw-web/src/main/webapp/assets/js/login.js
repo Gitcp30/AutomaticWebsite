@@ -1,7 +1,7 @@
 /**
  * Created by zzr on 2017/4/23.
  */
-seajs.use(['componentutils','phoenix'],function(componentUtils){
+seajs.use(['jquery','componentutils'],function($,componentUtils){
     $(function () {
         /**
          * 点击切换验证码图片

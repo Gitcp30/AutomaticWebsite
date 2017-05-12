@@ -14,6 +14,7 @@ define(function(require, exports, module) {
             uniqueId : "id",
             searchOnEnterKey:false,
             queryParams: function (params) {
+                debugger
                 return params;
             },
         });

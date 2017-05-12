@@ -1,7 +1,7 @@
 /**
  * Created by zzr on 2017/4/23.
  */
-seajs.use(['wizard','jquery-validate','bootstrap-datepicker','select2','phoenix'],function(){
+seajs.use(['jquery','bootstrap','wizard','jquery-validate','bootstrap-datepicker','select2','ace-elements','ace','phoenix.form'],function(){
 
     var isSuccess =false;
 

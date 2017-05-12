@@ -5,6 +5,7 @@
 define(function(require, exports, module) {
 
     var editUtils = require('../../../js/web/edit/editutils');
+    var baseSettingUtils = require("./basesetting");
 
     function bgBgShowStyle(val) {
         if (val == "no"){
