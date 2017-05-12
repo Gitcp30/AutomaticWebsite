@@ -1,7 +1,7 @@
 /**
  * Created by zzr on 2017/4/23.
  */
-seajs.use(['jquery','bootstrap','wizard','jquery-validate','bootstrap-datepicker','select2','ace-elements','ace','method-extend'],function($){
+seajs.use(['wizard','jquery-validate','bootstrap-datepicker','select2','phoenix'],function(){
 
     var isSuccess =false;
 
@@ -286,37 +286,6 @@ seajs.use(['jquery','bootstrap','wizard','jquery-validate','bootstrap-datepicker
     }
 
 
-
-    /*$('#logoSrc').ace_file_input({
-        style: 'well',
-        btn_choose: 'Drop files here or click to choose',
-        btn_change: null,
-        no_icon: 'ace-icon fa fa-cloud-upload',
-        droppable: true,
-        thumbnail: 'fit'//large | fit
-        //,icon_remove:null//set null, to hide remove/reset button
-        /!**,before_change:function(files, dropped) {
-						//Check an example below
-						//or examples/file-upload.html
-						return true;
-					}*!/
-        /!**,before_remove : function() {
-						return true;
-					}*!/
-        ,
-        preview_error : function(filename, error_code) {
-            //name of the file that failed
-            //error_code values
-            //1 = 'FILE_LOAD_FAILED',
-            //2 = 'IMAGE_LOAD_FAILED',
-            //3 = 'THUMBNAIL_FAILED'
-            //alert(error_code);
-        }
-
-    }).on('change', function(){
-        //console.log($(this).data('ace_input_files'));
-        //console.log($(this).data('ace_input_method'));
-    });*/
     $('.date-picker').datepicker({
         autoclose: true,
         todayHighlight: true
@@ -340,7 +309,7 @@ seajs.use(['jquery','bootstrap','wizard','jquery-validate','bootstrap-datepicker
         debugger
         $.ajax({
             type: "POST",
-            url: ctx + "/register/save",
+            url: ctx + "/register/save2",
             data: JSON.stringify(formData),
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
@@ -349,10 +318,8 @@ seajs.use(['jquery','bootstrap','wizard','jquery-validate','bootstrap-datepicker
             success: function (res) {
                 debugger
                 if (res.code == "0") {
-                    alert("1");
                     isSuccess =  true;
                 } else {
-                    alert("2");
                     isSuccess = false;
 
                 }

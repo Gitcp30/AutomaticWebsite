@@ -1,5 +1,6 @@
 package com.jmu.service.impl;
 
+import com.jmu.common.AjaxPageResponse;
 import com.jmu.dao.CompanyMapper;
 import com.jmu.domain.Company;
 import com.jmu.service.CompanyService;
@@ -21,5 +22,11 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public Company findByUrl(String url) {
         return companyMapper.selectByVisitUrl(url);
+    }
+
+    @Override
+    public AjaxPageResponse findAll(Company company , AjaxPageResponse pageResponse) {
+        companyMapper.findAll(company,pageResponse);
+        return pageResponse;
     }
 }

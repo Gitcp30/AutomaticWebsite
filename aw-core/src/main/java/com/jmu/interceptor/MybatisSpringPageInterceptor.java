@@ -104,7 +104,7 @@ public class MybatisSpringPageInterceptor implements Interceptor {
             try {
                 Object data = invocation.proceed();
                 if (data instanceof List) {
-                    page.setData((List) data);
+                    page.setRows((List) data);
                 }
                 return data;
             } catch (Exception e) {
@@ -155,7 +155,7 @@ public class MybatisSpringPageInterceptor implements Interceptor {
 */
     private String buildMysqlPageSql(AjaxPageResponse page, String sql) {
         // 计算第一条记录的位置，Mysql中记录的位置是从0开始的。
-        int offset = (page.getPageNumber() - 1) * page.getPageSize();
+        int offset = page.getPageNumber() * page.getPageSize();
         return new StringBuilder(sql).append(" limit ").append(offset).append(",").append(page.getPageSize())
                 .toString();
     }

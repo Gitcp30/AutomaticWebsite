@@ -1,7 +1,15 @@
 /**
  * Created by zzr on 2017/4/27.
  */
-seajs.use(['componentutils','jquery','bootstrap','ace-elements','ace'],function(componentUtils,$){
+
+    define(function(require, exports, module) {
+        var $  = require('jquery');
+        var componentUtils = require('componentutils');
+        require('bootstrap');
+        require('bootstrap-table');
+        require('ace-elements');
+        require('ace');
+
 
     $(function() {
 
@@ -33,7 +41,6 @@ seajs.use(['componentutils','jquery','bootstrap','ace-elements','ace'],function(
         };
 
         var load = function(path, command, data) {
-            debugger
             $("#page-content").load(ctx+path, function(module, html) {
                 module.command = command;
                 module.data = data;

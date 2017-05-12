@@ -295,4 +295,10 @@
     and COMPANY_STATE != '3'
   </select>
 
+  <select id="findAll" parameterType="com.jmu.domain.Company" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from company
+  </select>
+
 </mapper>

@@ -4,20 +4,25 @@
  */
 package com.jmu.common;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.jmu.constant.ResponseCode;
 
+import java.util.List;
 import java.util.Map;
 
 /**
- * @author xuerdong
- * @since 1.1
+ * zhouzunrong
  */
 public class AjaxPageResponse extends AjaxResponse {
 
+	// 第几页
 	private int pageNumber = 1;
+	// 每一页数量
 	private int pageSize = 20;
 	private long total = 0l;
+	private List rows = Lists.newArrayList();
+	// 总页数
 	private int totalPage = 0;
 
 	private Map userData = Maps.newHashMap();
@@ -114,4 +119,12 @@ public class AjaxPageResponse extends AjaxResponse {
 		this.totalPage = totalPage;
 	}
 
+
+	public List getRows() {
+		return rows;
+	}
+
+	public void setRows(List rows) {
+		this.rows = rows;
+	}
 }

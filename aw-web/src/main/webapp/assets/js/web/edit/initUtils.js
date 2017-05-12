@@ -4,9 +4,7 @@
 
 define(function(require, exports, module) {
 
-    var $ = require('jquery');
-    var editUtils = require("editutils");
-    var baseSettingUtils = require("./basesetting");
+    var editUtils = require('../../../js/web/edit/editutils');
 
     function bgBgShowStyle(val) {
         if (val == "no"){

@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface WebHeaderMapper extends BaseMapper<WebHeader> {
 
-    public WebHeader selectByComapnyId(String companyId);
+        public WebHeader selectByComapnyId(String companyId);
 }

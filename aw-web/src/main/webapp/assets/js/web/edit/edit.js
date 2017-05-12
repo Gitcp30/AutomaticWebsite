@@ -1,4 +1,4 @@
-seajs.use(['componentutils', 'jquery', 'editutils', 'baseSettingUtils', 'initUtils', 'bootstrap', 'jquery-ui.custom', 'spinbox', 'colorbox', 'bootstrap-wysiwyg', 'jquery.hotkeys.index', 'bootstrap-duallistbox', 'nestable', 'bootstrap-colorpicker', 'ace-elements', 'ace', 'method-extend'], function (componentUtils, $, editUtils, baseSettingUtils, initUtils) {
+seajs.use(['componentutils', '../../../assets/js/web/edit/editutils', '../../../assets/js/web/edit/basesetting', '../../../assets/js/web/edit/initUtils', 'jquery-ui.custom', 'spinbox', 'colorbox', 'bootstrap-wysiwyg', 'jquery.hotkeys.index', 'bootstrap-duallistbox', 'nestable', 'bootstrap-colorpicker', 'phoenix'], function (componentUtils, editUtils, baseSettingUtils, initUtils) {
 
     // 初始化基础数据
     baseSettingUtils.baseSettingMap = baseSettingUtils.getBaseSettings();

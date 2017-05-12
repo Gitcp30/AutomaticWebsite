@@ -14,7 +14,9 @@
 
     <link rel="stylesheet" href="${ctx}/static/css/fonts.googleapis.com.css" />
     <!-- ace styles -->
-    <link rel="stylesheet" href="${ctx}/static/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+    <link rel="stylesheet" href="${ctx}/static/css/bootstrap-table.css" />
+
+    <link rel="stylesheet" href="${ctx}/static/css/ace-index.css"  />
 
     <link rel="shortcut icon" href="${ctx}/assets/image/favicon.ico">
     <link rel="icon" href="${ctx}/assets/image/favicon.ico">
@@ -51,8 +53,8 @@
     <script src="${ctx}/static/js/sea/config.js"></script>
     <script type="text/javascript">
         var ctx = "${ctx}";
+        seajs.use('admin-index');
     </script>
-    <script src="${ctx}/assets/js/admin/index.js"></script>
 </body>
 
 </html>

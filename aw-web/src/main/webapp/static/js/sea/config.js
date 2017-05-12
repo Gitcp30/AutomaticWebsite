@@ -27,14 +27,14 @@ seajs.config({
 		"knockout-min":"js/plus/knockout-min.js",
 		"jquery.newsbox":"js/plus/jquery.bootstrap.newsbox.min.js",
 		"bootstrap-colorpicker":"js/plus/bootstrap-colorpicker.min.js",
+		"bootstrap-table":"js/plus/bootstrap-table.js",
+		"bootstrap-table-zh-CN":"js/plus/bootstrap-table-zh-CN.js",
 
 		/////自定义sys   js文件
-		"editutils":"js/system/editutils.js",
+		"admin-index":"js/system/admin-index.js",
 		"constants":"js/system/constants.js",
 		"componentutils":"js/system/componentutils.js",
-		"method-extend":"js/system/method-extends.js",
-		"baseSettingUtils":"../../../assets/js/web/edit/basesetting.js",
-        "initUtils":"../../../assets/js/web/edit/initUtils.js",
+		"phoenix":"js/system/phoenix.js",
 	}
 })	
 

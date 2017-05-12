@@ -21,15 +21,6 @@
     <link rel="shortcut icon" href="${ctx}/assets/image/favicon.ico">
     <link rel="icon" href="${ctx}/assets/image/favicon.ico">
     <style>
-        body {
-            /*background-color: white;*/
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
 
         #webHeader {
             height: 100px;
@@ -62,11 +53,7 @@
 
         #webFooter {
             margin: 0 auto;
-             height: 80px;
-            /* border: 1px solid red;*/
-            background-color: #222222;
             position: relative;
-            height: 80px;
         }
 
 
@@ -256,19 +243,6 @@
             margin: 0;
         }
 
-
-        .grid-stack-item:hover .editLayer{
-            display: block;
-            left:10px;
-        }
-        .grid-stack-item  .editLayer{
-            cursor: pointer;
-        }
-
-
-        #webContainer .grid-stack-item-content{
-            border: 1px dashed #3298fe;
-        }
 
     </style>
 </head>

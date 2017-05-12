@@ -3,9 +3,6 @@
  */
 seajs.use(['jquery', 'lodash','componentutils', 'gridstack', 'jquery.SuperSlide','jquery.newsbox','jquery-ui.custom'], function ($, _,componentUtils) {
 
-
-
-
     $(function () {
 
         // 基础数据

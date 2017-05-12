@@ -1,22 +1,15 @@
 /**
  * Created by zzr on 2017/4/28.
  */
-seajs.use(['jquery', 'lodash','componentutils','baseSettingUtils', 'gridstack', 'jquery.SuperSlide','jquery.newsbox'], function ($, _,componentUtils,baseSettingUtils) {
-
-
-
+seajs.use(['lodash','componentutils','../../../assets/js/web/edit/basesetting', 'gridstack', 'jquery.SuperSlide','jquery.newsbox'], function ( _,componentUtils,baseSettingUtils) {
 
     $(function () {
-
-
         //  侧边栏初始化
-
         function updateBS(key,value) {
             // 保存更新
             baseSettingUtils.baseSettingMap[key]['bsValue'] = value;
             baseSettingUtils.updateBsMap[key] = baseSettingUtils.baseSettingMap[key];
         }
-
 
         // 基础数据
         var baseSettingMap  = baseSettingUtils.baseSettingMap;

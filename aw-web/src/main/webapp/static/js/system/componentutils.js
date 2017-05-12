@@ -149,7 +149,7 @@ define(function(require, exports) {
 
 		// 留言板
 	exports.messageBoard = function () {
-		return '<div class="row messageBoard">'+
+		return '<div class="row messageBoard" componentId="component_messageBoard">'+
             '<div class="col-sm-12" style="border-right:1px solid #ddd;">'+
             '<div class="well col-sm-12">'+
             '<h3><i class="fa fa-file-text" aria-hidden="true"></i> 留言板</h3>'+
