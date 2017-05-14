@@ -7,6 +7,7 @@
         var $ = require('jquery');
         require('bootstrap');
         require('bootstrap-table');
+        require('bootstrap-table-zh-CN');
         require('ace-elements');
         require('ace');
         // 自定义方法
@@ -21,13 +22,6 @@
         var affixwidth = $("#toolbar").outerWidth();
         $("#toolbar .form-inline").width(affixwidth);
         $(".footaffix").width(affixwidth);
-
-        $(document).on("show.bs.modal", ".modal[data-move!=false]", function(){
-            // 默认可拖动（不设置，或者true时，可拖动）  false时，不可拖。  // 依赖jquery-ui.js
-            $(this).draggable({
-                handle: ".modal-header"   // 只能点击头部拖动
-            });
-        });
 
         $("#navbar").load(ctx+"/admin/head");
         $("#footer").load(ctx+"/admin/footer");
@@ -64,5 +58,59 @@
             return false;
         });
     })
+
+        loadPagePermission = function(buttonConfigs, callback) {
+            var factButton = {};
+            for (var b in buttonConfigs) {
+                // factButton[b] = buttonConfigs[b];
+                //根据按钮查找html中是否已做disabled，如果没有设置值取消控制
+                var dom = $(b);
+                if (dom) {
+                    var btns = dom.hasClass("disabled");
+                    if (!btns || btns.length <= 0) {
+                        factButton[b] = buttonConfigs[b];
+                        continue;
+                    }
+                }
+                if (true) {
+                    factButton[b] = buttonConfigs[b]; // b --selecter
+                    dom.remove();
+                }
+
+            }
+            callback = callback || function() {};
+            callback(factButton);
+        }
+
+        bindEvent = function(data) {
+            data = data || {};
+            for (var d in data) {
+                var dom = $(d);
+                if (dom) {
+                    dom.removeClass('disabled');
+                    e = data[d];
+
+                    var type = e.eventType || 'click';
+                    var event = e.event || function() {
+                            if (console) {
+                                console.log('the button: ' + d + ' eventType :' + type + ' event is empty..')
+                            }
+                        };
+                    var proxy = e.proxy || false;
+                    if (proxy) {
+                        $('body').off(type, d); // type:click   d:class
+                        $('body').on(type, d, event);
+                    } else {
+                        dom.on(type, event);
+                    }
+                }
+            }
+        }
+
+
+
+
+
+
 
 });

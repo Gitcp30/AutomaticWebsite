@@ -5,11 +5,9 @@
 package com.jmu.common;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.jmu.constant.ResponseCode;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * zhouzunrong
@@ -19,13 +17,11 @@ public class AjaxPageResponse extends AjaxResponse {
 	// 第几页
 	private int pageNumber = 1;
 	// 每一页数量
-	private int pageSize = 20;
-	private long total = 0l;
-	private List rows = Lists.newArrayList();
+	private int pageSize = 10;
 	// 总页数
-	private int totalPage = 0;
-
-	private Map userData = Maps.newHashMap();
+	private long total = 0l;
+	// 查询数据
+	private List rows = Lists.newArrayList();
 
 	public AjaxPageResponse() {
 		super();
@@ -102,23 +98,6 @@ public class AjaxPageResponse extends AjaxResponse {
 	public void setTotal(long total) {
 		this.total = total;
 	}
-
-	public Map getUserData() {
-		return userData;
-	}
-
-	public void setUserData(Map userData) {
-		this.userData = userData;
-	}
-
-	public int getTotalPage() {
-		return totalPage;
-	}
-
-	public void setTotalPage(int totalPage) {
-		this.totalPage = totalPage;
-	}
-
 
 	public List getRows() {
 		return rows;

@@ -325,8 +325,8 @@ pre.prettyprint {
 }
 .pagination > li.active > a,
 .pagination > li.active > a:hover {
-  background-color: #009ddb;
-  border-color: #009ddb;
+  background-color: #428bca;
+  border-color: #428bca;
   color: #ffffff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
   z-index: 2;

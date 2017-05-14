@@ -64,7 +64,7 @@ public class MybatisSpringPageInterceptor implements Interceptor {
 
             Connection connection = (Connection) invocation.getArgs()[0];
 
-            if (page.getTotalPage() > 0) {
+            if (page.getTotal() > 0) {
             } else {
                 Object parameterObj = boundSql.getParameterObject();
                 queryTotalRecord(page, parameterObj, mappedStatement, connection);

@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="${ctx}/static/css/bootstrap-table.css" />
 
     <link rel="stylesheet" href="${ctx}/static/css/ace-index.css"  />
+    <link rel="stylesheet" href="${ctx}/static/css/common.css"  />
 
     <link rel="shortcut icon" href="${ctx}/assets/image/favicon.ico">
     <link rel="icon" href="${ctx}/assets/image/favicon.ico">
