@@ -12,6 +12,7 @@
         require('ace');
         // 自定义方法
         require('phoenix.table');
+        require('phoenix.date');
         var componentUtils = require('componentutils');
 
 
@@ -107,10 +108,13 @@
             }
         }
 
+        dateTimeFormatter = function(value,row,index){
+            return (new Date(value)).phoenixDateFormat("yyyy-MM-dd hh:mm:ss");
+        }
 
-
-
-
+        dateFormatter = function(value,row,index){
+            return (new Date(value)).phoenixDateFormat("yyyy-MM-dd");
+        }
 
 
 });

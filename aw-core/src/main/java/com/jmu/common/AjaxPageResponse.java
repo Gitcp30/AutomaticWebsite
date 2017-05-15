@@ -16,6 +16,8 @@ public class AjaxPageResponse extends AjaxResponse {
 
 	// 第几页
 	private int pageNumber = 1;
+	// 分页位移
+	private int pageOffset = 0;
 	// 每一页数量
 	private int pageSize = 10;
 	// 总页数
@@ -105,5 +107,13 @@ public class AjaxPageResponse extends AjaxResponse {
 
 	public void setRows(List rows) {
 		this.rows = rows;
+	}
+
+	public int getPageOffset() {
+		return pageOffset;
+	}
+
+	public void setPageOffset(int pageOffset) {
+		this.pageOffset = pageOffset;
 	}
 }

@@ -30,6 +30,19 @@
     <result column="LCOK_REASON" jdbcType="VARCHAR" property="lcokReason" />
     <result column="STAFF_NO" jdbcType="VARCHAR" property="staffNo" />
   </resultMap>
+
+
+  <resultMap id="UserVoAndAuditingResultMap" type="com.jmu.domain.vo.UserVo" extends="BaseResultMap">
+      <association property="auditing" javaType="com.jmu.domain.Auditing">
+        <id column="AUDITING_ID" jdbcType="VARCHAR" property="auditingId" />
+        <result column="COMPANY_ID" jdbcType="VARCHAR" property="companyId" />
+        <result column="AUDITING_STATE" jdbcType="SMALLINT" property="auditingState" />
+        <result column="FAIL_REASON" jdbcType="VARCHAR" property="failReason" />
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="AUDITING_TIME" jdbcType="TIMESTAMP" property="auditingTime" />
+      </association>
+  </resultMap>
+
   <sql id="Base_Column_List">
     <!--
       WARNING - @mbggenerated
@@ -346,4 +359,12 @@
     from user
     where MAILBOX = #{mailbox,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectUserAuditingByCompanyId" parameterType="java.lang.String" resultMap="UserVoAndAuditingResultMap">
+    select *
+    from user ,auditing
+    where user.COMPANY_ID = #{companyId,jdbcType=VARCHAR}
+    and  auditing.COMPANY_ID = #{companyId,jdbcType=VARCHAR}
+  </select>
+
 </mapper>

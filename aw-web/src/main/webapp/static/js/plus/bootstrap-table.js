@@ -1,15 +1,11 @@
+
 /**
  * @author zhixin wen <wenzhixin2010@gmail.com>
- * version: 1.9.1
+ * version: 1.11.1
  * https://github.com/wenzhixin/bootstrap-table/
  */
 define(function (require, exports, module) {
 
-    /**
-     * @author zhixin wen <wenzhixin2010@gmail.com>
-     * version: 1.11.1
-     * https://github.com/wenzhixin/bootstrap-table/
-     */
 
     (function ($) {
         'use strict';
@@ -1883,7 +1879,9 @@ define(function (require, exports, module) {
                 }
             });
 
+            var $lastDetail;  // 上次点击的对象
             this.$body.find('> tr[data-index] > td > .detail-icon').off('click').on('click', function () {
+
                 var $this = $(this),
                     $tr = $this.parent().parent(),
                     index = $tr.data('index'),
@@ -1894,7 +1892,19 @@ define(function (require, exports, module) {
                     $this.find('i').attr('class', sprintf('%s %s', that.options.iconsPrefix, that.options.icons.detailOpen));
                     that.trigger('collapse-row', index, row);
                     $tr.next().remove();
+                    $lastDetail = undefined;
                 } else {
+                    // 删除上次张开的
+                    if($lastDetail != undefined){
+                        var $tr_last = $lastDetail.parent().parent();
+                        var index_last = $tr_last.data('index');
+                        var row_last = data[index_last];
+
+                        $lastDetail.find('i').attr('class', sprintf('%s %s', that.options.iconsPrefix, that.options.icons.detailOpen));
+                        that.trigger('collapse-row', index_last, row_last);
+                        $tr_last.next().remove();
+                    }
+
                     $this.find('i').attr('class', sprintf('%s %s', that.options.iconsPrefix, that.options.icons.detailClose));
                     $tr.after(sprintf('<tr class="detail-view"><td colspan="%s"></td></tr>', $tr.find('td').length));
                     var $element = $tr.next().find('td');
@@ -1903,7 +1913,9 @@ define(function (require, exports, module) {
                         $element.append(content);
                     }
                     that.trigger('expand-row', index, row, $element);
+                    $lastDetail = $this;
                 }
+
                 that.resetView();
                 return false;
             });

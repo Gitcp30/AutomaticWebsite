@@ -19373,3 +19373,5 @@ input.typeahead.scrollable ~ .tt-dropdown-menu {
     display: none !important;
   }
 }
+.table-detail{background-color:#fff;border:1px solid #dcebf7;width:100%;padding:12px}
+.table-detail td>.profile-user-info{width:100%}

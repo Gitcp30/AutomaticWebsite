@@ -155,8 +155,7 @@ public class MybatisSpringPageInterceptor implements Interceptor {
 */
     private String buildMysqlPageSql(AjaxPageResponse page, String sql) {
         // 计算第一条记录的位置，Mysql中记录的位置是从0开始的。
-        int offset = page.getPageNumber() * page.getPageSize();
-        return new StringBuilder(sql).append(" limit ").append(offset).append(",").append(page.getPageSize())
+        return new StringBuilder(sql).append(" limit ").append(page.getPageOffset()).append(",").append(page.getPageSize())
                 .toString();
     }
 

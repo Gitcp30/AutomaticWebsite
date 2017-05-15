@@ -1,8 +1,13 @@
 package com.jmu.controller;
 
+import com.google.common.collect.Lists;
 import com.jmu.common.AjaxPageResponse;
-import com.jmu.domain.Company;
+import com.jmu.common.AjaxResponse;
+import com.jmu.constant.Constants;
+import com.jmu.domain.vo.CompanyVo;
+import com.jmu.domain.vo.UserVo;
 import com.jmu.service.CompanyService;
+import com.jmu.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,26 +26,9 @@ public class CompanyController {
 
     @Autowired
     private CompanyService companyService;
+    @Autowired
+    private UserService userService;
 
-
-   /* public JsonResult GetDepartment(int limit, int offset, string departmentname, string statu)
-    {
-        var lstRes = new List<Department>();
-        for (var i = 0; i < 50; i++)
-        {
-            var oModel = new Department();
-            oModel.ID = Guid.NewGuid().ToString();
-            oModel.Name = "销售部" + i ;
-            oModel.Level = i.ToString();
-            oModel.Desc = "暂无描述信息";
-            lstRes.Add(oModel);
-        }
-
-        var total = lstRes.Count;
-        var rows = lstRes.Skip(offset).Take(limit).ToList();
-        return Json(new { total = total, rows = rows }, JsonRequestBehavior.AllowGet);
-    }
-*/
 
 
    @RequestMapping(value = "company",method = RequestMethod.GET)
@@ -51,8 +39,24 @@ public class CompanyController {
 
 
    @ResponseBody
-   @RequestMapping("getCompany")
-   public AjaxPageResponse getCompany(Company company,AjaxPageResponse page){
-       return companyService.findAll(company,page);
+   @RequestMapping("getAuditingCompany")
+   public AjaxPageResponse getCompany(CompanyVo companyVo, AjaxPageResponse page){
+       // 审核中，以及未核实状态
+       Short[] companyStates = {Constants.AUDITING_FAIL,Constants.AUDITING_ING};
+       companyVo.setCompanyStates(companyStates);
+       return companyService.findAll(companyVo,page);
    }
+
+    @ResponseBody
+    @RequestMapping("getUserAndAuditing")
+    public AjaxResponse getUserAndAuditing(String companyId){
+        if(companyId == null ){
+            AjaxResponse.fail("没有单位id!");
+        }
+        UserVo userVo = userService.getUserAndAuditing(companyId);
+        AjaxResponse ajaxResponse = new AjaxResponse();
+        ajaxResponse.setData(Lists.newArrayList(userVo));
+        return ajaxResponse;
+    }
+
 }

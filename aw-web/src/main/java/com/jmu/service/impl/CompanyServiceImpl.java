@@ -3,6 +3,7 @@ package com.jmu.service.impl;
 import com.jmu.common.AjaxPageResponse;
 import com.jmu.dao.CompanyMapper;
 import com.jmu.domain.Company;
+import com.jmu.domain.vo.CompanyVo;
 import com.jmu.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,8 +26,8 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public AjaxPageResponse findAll(Company company , AjaxPageResponse pageResponse) {
-        companyMapper.findAll(company,pageResponse);
+    public AjaxPageResponse findAll(CompanyVo companyVo, AjaxPageResponse pageResponse) {
+        companyMapper.findAll(companyVo,pageResponse);
         return pageResponse;
     }
 }

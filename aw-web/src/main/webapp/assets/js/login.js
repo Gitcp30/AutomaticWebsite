@@ -73,7 +73,6 @@ seajs.use(['jquery','componentutils'],function($,componentUtils){
                     dataType: 'json',
                     cache: false,
                     success: function (res) {
-                        debugger
                         if (res.code == "0") {
                             //saveCookie();
                             window.location.href = ctx + "/admin";

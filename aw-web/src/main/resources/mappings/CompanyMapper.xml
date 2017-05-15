@@ -295,10 +295,24 @@
     and COMPANY_STATE != '3'
   </select>
 
-  <select id="findAll" parameterType="com.jmu.domain.Company" resultMap="BaseResultMap">
+
+  <select id="findAll" parameterType="com.jmu.domain.vo.CompanyVo" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from company
+    where 1= 1
+    <if test="companyStates != null">
+      and COMPANY_STATE in
+      <foreach item="state" index="index" collection="companyStates" open="(" separator="," close=")">
+        ${state}
+      </foreach>
+    </if>
+
+    <if test="companyName!=null and companyName!=''">
+      AND COMPANY_NAME Like CONCAT('%',#{companyName,jdbcType=VARCHAR},'%')
+    </if>
+
   </select>
+
 
 </mapper>
