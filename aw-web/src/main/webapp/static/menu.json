@@ -9,7 +9,7 @@
 				[
 					{
 						"text": "测试",
-						"url": "/admin/sys/company"
+						"url": "/admin/sys/companyAuditing"
 					},{
 						"text": "单据类型管理",
 						"url": "basicdata/html/cdOrderTypeList.html"
