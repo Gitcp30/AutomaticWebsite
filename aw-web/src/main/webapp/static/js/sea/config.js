@@ -30,6 +30,7 @@ seajs.config({
 		"bootstrap-table":"js/plus/bootstrap-table.js",
 		"bootstrap-table-zh-CN":"js/plus/bootstrap-table-zh-CN.js",
 		"moment.min":"js/plus/date-time/moment.min.js",
+        "layer":"js/plus/layer/layer.js",
 
 		/////自定义sys   js文件
 		"admin-index":"js/system/admin-index.js",
@@ -39,6 +40,11 @@ seajs.config({
 		"phoenix.table":"js/system/phoenix.table.js",
 		"phoenix.form":"js/system/phoenix.form.js",
         "phoenix.date":"js/system/phoenix.date.js",
+		"phoenix.util":"js/system/phoenix.util.js",
+
+
+		//css
+        "layer-css":"js/plus/layer/layer.css",
 	}
 })	
 

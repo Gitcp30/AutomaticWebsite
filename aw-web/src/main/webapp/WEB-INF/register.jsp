@@ -348,11 +348,11 @@
 										</div>
 
 										<div class="form-group establishmentDate">
-											<label class="control-label col-xs-12 col-sm-4 no-padding-right" for="establishmentDate">工商注册时间:</label>
+											<label class="control-label col-xs-12 col-sm-4 no-padding-right" for="establishmentDate">工商注册时间</label>
 
 											<div class="col-xs-12 col-sm-3">
 												<div class="input-group">
-													<input class="form-control date-picker" id="establishmentDate" name="establishmentDate" type="text" data-date-format="yyyy-dd-mm" />
+													<input class="form-control date-picker" id="establishmentDate" name="establishmentDate" type="text" data-date-format="yyyy-mm-dd" />
 													<span class="input-group-addon">
 														<i class="fa fa-calendar bigger-110"></i>
 													</span>

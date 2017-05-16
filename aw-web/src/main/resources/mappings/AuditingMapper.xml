@@ -143,4 +143,34 @@
       AUDITING_TIME = #{auditingTime,jdbcType=TIMESTAMP}
     where AUDITING_ID = #{auditingId,jdbcType=VARCHAR}
   </update>
+
+  <update id="updateByCompanyId" parameterType="com.jmu.domain.Auditing">
+    update auditing
+    <set>
+      <if test="auditingState != null">
+        AUDITING_STATE = #{auditingState,jdbcType=SMALLINT},
+      </if>
+      <if test="failReason != null">
+        FAIL_REASON = #{failReason,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditingTime != null">
+        AUDITING_TIME = #{auditingTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where COMPANY_ID = #{companyId,jdbcType=VARCHAR}
+  </update>
+
+
+  <delete id="batchDeleteByCompanyId" parameterType="string">
+    delete from auditing
+    where COMPANY_ID in
+    <foreach collection="array" item="companyId" open="(" close=")" separator=",">
+      #{companyId}
+    </foreach>
+  </delete>
+
+
 </mapper>

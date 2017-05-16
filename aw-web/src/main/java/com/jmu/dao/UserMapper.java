@@ -15,4 +15,6 @@ public interface UserMapper extends BaseMapper<User> {
 
     public UserVo selectUserAuditingByCompanyId(String companyId);
 
+    int batchDeleteByCompanyId(String[] companyIds);
+
 }

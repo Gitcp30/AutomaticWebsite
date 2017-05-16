@@ -10,15 +10,15 @@
         require('bootstrap-table-zh-CN');
         require('ace-elements');
         require('ace');
+        require('layer');
+        require('layer-css');
         // 自定义方法
         require('phoenix.table');
         require('phoenix.date');
+        require('phoenix.form');
         var componentUtils = require('componentutils');
 
-
-
-
-    $(function() {
+        $(function() {
 
         var affixwidth = $("#toolbar").outerWidth();
         $("#toolbar .form-inline").width(affixwidth);

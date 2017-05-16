@@ -4,14 +4,17 @@ import com.google.common.collect.Lists;
 import com.jmu.common.AjaxPageResponse;
 import com.jmu.common.AjaxResponse;
 import com.jmu.constant.Constants;
+import com.jmu.domain.Auditing;
 import com.jmu.domain.vo.CompanyVo;
 import com.jmu.domain.vo.UserVo;
+import com.jmu.service.admin.AuditingService;
 import com.jmu.service.admin.CompanyService;
 import com.jmu.service.admin.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -28,6 +31,8 @@ public class CompanyAuditingController {
     private CompanyService companyService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private AuditingService auditingService;
 
 
 
@@ -58,5 +63,27 @@ public class CompanyAuditingController {
         ajaxResponse.setData(Lists.newArrayList(userVo));
         return ajaxResponse;
     }
+
+
+    @ResponseBody
+    @RequestMapping("saveAuditing")
+    public AjaxResponse saveAuditing(Auditing auditing){
+        if(auditing.getAuditingId() == null && auditing.getAuditingState() == null){
+            AjaxResponse.fail("参数错误！");
+        }
+        return auditingService.updateAuditing(auditing);
+    }
+
+
+    @ResponseBody
+    @RequestMapping("deleteAuditing")
+    public AjaxResponse deleteAuditing(@RequestParam(value="companyIds[]",required=true) String[] companyIds){
+        if (companyIds != null && companyIds.length > 0){
+            return auditingService.deleteAuditing(companyIds);
+        }
+        return AjaxResponse.fail("没有可删除的数据！");
+    }
+
+
 
 }

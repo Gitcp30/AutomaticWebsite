@@ -1,8 +1,8 @@
-define(function(require, exports, module) {
+	define(function(require, exports, module) {
     !function($) {
-       /* $.fn.toObject = function() {
+        $.fn.toObject = function() {
             var inputs = {};
-            var doms = $(this).find("input[name],select[name],textarea[name],.sns-combobox,.sns-popwin");
+            var doms = $(this).find("input[name],select[name],textarea[name]");
             $(doms).each(function(i, elm) {
                 var inputName = $(this).attr("name");
                 var inputVal = '';
@@ -27,11 +27,11 @@ define(function(require, exports, module) {
             
             return inputs;
         };
+
         $.fn.toForm = function(vo) {
             if (vo == null)
                 vo = new Array();
-            var checkboxgroup = $(this).find(".sns-checkboxgroup input");
-            var doms = $(this).find("input[name],select[name],textarea[name],.sns-combobox,.sns-popwin");
+            var doms = $(this).find("input[name],select[name],textarea[name]");
             doms.each(function(i, elm) {
                 var value = vo[elm.name];
                 var tagName = elm.tagName;
@@ -41,26 +41,11 @@ define(function(require, exports, module) {
                     if (type == 'BUTTON' || type == 'SUBMIT') {
                         return;
                     } else if (type == 'CHECKBOX') {
-                    	value = value.split(",");//数据库存的值是 字符串 以逗号隔开的数据
-                    	$(checkboxgroup).each(function(i, elm) {//先清理勾选的
-                    		$(this).removeAttr('checked');
-                    	});
-                    	$(checkboxgroup).each(function(i, elm) {//重新选择
-                    		var inputTarget = $(this);
-                    		var inputVal = $(this).val();
-                    		$.each(value, function(i, item){      
-                    		      if(inputVal == item){
-                    		    	  inputTarget.prop('checked',true);
-                    		      }
-                    		});   
-                    	});
+
                     } else if (type == 'RADIO') {
 
                     } else {
-                        if ($(elm).hasClass("sns-date")) {
-                        } else {
-                            $(elm).val(value);
-                        }
+                        $(elm).val(value);
                     }
                 } else if (tagName == 'SELECT') {
                     // 设置select2的选中值
@@ -70,9 +55,11 @@ define(function(require, exports, module) {
                 }
             });
         };
-        /!**
+
+
+        /**
          * 重置表单数据
-         *!/
+         */
         $.fn.reset = function() {
             $(this).find("input,textarea").val('').removeAttr('checked').removeAttr('selected');
             $(this).find("option").removeAttr('checked').removeAttr('selected');
@@ -93,7 +80,7 @@ define(function(require, exports, module) {
                     console.log("--- format =" + opts.format);
                 }
             });
-        };*/
+        };
 
         $.fn.serializeObject = function() {
             var o = {};

@@ -16,8 +16,11 @@ public class CustomDateConverter implements Converter<String,Date>{
 		
 		//实现 将日期串转成日期类型(格式是yyyy-MM-dd HH:mm:ss)
 		
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+		if(source == ""){
+			return  null;
+		}
 		try {
 			//转成直接返回
 			return simpleDateFormat.parse(source);

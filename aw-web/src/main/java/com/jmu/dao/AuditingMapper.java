@@ -7,4 +7,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AuditingMapper extends BaseMapper<Auditing> {
 
+    int updateByCompanyId(Auditing auditing);
+
+    int batchDeleteByCompanyId(String[] companyIds);
+
 }

@@ -312,7 +312,66 @@
       AND COMPANY_NAME Like CONCAT('%',#{companyName,jdbcType=VARCHAR},'%')
     </if>
 
+    <if test="visitUrl!=null and visitUrl!=''">
+      AND VISIT_URL Like CONCAT('%',#{visitUrl,jdbcType=VARCHAR},'%')
+    </if>
+
+    <if test="mailbox!=null and mailbox!=''">
+      AND MAILBOX = #{mailbox,jdbcType=VARCHAR}
+    </if>
+
+    <if test="subjectType!=null">
+      AND SUBJECT_TYPE = #{subjectType,jdbcType=SMALLINT}
+    </if>
+
+    <if test="industryType!=null and industryType!=''">
+      AND INDUSTRY_TYPE = #{industryType,jdbcType=VARCHAR}
+    </if>
+
+    <if test="companySize!=null">
+      AND COMPANY_SIZE = #{companySize,jdbcType=SMALLINT}
+    </if>
+
+    <if test="companyState!=null">
+      AND COMPANY_STATE = #{companyState,jdbcType=SMALLINT}
+    </if>
+
+    <if test="establishmentDateBegin!=null">
+      <![CDATA[
+      and DATE_FORMAT(ESTABLISHMENT_DATE, '%Y-%m-%d') >=  DATE_FORMAT(#{establishmentDateBegin,jdbcType=TIMESTAMP}, '%Y-%m-%d')
+      ]]>
+    </if>
+
+    <if test="establishmentDateEnd!=null">
+      <![CDATA[
+      and DATE_FORMAT(ESTABLISHMENT_DATE, '%Y-%m-%d') <=  DATE_FORMAT(#{establishmentDateEnd,jdbcType=TIMESTAMP}, '%Y-%m-%d')
+      ]]>
+    </if>
+
+    <if test="createTimeEnd!=null">
+      <![CDATA[
+      and DATE_FORMAT(CREATE_TIME, '%Y-%m-%d') <=  DATE_FORMAT(#{createTimeEnd,jdbcType=TIMESTAMP}, '%Y-%m-%d')
+      ]]>
+
+    </if>
+
+    <if test="createTimeBegin!=null">
+      <![CDATA[
+      and DATE_FORMAT(CREATE_TIME, '%Y-%m-%d') >=  DATE_FORMAT(#{createTimeBegin,jdbcType=TIMESTAMP}, '%Y-%m-%d')
+      ]]>
+
+    </if>
+
   </select>
+
+
+  <delete id="batchDeleteByPrimaryId" parameterType="string">
+    delete from company
+    where COMPANY_ID in
+    <foreach collection="array" item="companyId" open="(" close=")" separator=",">
+      #{companyId}
+    </foreach>
+  </delete>
 
 
 </mapper>

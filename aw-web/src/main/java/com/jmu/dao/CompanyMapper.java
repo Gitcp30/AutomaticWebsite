@@ -15,4 +15,6 @@ public interface CompanyMapper extends BaseMapper<Company> {
 
     List findAll(CompanyVo companyVo, AjaxPageResponse page);
 
+    int batchDeleteByPrimaryId(String[] companyIds);
+
 }
