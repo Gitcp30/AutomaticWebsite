@@ -185,6 +185,13 @@
     order by BANNER_ORDER asc
   </select>
 
+  <delete id="batchDeleteByCompanyId" parameterType="string">
+    delete from web_banner_img
+    where COMPANY_ID in
+    <foreach collection="array" item="companyId" open="(" close=")" separator=",">
+      #{companyId}
+    </foreach>
+  </delete>
 
 
 </mapper>

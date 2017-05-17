@@ -376,4 +376,20 @@
     </foreach>
   </delete>
 
+  <select id="selectCountByCompanyId" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select count(*)
+    from user
+    where COMPANY_ID = #{companyId,jdbcType=VARCHAR}
+  </select>
+
+
+  <select id="selectByCompanyId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where COMPANY_ID = #{companyId,jdbcType=VARCHAR}
+    order by CREATE_TIME
+  </select>
+
+
 </mapper>

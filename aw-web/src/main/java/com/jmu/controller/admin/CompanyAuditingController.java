@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * @Description: 单位控制类
+ * @Description: 单位审核控制类
  * @author: zhouzunrong
  * @create: 2017-05-10 14:10
  * @version: 1.0

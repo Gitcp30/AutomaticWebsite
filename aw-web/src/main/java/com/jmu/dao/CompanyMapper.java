@@ -17,4 +17,6 @@ public interface CompanyMapper extends BaseMapper<Company> {
 
     int batchDeleteByPrimaryId(String[] companyIds);
 
+    int updateStateByPrimaryKey(CompanyVo companyVo);
+
 }

@@ -169,8 +169,121 @@ define(function(require, exports) {
             '</div>';
     }
 
+    // 单位详情信息
+    exports.companyDetail =function (data) {
+        debugger
+        Template7.registerPartial(
+            'begin',
+            '<div class="table-detail">'+
+            '<div class="row">'+
+            '<div class="col-xs-10 col-sm-2">'+
+            '<div class="text-center">'+
+            '{{#if logoSrc}}'+
+            '<img height="150" class="thumbnail inline no-margin-bottom" alt="Domain Owners Avatar" src="'+ctx+'{{logoSrc}}" />'+
+            '{{else}}'+
+            '<img height="150" class="thumbnail inline no-margin-bottom" alt="Domain Owners Avatar" src="'+ctx+'/static/images/avatars/profile-pic.jpg" />'+
+            '{{/if}}'+
+            '<br />'+
+            '<div class="width-80 label label-info label-xlg arrowed-in arrowed-in-right">'+
+            '<div class="inline position-relative">'+
+            '<a class="user-title-label" href="#">'+
+            '<i class="ace-icon fa fa-circle light-green"></i>'+
+            '&nbsp;'+
+            '<span class="white">'+
+            '{{#if companyName}}'+
+            '{{companyName}}'+
+            '{{/if}}'+
+            '</span>'+
+            '</a>'+
+            '</div>'+
+            '</div>'+
+            '</div>'+
+            '</div>'+
 
 
+            '<div class="col-xs-12 col-sm-7">'+
+            '<div class="space visible-xs"></div>'+
+
+            '<div class="profile-user-info profile-user-info-striped">'+
+            '<div class="profile-info-row">'+
+            '<div class="profile-info-name">负责人</div>'+
+
+            '<div class="profile-info-value">'+
+            '<span>'+
+            '{{#if representative}}'+
+            '{{representative}}'+
+            '{{/if}}'+
+            '</span>'+
+            '</div>'+
+            '</div>'+
+
+            '<div class="profile-info-row">'+
+            '<div class="profile-info-name"> 手机号码</div>'+
+
+            '<div class="profile-info-value">'+
+            '<span>'+
+            '{{#if mobile}}'+
+            '{{mobile}}'+
+            '{{/if}}'+
+            '</span>'+
+            '</div>'+
+            '</div>'+
+
+            '<div class="profile-info-row">'+
+            '<div class="profile-info-name">固定电话</div>'+
+
+            '<div class="profile-info-value">'+
+            '<span>'+
+            '{{#if telPhone}}'+
+            '{{telPhone}}'+
+            '{{/if}}'+
+            '</span>'+
+            '</div>'+
+            '</div>'+
+
+            '<div class="profile-info-row">'+
+            '<div class="profile-info-name">邮政编码</div>'+
+
+            '<div class="profile-info-value">'+
+            '<span>'+
+            '{{#if zipCode}}'+
+            '{{zipCode}}'+
+            '{{/if}}'+
+            '</span>'+
+            '</div>'+
+            '</div>'+
+
+
+            '<div class="profile-info-row">'+
+            '<div class="profile-info-name">员工</div>'+
+
+            '<div class="profile-info-value">'+
+            '<span>'+data.count+'名员工<a herf="#" class="getList" style="cursor: pointer;" data-company="{{companyId}}">[查看]</a></span>'+
+            '</div>'+
+            '</div>'+
+
+            '<div class="profile-info-row">'+
+            '<div class="profile-info-name">联系地址</div>'+
+
+            '<div class="profile-info-value">'+
+
+            '<span>'+
+            '{{#if address}}'+
+            '<i class="fa fa-map-marker light-orange bigger-110"></i> '+
+            '{{address}}'+
+            '{{/if}}'+
+            '</span>'+
+            '</div>'+
+            '</div>'+
+
+
+            '</div>'+
+            '</div>'+
+            '</div>'+
+            '</div>'
+        );
+        return render(data);
+    }
 	// 渲染视图
 	function render(data){
 		var template_nav2 = '{{> "begin"}}';

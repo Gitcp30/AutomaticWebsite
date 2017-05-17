@@ -10,7 +10,7 @@ a:hover, a:focus {    color: #3a93df; text-decoration:none;}
 a {    color: #0682ea; outline:none!important; }
 
 */
-/*
+
 
 
 .w100pe { width: 100%!important;}
@@ -44,7 +44,7 @@ a {    color: #0682ea; outline:none!important; }
 .w700{ width:700px!important;}
 .w800{ width:800px!important;}
 .w900{ width:900px!important;}
-
+/*
 .f12{ font-size:12px;}
 .f14 { font-size:14px;}
 .f16 { font-size:16px;}

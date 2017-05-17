@@ -12,7 +12,7 @@
 						"url": "/admin/sys/companyAuditing"
 					},{
 						"text": "单据类型管理",
-						"url": "basicdata/html/cdOrderTypeList.html"
+						"url": "/admin/sys/companyPage"
 					}
 				]
 		},{

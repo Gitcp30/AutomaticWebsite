@@ -116,5 +116,9 @@
             return (new Date(value)).phoenixDateFormat("yyyy-MM-dd");
         }
 
+        date2Formatter = function(value,row,index){
+            return (new Date(value)).phoenixDateFormat("yyyy/MM/dd");
+        }
+
 
 });

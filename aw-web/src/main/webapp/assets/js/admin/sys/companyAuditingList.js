@@ -10,6 +10,7 @@ seajs.use(['./assets/js/admin/sys/companyAuditingListHandler','bootstrap-datepic
     var tableOpting = {
         url : ctx+'/admin/sys/getCompanyAuditing',
         detailView:true,
+        height: 500,
         columns: [{
             checkbox: true
         }, {

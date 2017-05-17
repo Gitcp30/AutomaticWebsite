@@ -71,7 +71,11 @@
 			   enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
 
 
-		<table tableName="web_content"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+		<table tableName="bullentin_board"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+			   enableSelectByExample="false" selectByExampleQueryId="false"></table>
+		<table tableName="message_board"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+			   enableSelectByExample="false" selectByExampleQueryId="false"></table>
+		<table tableName="product"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
 			   enableSelectByExample="false" selectByExampleQueryId="false"></table>
 	</context>
 </generatorConfiguration>

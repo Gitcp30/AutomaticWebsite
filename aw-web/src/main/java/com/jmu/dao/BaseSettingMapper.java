@@ -14,4 +14,6 @@ public interface BaseSettingMapper extends BaseMapper<BaseSetting> {
 
     int batchUpdateByPrimaryKey(List<BaseSetting> baseSettingList);
 
+    int batchDeleteByCompanyId(String[] companyIds);
+
 }

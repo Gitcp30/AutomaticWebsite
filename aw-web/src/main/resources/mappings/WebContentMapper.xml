@@ -225,4 +225,11 @@
   </select>
 
 
+  <delete id="batchDeleteByCompanyId" parameterType="string">
+    delete from web_content
+    where COMPANY_ID in
+    <foreach collection="array" item="companyId" open="(" close=")" separator=",">
+      #{companyId}
+    </foreach>
+  </delete>
 </mapper>

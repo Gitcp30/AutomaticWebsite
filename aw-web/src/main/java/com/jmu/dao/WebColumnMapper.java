@@ -15,4 +15,7 @@ public interface WebColumnMapper extends BaseMapper<WebColumn> {
 
     List<WebColumn> selectByUrl(String url);
 
+    int batchDeleteByCompanyId(String[] companyIds);
+
+
 }

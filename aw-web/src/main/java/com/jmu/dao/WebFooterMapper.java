@@ -10,4 +10,6 @@ public interface WebFooterMapper extends BaseMapper<WebFooter> {
 
     WebFooter selectByCompanyId(String companyId);
 
+    int batchDeleteByCompanyId(String[] companyIds);
+
 }

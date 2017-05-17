@@ -216,4 +216,13 @@
     </foreach>
   </update>
 
+
+  <delete id="batchDeleteByCompanyId" parameterType="string">
+    delete from base_setting
+    where COMPANY_ID in
+    <foreach collection="array" item="companyId" open="(" close=")" separator=",">
+      #{companyId}
+    </foreach>
+  </delete>
+
 </mapper>

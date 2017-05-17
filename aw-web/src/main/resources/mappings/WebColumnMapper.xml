@@ -238,5 +238,12 @@
     where URL = #{url,jdbcType=VARCHAR}
   </select>
 
+  <delete id="batchDeleteByCompanyId" parameterType="string">
+    delete from web_column
+    where COMPANY_ID in
+    <foreach collection="array" item="companyId" open="(" close=")" separator=",">
+      #{companyId}
+    </foreach>
+  </delete>
 
 </mapper>

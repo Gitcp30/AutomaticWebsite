@@ -20,6 +20,7 @@ public class CompanyVo extends Company {
     private Date createTimeBegin;
     private Date createTimeEnd;
 
+    private String[] companyIds;
 
 
     public Short[] getCompanyStates() {
@@ -60,5 +61,13 @@ public class CompanyVo extends Company {
 
     public void setCreateTimeEnd(Date createTimeEnd) {
         this.createTimeEnd = createTimeEnd;
+    }
+
+    public String[] getCompanyIds() {
+        return companyIds;
+    }
+
+    public void setCompanyIds(String[] companyIds) {
+        this.companyIds = companyIds;
     }
 }

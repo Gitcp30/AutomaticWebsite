@@ -15,4 +15,6 @@ public interface WebBannerImgMapper extends BaseMapper<WebBannerImg> {
 
     List selectByCompanyId(String companyId);
 
+    int batchDeleteByCompanyId(String[] companyIds);
+
 }

@@ -374,4 +374,17 @@
   </delete>
 
 
+  <update id="updateStateByPrimaryKey" parameterType="com.jmu.domain.vo.CompanyVo">
+    update company
+    set
+    COMPANY_STATE = #{companyState,jdbcType=SMALLINT},
+    MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+    MODIFIER = #{modifier,jdbcType=VARCHAR}
+    where COMPANY_ID in
+    <foreach collection="companyIds" item="companyId" open="(" close=")" separator=",">
+      #{companyId}
+    </foreach>
+  </update>
+
+
 </mapper>

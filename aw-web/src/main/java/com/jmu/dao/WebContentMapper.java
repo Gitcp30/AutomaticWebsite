@@ -16,4 +16,5 @@ public interface WebContentMapper extends BaseMapper<WebContent> {
 
     List<WebContent> selectByColumnId(@Param("comumnId") String comumnId,@Param("companyId") String companyId);
 
+    int batchDeleteByCompanyId(String[] companyIds);
 }

@@ -36,9 +36,10 @@ define(function() {
 		OPERATE_FAILURE : '操作失败',
 		SELECT_RECORD_ONLY_ONE : '请选择一条记录！',
 		NOT_AUDITING_ING:'当前记录不是审核状态!',
-		ENABLE : 'ENABLE',
-		DISABLE : 'DISABLE',
-		SYSTEM_ERROR:'系统错误，请重试！'
+		ENABLE : '0',
+		DISABLE : '1',
+		SYSTEM_ERROR:'系统错误，请重试！',
+		NO_DATA_OPERATE:'没有可操作的记录！'
 
 	};
 });
