@@ -16,6 +16,8 @@ public interface CompanyService {
 
     public AjaxResponse updateState(CompanyVo companyVo);
 
-    public AjaxResponse deleteCompany(Short[] companyIds);
+    public AjaxResponse deleteCompany(String[] companyIds);
+
+    public AjaxResponse updateCompany(Company company);
 
 }

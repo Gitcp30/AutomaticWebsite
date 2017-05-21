@@ -41,6 +41,7 @@
         };
 
         var load = function(path, command, data) {
+            $.ajaxSetup({cache:true});
             $("#page-content").load(ctx+path, function(module, html) {
                 module.command = command;
                 module.data = data;

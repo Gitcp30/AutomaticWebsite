@@ -3,16 +3,14 @@ package com.jmu.controller.admin;
 import com.jmu.common.AjaxPageResponse;
 import com.jmu.common.AjaxResponse;
 import com.jmu.constant.Constants;
+import com.jmu.domain.Company;
 import com.jmu.domain.User;
 import com.jmu.domain.vo.CompanyVo;
 import com.jmu.service.admin.CompanyService;
 import com.jmu.service.admin.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.Date;
@@ -116,13 +114,30 @@ public class CompanyController {
     @RequestMapping("deleteCompany")
     public AjaxResponse deleteCompany(@RequestParam(value="companyIds[]",required=true) String[] companyIds){
         if (companyIds != null && companyIds.length > 0){
-           // return auditingService.deleteAuditing(companyIds);
+           return companyService.deleteCompany(companyIds);
         }
         return AjaxResponse.fail("没有可删除的数据！");
     }
 
 
+    /**
+     * 更新单位信息
+     * @param company
+     * @param session
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("updateCompany")
+    public AjaxResponse updateCompany(@RequestBody Company company, HttpSession session){
+        if (company.getCompanyId() == null){
+            return  AjaxResponse.fail("单位id不存在！");
+        }
+        User user = (User) session.getAttribute("currentUser");
+        company.setModifier(user.getUserId());
 
+       return companyService.updateCompany(company);
+
+    }
 
 
 

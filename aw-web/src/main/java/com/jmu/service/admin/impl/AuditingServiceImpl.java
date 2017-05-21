@@ -1,6 +1,7 @@
 package com.jmu.service.admin.impl;
 
 import com.jmu.common.AjaxResponse;
+import com.jmu.constant.Constants;
 import com.jmu.dao.AuditingMapper;
 import com.jmu.dao.CompanyMapper;
 import com.jmu.dao.UserMapper;
@@ -41,7 +42,11 @@ public class AuditingServiceImpl implements AuditingService {
         // 保存单位表
         Company company = new Company();
         company.setCompanyId(auditing.getCompanyId());
-        company.setCompanyState(auditing.getAuditingState());
+        if(auditing.getAuditingState() == Constants.AUDITING_SUCCESS){
+            company.setCompanyState(Constants.STATE_NORMAL);
+        } else {
+            company.setCompanyState(Constants.AUDITING_FAIL);
+        }
         companyMapper.updateByPrimaryKeySelective(company);
 
         return  AjaxResponse.success();

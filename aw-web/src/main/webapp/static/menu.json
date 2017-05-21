@@ -23,7 +23,7 @@
 			},
 			"submenu" : [{
 						"text" : "包装规格",
-						"url" : "item/html/cdPackageList.html"
+						"url" : "/admin/welcome"
 					}, {
 						"text" : "商品组",
 						"url" : "item/html/ebMaterialGroupList.html"

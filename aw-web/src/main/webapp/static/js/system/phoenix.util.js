@@ -19,18 +19,19 @@ define(function(require, exports, module) {
         return $.ajax(options);
     };
 
-    exports.jsonAjaxRequest = function(url, data,func) {
-        return $.ajax({
-            url : url,
-            data : JSON.stringify(data),
-            type : 'json',
-            method : 'post',
-            contentType : 'application/json;charset=utf-8',
-            success:func,
-            error:function(){
-                layer.msg(Constants.SYSTEM_ERROR,{icon:1});
-            }
-        });
+
+    var defaults2 = {
+        dataType : 'json',
+        method : 'post',
+        contentType : 'application/json;charset=utf-8',
+        error:function(){
+            layer.msg(Constants.SYSTEM_ERROR,{icon:1});
+        }
+    };
+
+    exports.jsonAjaxRequest = function(url, data,callback,opts) {
+        var options = $.extend({}, defaults2, opts,{url:url,data:JSON.stringify(data),success:callback});
+        return $.ajax(options);
     };
 
     exports.hasOne = function(selectedRows) {

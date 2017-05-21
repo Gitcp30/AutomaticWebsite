@@ -45,7 +45,8 @@ seajs.config({
 
 		//css
         "layer-css":"js/plus/layer/layer.css",
-	}
+	},
+
 })	
 
 

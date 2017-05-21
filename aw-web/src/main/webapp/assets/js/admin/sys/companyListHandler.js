@@ -8,13 +8,13 @@ define(function(require, exports) {
     var phoenixUtils = require('phoenix.util');
     var componentUtils = require('componentutils');
 
+    var $companyTables = $('#companyTable');
+    var $companyQueryDialog = $('#companyQueryDialog');
 
-
-
-    var $companyTable = $('#companyTable');
     var $companyUserTable = $('#companyUserTable');
     var $companyUserDialog = $('#companyUserDialog');
-    var $companyQueryDialog = $('#companyQueryDialog');
+    var $companyEditDialog = $('#companyEditDialog');
+
 
 
     var isSeniorQuery = false;
@@ -84,7 +84,7 @@ define(function(require, exports) {
 
     // 启用/停用更新方法
     function  updateState(state) {
-        var selectedRows = $companyTable.bootstrapTable('getSelections');
+        var selectedRows = $companyTables.bootstrapTable('getSelections');
         // 存在记录
         if(phoenixUtils.hasOne(selectedRows)){
             var ids = $.map(selectedRows, function(row) {
@@ -107,7 +107,7 @@ define(function(require, exports) {
                     {'companyState':state,'companyIds':ids},
                     function (res) {
                         if(res.code == Constants.CODE_SUCCESS){
-                            $companyTable.bootstrapTable('refresh');
+                            $companyTables.bootstrapTable('refresh');
                         }else {
                             layer.msg(res.message);
                         }
@@ -140,17 +140,34 @@ define(function(require, exports) {
         deleteCompany([row]);
     },
     'click .edit' : function(e, value, row) {
-        phoenix.newpageOpen('bdmweb/item/html/cdCommonMaterialEditor.html', 'sidebar=true', 'cdcmId=' + row.cdcmId);
+        $companyEditDialog.reset();
+        $companyEditDialog.toForm(row);
+        $('#companyEditForm .date-picker').datepicker("setDate", dateFormatter(row.establishmentDate));
+        $companyEditDialog.modal('show');
     }
-};
+    };
 
 
+     exports.editDialogCommitHandler = function () {
+         var row = $companyEditDialog.toObject();
+         phoenixUtils.jsonAjaxRequest(ctx+'/admin/sys/updateCompany',row,function (res) {
+             debugger
+             if(res.code == Constants.CODE_SUCCESS){
+                 $companyEditDialog.modal('hide');
+                 $companyTables.bootstrapTable('refresh');
+             }else {
+                 layer.msg(res.message);
+             }
+         });
+
+     }
 
     //查询参数
     exports.queryParams = function (tableParams) {
+        debugger
         var params;
         if (isSeniorQuery) {
-           params = $companyAuditQueryDialog.toObject();
+           params = $companyQueryDialog.toObject();
         } else {
             params = {companyName: tableParams.search }// 搜索框
         }
@@ -167,9 +184,7 @@ define(function(require, exports) {
 
     //员工查询参数
     exports.queryUserParams = function (tableParams) {
-        debugger
         var temp = {
-            userName: tableParams.search,// 搜索框
             pageSize: tableParams.limit,   //页面大小
             pageOffset: tableParams.offset  //页码
         };
@@ -190,7 +205,7 @@ define(function(require, exports) {
 
     // 删除记录
     exports.deleteCompanyHandler = function () {
-        var selectedRows = $companyTable.bootstrapTable('getSelections');
+        var selectedRows = $companyTables.bootstrapTable('getSelections');
         deleteCompany(selectedRows);
     }
 
@@ -209,7 +224,7 @@ define(function(require, exports) {
                     {companyIds: ids},
                     function (res) {
                         if(res.code == Constants.CODE_SUCCESS){
-                            $companyTable.bootstrapTable('refresh');
+                            $companyTables.bootstrapTable('refresh');
                             layer.close(index);
                         }else {
                             layer.msg(res.message);
@@ -233,8 +248,8 @@ define(function(require, exports) {
         $companyQueryDialog.reset();
     }
     // 高级查询查询事件
-    exports.queryDialogQueryHandler = function () {
-        $companyTable.bootstrapTable('refresh');
+    exports.queryDialogCommitHandler = function () {
+        $companyTables.bootstrapTable('refresh');
         isSeniorQuery = false;
         $companyQueryDialog.modal('hide');
     }

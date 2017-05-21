@@ -130,9 +130,7 @@ seajs.use(['./assets/js/admin/sys/companyAuditingListHandler','bootstrap-datepic
         }
     });
 
-    $(function() {
-        $companyAuditTable.bootstrapTable(tableOpting);
-    });
+    $companyAuditTable.bootstrapTable(tableOpting);
 
 
 });

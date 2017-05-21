@@ -3,7 +3,6 @@
  */
 define(function(require, exports) {
 
-
     var Constants = require('constants');
     var phoenixUtils = require('phoenix.util');
 
@@ -128,6 +127,7 @@ define(function(require, exports) {
 
     // 删除记录
     exports.deleteCompanyHandler = function () {
+        debugger
         var selectedRows = $companyAuditTable.bootstrapTable('getSelections');
         if (selectedRows.length === 0) {
             layer.msg(Constants.NO_SELECT_RECORD_TIP);
@@ -167,6 +167,7 @@ define(function(require, exports) {
     }
     // 高级查询查询事件
     exports.queryDialogQueryHandler = function () {
+        debugger
         $companyAuditTable.bootstrapTable('refresh');
         isSeniorQuery = false;
         $companyAuditQueryDialog.modal('hide');

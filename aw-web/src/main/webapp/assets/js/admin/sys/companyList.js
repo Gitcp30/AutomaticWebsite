@@ -69,11 +69,12 @@ seajs.use(['./assets/js/admin/sys/companyListHandler','bootstrap-datepicker'],fu
 
     // 员工表（子表）
     var userTableOpting = {
-        url : ctx+'/admin/sys/getCompanyUser',
+        search:false,
+        showColumns:false,
+        showRefresh: false,
         toolbar: '#toolbar2',
-        columns: [{
-            checkbox: true
-        }, {
+        url : ctx+'/admin/sys/getCompanyUser',
+        columns: [ {
             field: 'userName',
             title: '员工名称',
         }, {
@@ -123,9 +124,6 @@ seajs.use(['./assets/js/admin/sys/companyListHandler','bootstrap-datepicker'],fu
             title:'创建时间',
             formatter :date2Formatter
         }],
-        formatSearch:function () {
-            return '员工名称';
-        },
         queryParams : handler.queryUserParams
     };
 
@@ -152,15 +150,46 @@ seajs.use(['./assets/js/admin/sys/companyListHandler','bootstrap-datepicker'],fu
             proxy : true,
             event : handler.disableHandler
         },
+        "#company-seniorQuery-button" : {
+            name : '高级查询',
+            eventType : 'click',
+            proxy : true,
+            event : handler.queryDialogHandler
+        },
+        "#companyQuery-reset-button" : {
+            name : '重置',
+            eventType : 'click',
+            proxy : true,
+            event : handler.queryDialogResetHandler
+        },
+        "#companyQuery-commit-button" : {
+            name : '确定',
+            eventType : 'click',
+            proxy : true,
+            event : handler.queryDialogCommitHandler
+        },
         ".getList" : {
         name : '重置',
             eventType : 'click',
             proxy : true,
             event : handler.getUserHandler
-    }
+    },
+        "#companyEdit-commit-button" : {
+            name : '编辑确定',
+            eventType : 'click',
+            proxy : true,
+            event : handler.editDialogCommitHandler
+        }
     };
 
-
+    $('.date-picker').datepicker({
+        autoclose: true,
+        todayHighlight: true
+    })
+    //show datepicker when clicking on the icon
+        .next().on(ace.click_event, function(){
+        $(this).prev().focus();
+    });
 
     loadPagePermission(companyButtonConfigs, function(data) {
         bindEvent(data);
@@ -168,10 +197,10 @@ seajs.use(['./assets/js/admin/sys/companyListHandler','bootstrap-datepicker'],fu
 
 
 
-    $(function() {
+
         $companyTable.bootstrapTable(tableOpting);
         $companyUserTable.bootstrapTable(userTableOpting);
-    });
+
 
 
 });
