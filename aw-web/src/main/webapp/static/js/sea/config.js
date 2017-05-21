@@ -31,6 +31,13 @@ seajs.config({
 		"bootstrap-table-zh-CN":"js/plus/bootstrap-table-zh-CN.js",
 		"moment.min":"js/plus/date-time/moment.min.js",
         "layer":"js/plus/layer/layer.js",
+		"treegrid.bootstrap3":"js/plus/jquery.treegrid/jquery.treegrid.bootstrap3.js",
+        "treegrid-css":"js/plus/jquery.treegrid/jquery.treegrid.css",
+        "treegrid.extension":"js/plus/jquery.treegrid/jquery.treegrid.extension.js",
+        "treegrid":"js/plus/jquery.treegrid/jquery.treegrid.js",
+
+
+
 
 		/////自定义sys   js文件
 		"admin-index":"js/system/admin-index.js",

@@ -1,35 +1,34 @@
 [  
-		{
-		"mainmenu": {
+		{"mainmenu": {
 					"text": "一级菜单",
 					"class": "menu-icon fa fa-list",
-					"style":"open"
+					"style":"closed"
 					},
-				"submenu": 		
+		"submenu":
 				[
 					{
-						"text": "测试",
+						"text": "单位审核",
 						"url": "/admin/sys/companyAuditing"
 					},{
-						"text": "单据类型管理",
+						"text": "单位管理",
 						"url": "/admin/sys/companyPage"
 					}
 				]
-		},{
-			"mainmenu" : {
-				"text" : "商品相关",
+		},
+		{"mainmenu" : {
+				"text" : "系统",
 				"class" : "menu-icon fa fa-list",
 				"style" : "open"
 			},
 			"submenu" : [{
-						"text" : "包装规格",
+						"text" : "欢迎页面",
 						"url" : "/admin/welcome"
 					}, {
 						"text" : "商品组",
-						"url" : "item/html/ebMaterialGroupList.html"
+						"url" : "/admin/sys/functionPage"
 					}]
-		},{
-			"mainmenu" : {
+		},
+		{"mainmenu" : {
 				"text" : "地点相关",
 				"class" : "menu-icon fa fa-list",
 				"style" : "open"
@@ -38,8 +37,8 @@
 						"text": "距离数据管理",
 						"url": "basicdata/html/DistanceCacheList.html"
 					}]
-		}, {
-			"mainmenu" : {
+		},
+		{"mainmenu" : {
 				"text" : "费用",
 				"class" : "menu-icon fa fa-list",
 				"style" : "open"
@@ -48,8 +47,8 @@
 						"text" : "费用名称",
 						"url" : "fee/html/ebFeeList.html"
 					}]
-		}, {
-			"mainmenu" : {
+		},
+		{"mainmenu" : {
 				"text" : "币种",
 				"class" : "menu-icon fa fa-list",
 				"style" : "open"

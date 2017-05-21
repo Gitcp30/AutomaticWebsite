@@ -12,6 +12,7 @@
         require('ace');
         require('layer');
         require('layer-css');
+        require('treegrid');
         // 自定义方法
         require('phoenix.table');
         require('phoenix.date');
@@ -35,7 +36,11 @@
                 url: data,
                 dataType: "json",
                 success: function(data) {
-                    $("#sidebar").html(componentUtils.adminMenu(data));
+                    debugger
+                    if(data != null){
+                        $("#sidebar").html(componentUtils.adminMenu(data));
+                    }
+
                 }
             })
         };
@@ -53,7 +58,7 @@
         };
 
         // 渲染左侧菜单
-        renderSideBar(ctx+"/static/menu.json");
+        renderSideBar(ctx+"/admin/sys/getFunction");
         $('#sidebar').delegate('.submenu a', 'click', function() {
             var curhash = $(this).attr('href');
             load(curhash);

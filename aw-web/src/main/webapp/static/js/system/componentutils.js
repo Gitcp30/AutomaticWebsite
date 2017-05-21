@@ -56,7 +56,7 @@ define(function(require, exports) {
             '{{#with mainmenu}}' +
             '<li class="{{style}}">' +
             '<a href="#" class="dropdown-toggle">' +
-            '<i class="{{class}}"></i><span class="menu-text">{{text}}</span>' +
+            '<i class="{{functionClass}}"></i><span class="menu-text">{{text}}</span>' +
             '<b class="arrow fa fa-angle-down"></b>' +
             '</a>' +
             '{{/with}}' +

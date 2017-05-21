@@ -69,13 +69,16 @@
 
 		<!--<table tableName="base_setting"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
 			   enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-
+<!--
 
 		<table tableName="bullentin_board"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
 			   enableSelectByExample="false" selectByExampleQueryId="false"></table>
 		<table tableName="message_board"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
 			   enableSelectByExample="false" selectByExampleQueryId="false"></table>
 		<table tableName="product"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+			   enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+
+		<table tableName="sysfunction"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
 			   enableSelectByExample="false" selectByExampleQueryId="false"></table>
 	</context>
 </generatorConfiguration>
