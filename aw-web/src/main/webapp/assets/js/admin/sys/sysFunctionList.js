@@ -32,18 +32,7 @@ seajs.use(['./assets/js/admin/sys/sysFunctionListHandler','phoenix.util','treegr
     });
 
 
-    var initSelect = function () {
-        phoenixUtils.ajaxRequest(ctx+'/admin/sys/getMainMenu',{},function (data) {
-            // 初始化新增中父节点
 
-            var html = ' <option value=""></option>';
-            $.each(data,function (index,menu) {
-                html += ' <option value="'+menu.functionId+'">'+menu.text+'</option>';
-            });
-            $('#funcParentId').html(html);
-
-        });
-    }
 
     $(function () {
         $('#sysFunctionTable').treegridData({
@@ -53,9 +42,9 @@ seajs.use(['./assets/js/admin/sys/sysFunctionListHandler','phoenix.util','treegr
             url: ctx+'/admin/sys/getAllFunction',   //请求数据的ajax的url
             ajaxParams: {}, //请求数据的ajax的data属性
             expandColumn: null,//在哪一列上面显示展开按钮
-            striped: false,   //是否各行渐变色
+            striped: true,   //是否各行渐变色
             bordered: true,  //是否显示边框
-            expandAll: false,  //是否全部展开,
+            expandAll: true,  //是否全部展开,
             columns: [
                 {
                     title: '菜单名称',
@@ -81,7 +70,7 @@ seajs.use(['./assets/js/admin/sys/sysFunctionListHandler','phoenix.util','treegr
                 },{
                     title: '默认开关',
                     field: 'style'
-                    },
+                },
                 {
                     title: '描述',
                     field: 'functionDesc'
@@ -93,9 +82,6 @@ seajs.use(['./assets/js/admin/sys/sysFunctionListHandler','phoenix.util','treegr
                 }
             ]
         });
-        // 初始化新增中父节点
-        initSelect();
-
 
     });
 

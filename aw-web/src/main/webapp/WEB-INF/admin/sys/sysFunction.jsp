@@ -100,7 +100,7 @@
             <div class="modal-footer">
                 <div class="pull-right">
                     <button class="btn btn-default" id = "functionAdd-cancel-button" type="button" data-dismiss="modal" >取消</button>
-                    <button class="btn btn-primary query" id = "functionAdd-commit-button" type="button">查询</button>
+                    <button class="btn btn-primary query" id = "functionAdd-commit-button" type="button">确定</button>
                 </div>
             </div>
         </div>

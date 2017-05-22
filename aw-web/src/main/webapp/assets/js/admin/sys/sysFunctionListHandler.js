@@ -42,6 +42,7 @@ define(function(require, exports) {
                 debugger
                 if(res.code == Constants.CODE_SUCCESS){
                     layer.close(index);
+                    initTreeGrid();
                 }else {
                     layer.msg(res.message);
                 }
@@ -63,6 +64,7 @@ define(function(require, exports) {
 
      exports.addDialogHandler = function () {
          $functionAddDialog.reset();
+         initSelect();
          $functionAddDialog.modal('show');
      }
 
@@ -73,6 +75,8 @@ define(function(require, exports) {
              debugger
              if(res.code == Constants.CODE_SUCCESS){
                  $functionAddDialog.modal('hide');
+                 debugger
+                 initTreeGrid();
              }else {
                  layer.msg(res.message);
              }
@@ -80,4 +84,66 @@ define(function(require, exports) {
      }
 
 
+    var initSelect = function () {
+        phoenixUtils.ajaxRequest(ctx+'/admin/sys/getMainMenu',{},function (data) {
+            // 初始化新增中父节点
+
+            var html = ' <option value=""></option>';
+            $.each(data,function (index,menu) {
+                html += ' <option value="'+menu.functionId+'">'+menu.text+'</option>';
+            });
+            $('#funcParentId').html(html);
+
+        });
+    }
+     var initTreeGrid = function () {
+         $('#sysFunctionTable').empty();
+         $('#sysFunctionTable').treegridData({
+             id: 'functionId',
+             parentColumn: 'parentId',
+             type: "GET", //请求数据的ajax类型
+             url: ctx+'/admin/sys/getAllFunction',   //请求数据的ajax的url
+             ajaxParams: {}, //请求数据的ajax的data属性
+             expandColumn: null,//在哪一列上面显示展开按钮
+             striped: true,   //是否各行渐变色
+             bordered: true,  //是否显示边框
+             expandAll: true,  //是否全部展开,
+             columns: [
+                 {
+                     title: '菜单名称',
+                     field: 'text'
+                 },
+                 {
+                     title: '菜单ID',
+                     field: 'functionId'
+                 },
+                 {
+                     title: '类型',
+                     field: 'functionType'
+                 },
+                 {
+                     title: '排序序号',
+                     field: 'orderNo'
+                 },{
+                     title: '访问路径',
+                     field: 'url'
+                 },{
+                     title: '图标',
+                     field: 'functionClass'
+                 },{
+                     title: '默认开关',
+                     field: 'style'
+                 },
+                 {
+                     title: '描述',
+                     field: 'functionDesc'
+                 }, {
+                     field : 'options',
+                     title : '操作',
+                     formatter : exports.operateFormatter,
+                     events : exports.operateEvents
+                 }
+             ]
+         });
+     }
 });

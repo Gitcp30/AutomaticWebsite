@@ -30,7 +30,8 @@
             $.each(data, function (i, item) {
                 if (item[options.parentColumn] == parentNode[options.id]) {
                     var tr = $('<tr></tr>');
-                    var nowParentIndex = (parentIndex + (j++) + 1);
+                    j++;
+                    var nowParentIndex = (parentIndex  + 1);
                     tr.addClass('treegrid-' + nowParentIndex);
                     tr.addClass('treegrid-parent-' + parentIndex);
                     $.each(options.columns, function (index, column) {
@@ -46,7 +47,7 @@
                         tr.append(td);
                     });
                     tbody.append(tr);
-                    target.getChildNodes(data, item, nowParentIndex, tbody)
+                    target.getChildNodes(data, item, j, tbody)
 
                 }
             });
@@ -83,7 +84,7 @@
                     var rootNode = target.getRootNodes(data);
                     $.each(rootNode, function (i, item) {
                         var tr = $('<tr></tr>');
-                        tr.addClass('treegrid-' + (j + i));
+                        tr.addClass('treegrid-' + j);
                         $.each(options.columns, function (index, column) {
                             var td = $('<td></td>');
                             if(column.field == 'options'){
@@ -95,7 +96,8 @@
                             tr.append(td);
                         });
                         tbody.append(tr);
-                        target.getChildNodes(data, item, (j + i), tbody);
+                        target.getChildNodes(data, item, j, tbody);
+                        j++;
                     });
                     target.append(tbody);
                     target.treegrid({
@@ -144,6 +146,10 @@
 
     $.fn.treegridData.methods = {
         getAllNodes: function (target, data) {
+            return target.treegrid('getAllNodes');
+        },
+
+        refresh: function (target, data) {
             return target.treegrid('getAllNodes');
         },
         //组件的其他方法也可以进行类似封装........
