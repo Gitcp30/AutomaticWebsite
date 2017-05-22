@@ -36,6 +36,7 @@ seajs.config({
         "treegrid.extension":"js/plus/jquery.treegrid/jquery.treegrid.extension.js",
         "treegrid":"js/plus/jquery.treegrid/jquery.treegrid.js",
 
+		"uploadPreview":"js/plus/uploadPreview.js",
 
 
 
@@ -48,7 +49,7 @@ seajs.config({
 		"phoenix.form":"js/system/phoenix.form.js",
         "phoenix.date":"js/system/phoenix.date.js",
 		"phoenix.util":"js/system/phoenix.util.js",
-
+		"phoenix.validate":"js/system/phoenix.validate.js",
 
 		//css
         "layer-css":"js/plus/layer/layer.css",

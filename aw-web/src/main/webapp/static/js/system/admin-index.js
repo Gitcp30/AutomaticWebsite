@@ -36,7 +36,6 @@
                 url: data,
                 dataType: "json",
                 success: function(data) {
-                    debugger
                     if(data != null){
                         $("#sidebar").html(componentUtils.adminMenu(data));
                     }

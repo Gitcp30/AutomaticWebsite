@@ -65,6 +65,9 @@ public class Constants {
     public static Short USER_WEB_ADMIN = 1;
     public static Short USER_SYS_ADMIN = 2;
 
+    // 存储图片的物理路径String pic_path = "F:\\workspace\\upload_temp\\profile\\";
+    public static String PIC_PATH = "F:\\workspace\\upload_temp\\profile\\";
+
 
 
 }

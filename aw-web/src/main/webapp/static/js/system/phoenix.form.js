@@ -8,6 +8,9 @@
                 var inputVal = '';
                 if($(this).attr("type") == 'checkbox'){
                 	inputVal = $(this)[0].checked;
+                } else if($(this).attr("type") == 'radio'){
+                    $('select#sel option:selected').val();
+                    inputVal = $(this)[0].checked;
                 }else{
                 	inputVal = $(this).val();
                 }
@@ -43,7 +46,10 @@
                     } else if (type == 'CHECKBOX') {
 
                     } else if (type == 'RADIO') {
-
+                        debugger
+                        if($(elm).val() == value ){
+                            $(elm).prop("checked",true);
+                        }
                     } else {
                         $(elm).val(value);
                     }

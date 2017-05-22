@@ -16,6 +16,7 @@ define(function(require, exports, module) {
 
     exports.ajaxRequest = function(url, data,callback,opts) {
         var options = $.extend({}, defaults, opts,{url:url,data:data,success:callback});
+        debugger
         return $.ajax(options);
     };
 
