@@ -152,4 +152,51 @@
       #{companyId}
     </foreach>
   </delete>
+
+  <select id="selectByCompanyId" resultMap="BaseResultMap" parameterType="com.jmu.domain.vo.MessageBoardVo" >
+  select
+  <include refid="Base_Column_List" />
+  from message_board
+  where COMPANY_ID = #{companyId,jdbcType=VARCHAR}
+
+    <if test="userName!=null and userName!=''">
+      AND USER_NAME Like CONCAT('%',#{userName,jdbcType=VARCHAR},'%')
+    </if>
+
+    <if test="mailbox!=null and mailbox!=''">
+      AND MAILBOX = #{mailbox,jdbcType=VARCHAR}
+    </if>
+
+    <if test="createTimeEnd!=null">
+      <![CDATA[
+      and DATE_FORMAT(CREATE_TIME, '%Y-%m-%d') <=  DATE_FORMAT(#{createTimeEnd,jdbcType=TIMESTAMP}, '%Y-%m-%d')
+      ]]>
+
+    </if>
+
+    <if test="createTimeBegin!=null">
+      <![CDATA[
+      and DATE_FORMAT(CREATE_TIME, '%Y-%m-%d') >=  DATE_FORMAT(#{createTimeBegin,jdbcType=TIMESTAMP}, '%Y-%m-%d')
+      ]]>
+
+    </if>
+
+    order by CREATE_TIME
+
+</select>
+
+
+
+
+
+
+  <delete id="batchDeleteByPrimaryId" parameterType="String">
+    delete from message_board
+    where MESSAGE_BOARD_ID in
+    <foreach collection="array" item="messageBoardId" open="(" close=")" separator=",">
+      #{messageBoardId}
+    </foreach>
+  </delete>
+
+
 </mapper>
