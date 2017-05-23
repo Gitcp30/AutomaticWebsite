@@ -6,10 +6,12 @@ import com.jmu.dao.UserMapper;
 import com.jmu.domain.User;
 import com.jmu.domain.vo.UserVo;
 import com.jmu.service.admin.UserService;
+import com.jmu.util.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * @Description: 用户服务实现类
@@ -61,5 +63,43 @@ public class UserServiceImpl implements UserService {
         } else{
             return  AjaxResponse.fail("用户id为空");
         }
+    }
+
+    @Override
+    public AjaxPageResponse findAll(UserVo userVo, AjaxPageResponse page) {
+            userMapper.selectAllByCompanyId(userVo,page);
+            return  page;
+    }
+
+
+    @Override
+    public AjaxResponse saveUser(User user) {
+        user.setUserId(UUID.randomUUID().toString().replace("-", ""));
+        user.setUserType((short) 0);
+        user.setPassword(CommonUtils.MD5("123456"));
+        user.setSysAccount(CommonUtils.createSysAccount(user.getMailbox()));
+        user.setUserState((short)0);
+        user.setPicSrc("/pic/sys/PictureLibrary/1.jpg");
+        userMapper.insertSelective(user);
+        return AjaxResponse.success();
+    }
+
+    @Override
+    public AjaxResponse deleteUser(String[] userIds) {
+        if(userIds!=null  && userIds.length>0){
+            userMapper.batchDeleteByPrimaryKey(userIds);
+            return  AjaxResponse.success();
+        } else {
+            return  AjaxResponse.fail("删除ID不存在");
+        }
+    }
+
+    @Override
+    public AjaxResponse updateUserState(UserVo userVo) {
+        if(userVo.getUserState() == null || userVo.getUserState() ==null){
+            return AjaxResponse.fail("状态为空");
+        }
+        userMapper.updateStateByPrimaryKey(userVo);
+        return AjaxResponse.success();
     }
 }

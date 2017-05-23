@@ -19,4 +19,13 @@ public interface UserService {
     public User getUser(String userId);
 
     public AjaxResponse updateUser(User user);
+
+    public AjaxPageResponse findAll(UserVo userVo,AjaxPageResponse page);
+
+    public AjaxResponse saveUser(User user);
+
+    public AjaxResponse deleteUser(String[] userIds);
+
+    public AjaxResponse updateUserState(UserVo userVo);
+
 }

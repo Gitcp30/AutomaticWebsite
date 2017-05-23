@@ -87,9 +87,6 @@ seajs.use(['./assets/js/admin/sys/companyListHandler','bootstrap-datepicker'],fu
             field:'mailbox',
             title:'邮箱'
         }, {
-            field:'industryType',
-            title:'所在行业'
-        }, {
             field:'mobile',
             title:'手机号',
         }, {
@@ -104,9 +101,6 @@ seajs.use(['./assets/js/admin/sys/companyListHandler','bootstrap-datepicker'],fu
         }, {
             field:'remark',
             title:'备注',
-        }, {
-            field:'duties',
-            title:'职务',
         }, {
             field:'address',
             title:'住址',

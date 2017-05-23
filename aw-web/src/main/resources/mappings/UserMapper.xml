@@ -392,4 +392,97 @@
   </select>
 
 
+  <select id="selectAllByCompanyId" parameterType="com.jmu.domain.vo.UserVo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where COMPANY_ID = #{companyId,jdbcType=VARCHAR}
+    <if test="userName!=null and userName!=''">
+      AND USER_NAME Like CONCAT('%',#{userName,jdbcType=VARCHAR},'%')
+    </if>
+
+    <if test="sysAccount!=null and sysAccount!=''">
+      AND SYS_ACCOUNT Like CONCAT('%',#{sysAccount,jdbcType=VARCHAR},'%')
+    </if>
+
+    <if test="staffNo!=null and staffNo!=''">
+      AND STAFF_NO Like CONCAT('%',#{staffNo,jdbcType=VARCHAR},'%')
+    </if>
+
+    <if test="mailbox!=null and mailbox!=''">
+      AND MAILBOX = #{mailbox,jdbcType=VARCHAR}
+    </if>
+
+
+
+    <if test="idCard!=null and idCard!=''">
+      AND ID_CARD = #{idCard,jdbcType=VARCHAR}
+    </if>
+
+    <if test="mobile!=null and mobile!=''">
+      AND MOBILE = #{mobile,jdbcType=VARCHAR}
+    </if>
+
+
+    <if test="sex != null">
+      AND SEX = #{sex,jdbcType=SMALLINT}
+    </if>
+
+
+    <if test="userState != null">
+      AND USER_STATE = #{userState,jdbcType=SMALLINT}
+
+    </if>
+
+    <if test="birthdayBegin!=null">
+      <![CDATA[
+      and DATE_FORMAT(BIRTHDAY, '%Y-%m-%d') >=  DATE_FORMAT(#{birthdayBegin,jdbcType=TIMESTAMP}, '%Y-%m-%d')
+      ]]>
+    </if>
+
+    <if test="birthdayEnd!=null">
+      <![CDATA[
+      and DATE_FORMAT(BIRTHDAY, '%Y-%m-%d') <=  DATE_FORMAT(#{birthdayEnd,jdbcType=TIMESTAMP}, '%Y-%m-%d')
+      ]]>
+    </if>
+
+    <if test="createTimeEnd!=null">
+      <![CDATA[
+      and DATE_FORMAT(CREATE_TIME, '%Y-%m-%d') <=  DATE_FORMAT(#{createTimeEnd,jdbcType=TIMESTAMP}, '%Y-%m-%d')
+      ]]>
+
+    </if>
+
+    <if test="createTimeBegin!=null">
+      <![CDATA[
+      and DATE_FORMAT(CREATE_TIME, '%Y-%m-%d') >=  DATE_FORMAT(#{createTimeBegin,jdbcType=TIMESTAMP}, '%Y-%m-%d')
+      ]]>
+
+    </if>
+
+    order by CREATE_TIME
+  </select>
+
+
+  <delete id="batchDeleteByPrimaryKey" parameterType="string">
+    delete from user
+    where USER_ID in
+    <foreach collection="array" item="userId" open="(" close=")" separator=",">
+      #{userId}
+    </foreach>
+  </delete>
+
+
+
+  <update id="updateStateByPrimaryKey" parameterType="com.jmu.domain.vo.UserVo">
+    update user
+    set
+    USER_STATE = #{userState,jdbcType=SMALLINT},
+    MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+    MODIFIER = #{modifier,jdbcType=VARCHAR}
+    where USER_ID in
+    <foreach collection="userIds" item="userId" open="(" close=")" separator=",">
+      #{userId}
+    </foreach>
+  </update>
 </mapper>

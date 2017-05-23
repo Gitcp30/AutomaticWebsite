@@ -24,4 +24,10 @@ public interface UserMapper extends BaseMapper<User> {
 
     List<User> selectByCompanyId(String companyId, AjaxPageResponse page);
 
+    List<User> selectAllByCompanyId(UserVo userVo, AjaxPageResponse page);
+
+    int batchDeleteByPrimaryKey(String[] userIds);
+
+    int updateStateByPrimaryKey(UserVo userVo);
+
 }
