@@ -40,7 +40,7 @@ seajs.use(['phoenix.util','constants','bootstrap-datepicker','uploadPreview','jq
 
 
     /**
-     * 公司注册form验证
+     * 用户信息form验证
      */
     $userEditForm.validate({
         errorElement: 'div',

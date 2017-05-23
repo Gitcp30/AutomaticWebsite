@@ -4,29 +4,39 @@
     <div class="row">
         <div class="col-xs-12">
             <!-- main content -->
-            <form class="form-horizontal" id="companyEditForm" novalidate="novalidate">
+            <form class="form-horizontal" id="companyUpdateForm" novalidate="novalidate">
                 <input type="hidden" name="companyId">
                 <div class="form-group">
                     <div class="col-sm-3">
                         <label class="control-label">单位名称</label>
-                        <input type="text" class="form-control" name = "companyName" placeholder="" aria-required="true" disabled>
+                        <input type="text" class="form-control" name = "companyName" placeholder="" aria-required="true" >
                     </div>
                     <div class="col-sm-3">
                         <label class="control-label">访问路径</label>
                         <input type="text" class="form-control" name = "visitUrl" placeholder="" aria-required="true" disabled>
                     </div>
+
+                    <div class="col-sm-3">
+                        <label class="control-label">注册主体</label>
+                        <input type="text" class="form-control" name = "subjectType" placeholder="" aria-required="true" disabled>
+                    </div>
+
                     <div class="col-sm-3">
                         <label class="control-label">邮箱</label>
                         <input type="text" class="form-control" name = "mailbox" placeholder="" aria-required="true">
                     </div>
+
+                </div>
+                <div class="form-group"><div class="col-sm-6"><label class="control-label red">*以下信息方便您接收重要通知，我们将为您保密。</label></div></div>
+
+
+                <div class="form-group companySetting">
 
                     <div class="col-sm-3">
                         <label class="control-label">负责人</label>
                         <input type="text" class="form-control" name = "representative" placeholder="" aria-required="true">
                     </div>
 
-                </div>
-                <div class="form-group">
                     <div class="col-sm-3">
                         <label class="control-label">工商注册</label>
                         <div class="input-group">
@@ -54,14 +64,6 @@
                             <option value="0">1-10人</option>
                             <option value="1">10-50人</option>
                             <option value="2">50以上</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-3">
-                        <label class="control-label">注册主体</label>
-                        <select name="subjectType" class="form-control">
-                            <option value="0">公司</option>
-                            <option value="1">机构</option>
-                            <option value="2">个人</option>
                         </select>
                     </div>
 
@@ -92,9 +94,11 @@
                         <textarea class="form-control" name = "address" placeholder="" aria-required="true"></textarea>
                     </div>
                 </div>
-
-
             </form>
+            <div class="pull-right">
+                <button class="btn btn-default" id = "companyUpdate-cancel-button" type="button">取消</button>
+                <button class="btn btn-primary query" id = "companyUpdate-commit-button" type="button">确定</button>
+            </div>
         </div>
     </div>
 </div>

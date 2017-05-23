@@ -175,15 +175,13 @@ define(function(require, exports, module) {
         $.validator.addMethod("isMobile", function(value, element) {
             var length = value.length;
             var mobile = /^(((13[0-9]{1})|(15[0-9]{1}))+\d{8})$/;
-            return this.optional(element) || (length == 11 && mobile.test(value));
+            return this.optional(element) || (length == 11 );
         }, "请正确填写您的手机号码");
 
         // 身份证号码验证
         $.validator.addMethod("isIdCardNo", function(value, element) {
             return this.optional(element) || idCardNoUtil.checkIdCardNo(value);
         }, "请正确输入您的身份证号码");
-
-
 
 
     }(jQuery);

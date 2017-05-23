@@ -109,4 +109,14 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
 
+    @Override
+    public Company getCompany(String companyId) {
+        if(companyId != null){
+            return companyMapper.selectByPrimaryKey(companyId);
+        } else {
+            return null;
+        }
+    }
+
+
 }

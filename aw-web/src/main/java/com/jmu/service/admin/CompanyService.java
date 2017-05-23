@@ -20,4 +20,7 @@ public interface CompanyService {
 
     public AjaxResponse updateCompany(Company company);
 
+    public Company getCompany(String companyId);
+
+
 }
