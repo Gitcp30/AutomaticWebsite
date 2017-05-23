@@ -61,6 +61,9 @@ define(function(require, exports) {
 
         var html = '<h5 class="blue lighter less-margin">没查到结果！</h5>';
         if(data != null){
+            if(data.userName == null){
+                data.userName = '';
+            }
             html = initDetail(data);
         }
         $detail.html(html);
@@ -234,7 +237,7 @@ define(function(require, exports) {
         '</div>'+
         '</div>';
         // 审核中
-        if(data.auditing.auditingState == 0){
+        if(data.auditing.auditingState == 2){
             html +='<div class="col-xs-12 col-sm-3">'+
                 '<div class="space visible-xs"></div>'+
                 '<h5 class="blue lighter less-margin">审核结果:审核中</h5>'+

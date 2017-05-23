@@ -48,7 +48,7 @@ public class AuditingServiceImpl implements AuditingService {
             company.setCompanyState(Constants.AUDITING_FAIL);
         }
         companyMapper.updateByPrimaryKeySelective(company);
-
+        // 发送邮件通知结果
         return  AjaxResponse.success();
     }
 

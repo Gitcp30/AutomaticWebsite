@@ -4,18 +4,23 @@ import com.google.common.collect.Lists;
 import com.jmu.common.AjaxPageResponse;
 import com.jmu.common.AjaxResponse;
 import com.jmu.constant.Constants;
+import com.jmu.constant.ResponseCode;
 import com.jmu.domain.Auditing;
+import com.jmu.domain.User;
 import com.jmu.domain.vo.CompanyVo;
 import com.jmu.domain.vo.UserVo;
 import com.jmu.service.admin.AuditingService;
 import com.jmu.service.admin.CompanyService;
 import com.jmu.service.admin.UserService;
+import com.jmu.service.web.InitWebService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * @Description: 单位审核控制类
@@ -33,7 +38,8 @@ public class CompanyAuditingController {
     private UserService userService;
     @Autowired
     private AuditingService auditingService;
-
+    @Autowired
+    private InitWebService initWebService;
 
 
    @RequestMapping(value = "companyAuditing",method = RequestMethod.GET)
@@ -67,11 +73,17 @@ public class CompanyAuditingController {
 
     @ResponseBody
     @RequestMapping("saveAuditing")
-    public AjaxResponse saveAuditing(Auditing auditing){
+    public AjaxResponse saveAuditing(Auditing auditing, HttpSession session){
         if(auditing.getAuditingId() == null && auditing.getAuditingState() == null){
             AjaxResponse.fail("参数错误！");
         }
-        return auditingService.updateAuditing(auditing);
+        AjaxResponse ajaxResponse = auditingService.updateAuditing(auditing);
+        // 审核通过初始化网站基本配置
+        if(ajaxResponse.getCode() == ResponseCode.SUCCESS && auditing.getAuditingState() == Constants.AUDITING_SUCCESS){
+            User user = (User) session.getAttribute("currentUser");
+            initWebService.initWeb(auditing.getCompanyId(),user.getUserId());
+        }
+        return  ajaxResponse;
     }
 
 

@@ -4,8 +4,10 @@ import com.google.common.collect.Lists;
 import com.jmu.common.AjaxResponse;
 import com.jmu.constant.Constants;
 import com.jmu.constant.ResponseCode;
+import com.jmu.dao.AuditingMapper;
 import com.jmu.dao.CompanyMapper;
 import com.jmu.dao.UserMapper;
+import com.jmu.domain.Auditing;
 import com.jmu.domain.Company;
 import com.jmu.domain.User;
 import com.jmu.entity.Email;
@@ -32,6 +34,8 @@ public class RegisterServiceImpl implements RegisterService {
     private UserMapper userMapper;
     @Autowired
     private CompanyMapper companyMapper;
+    @Autowired
+    private AuditingMapper auditingMapper;
 
     /**
      * 生成校验邮箱验证码
@@ -90,6 +94,12 @@ public class RegisterServiceImpl implements RegisterService {
         user.setUserState((short)0);
         user.setCompanyId(company.getCompanyId());
         userMapper.insert(user);
+        // 插入审核信息表
+        Auditing auditing = new Auditing();
+        auditing.setAuditingId(UUID.randomUUID().toString().replace("-", ""));
+        auditing.setCompanyId(company.getCompanyId());
+        auditing.setAuditingState(Constants.AUDITING_ING);
+        auditingMapper.insertSelective(auditing);
 
         return AjaxResponse.success();
     }
