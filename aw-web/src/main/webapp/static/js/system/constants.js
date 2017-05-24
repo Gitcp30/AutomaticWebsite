@@ -12,8 +12,8 @@ define(function() {
     	AUDITING_ING:2,
         AUDITING_FAIL:3,
         AUDITING_SUCCESS:4,
-
-        /**
+		STATE_STICK :2,
+    /**
 		 * ajaxResponse 返回code状态
          */
 		CODE_SUCCESS :'0',//成功

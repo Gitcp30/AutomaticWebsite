@@ -233,4 +233,59 @@
       #{companyId}
     </foreach>
   </delete>
+
+
+  <select id="selectAllByCompanyId" resultMap="ResultMapWithBLOBs" parameterType="com.jmu.domain.vo.BullentinBoardVo" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from bullentin_board
+    where COMPANY_ID = #{companyId,jdbcType=VARCHAR}
+
+    <if test="bullentinBoardTitle!=null and bullentinBoardTitle!=''">
+      AND BULLENTIN_BOARD_TITLE Like CONCAT('%',#{bullentinBoardTitle,jdbcType=VARCHAR},'%')
+    </if>
+
+    <if test="status != null">
+      AND STATUS = #{status,jdbcType=SMALLINT}
+    </if>
+
+    <if test="createTimeEnd!=null">
+      <![CDATA[
+      and DATE_FORMAT(CREATE_TIME, '%Y-%m-%d') <=  DATE_FORMAT(#{createTimeEnd,jdbcType=TIMESTAMP}, '%Y-%m-%d')
+      ]]>
+    </if>
+    <if test="createTimeBegin!=null">
+      <![CDATA[
+      and DATE_FORMAT(CREATE_TIME, '%Y-%m-%d') >=  DATE_FORMAT(#{createTimeBegin,jdbcType=TIMESTAMP}, '%Y-%m-%d')
+      ]]>
+    </if>
+    ORDER BY  STATUS  DESC,BB_ORDER DESC
+  </select>
+
+
+
+  <delete id="batchDeleteByPrimaryKey" parameterType="string">
+    delete from bullentin_board
+    where BULLENTIN_BOARD_ID in
+    <foreach collection="array" item="bullentinBoardId" open="(" close=")" separator=",">
+      #{bullentinBoardId}
+    </foreach>
+  </delete>
+
+
+  <update id="updateStateByPrimaryKey" parameterType="com.jmu.domain.vo.BullentinBoardVo">
+  update bullentin_board
+  set
+  STATUS = #{status,jdbcType=SMALLINT},
+  MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+  MODIFIER = #{modifier,jdbcType=VARCHAR}
+    where BULLENTIN_BOARD_ID in
+    <foreach collection="bullentinBoardIds" item="bullentinBoardId" open="(" close=")" separator=",">
+      #{bullentinBoardId}
+    </foreach>
+</update>
+
+
 </mapper>
