@@ -388,15 +388,7 @@ seajs.use(['jquery', 'lodash','componentutils','phoenix.util', 'gridstack', 'jqu
                                     if(res.code == 0){
                                         $('.loginForm').reset();
                                         // 设置名称号码
-                                        var user = res.data[0];
-                                        debugger
-                                        $("#navbar .navbar-header .islogin").removeClass('hide');
-                                        $("#navbar .navbar-header .nologin").addClass('hide');
-                                        if(user.picSrc !=null){
-                                            $("#navbar .navbar-header .islogin img").attr('src',ctx+user.picSrc);
-                                        }
-                                        $("#navbar .navbar-header .islogin span").empty().html('<small>Welcome,</small>'+user.userName);
-                                        layer.msg("保存成功！");
+                                        window.location.reload();
                                     }else {
                                         layer.msg(res.message);
                                     }
@@ -423,9 +415,7 @@ seajs.use(['jquery', 'lodash','componentutils','phoenix.util', 'gridstack', 'jqu
     $("#navbar .navbar-header .ace-nav").find(".islogin a.loginout").on("click",function () {
         phoenixUtils.jsonAjaxRequest(ctx+'/qw/loginout',{},function (res) {
             if(res.code == 0){
-                $("#navbar .navbar-header .islogin").addClass('hide');
-                $("#navbar .navbar-header .nologin").removeClass('hide');
-                layer.msg("退出成功！");
+                window.location.reload();
             }else {
                 layer.msg(res.message);
             }

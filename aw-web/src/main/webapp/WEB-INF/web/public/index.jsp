@@ -266,33 +266,44 @@
         <div class="navbar-buttons navbar-header pull-right" role="navigation">
             <ul class="nav ace-nav">
                 <!-- #section:basics/navbar.user_menu -->
-                <li class="light-blue islogin hide">
-                    <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                        <img class="nav-user-photo" src="${ctx}/pic/sys/PictureLibrary/1.jpg" alt="Jason's Photo" />
-                        <span class="user-info"><small>Welcome,</small>xx</span>
-                        <i class="ace-icon fa fa-caret-down"></i>
-                    </a>
-                    <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-                        <li>
-                            <a href="${ctx}/admin" target="_blank"> <i class="ace-icon fa fa-user"></i>个人信息
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#" class="loginout"> <i class="ace-icon fa fa-power-off"></i>退出
-                            </a>
-                        </li>
-                    </ul>
+                <li class="light-blue islogin ">
+                    <c:if test="${! empty sessionScope.currentUser}">
+                        <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                            <c:if test="${ empty sessionScope.currentUser.picSrc}">
+                                <img class="nav-user-photo" src="${ctx}/pic/logo.jpg" alt="Jason's Photo" />
+                            </c:if>
+                            <c:if test="${!empty sessionScope.currentUser.picSrc}">
+                                <img class="nav-user-photo" src="${ctx}${sessionScope.currentUser.picSrc}" alt="Jason's Photo" />
+                            </c:if>
+                            <span class="user-info">
+                        <small>Welcome,</small>
+                        <c:if test="${ empty sessionScope.currentUser.userName}">${sessionScope.currentUser.sysAccount}</c:if>
+                        <c:if test="${ !empty sessionScope.currentUser.userName}">${sessionScope.currentUser.userName}</c:if>
+                    </span>
+                            <i class="ace-icon fa fa-caret-down"></i>
+                        </a>
+                        <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                            <li>
+                                <a href="${ctx}/admin" target="_blank"> <i class="ace-icon fa fa-user"></i>个人信息
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#" class="loginout"> <i class="ace-icon fa fa-power-off"></i>退出
+                                </a>
+                            </li>
+                        </ul>
+                    </c:if>
+                    <c:if test="${empty sessionScope.currentUser}">
+                        <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                            <img class="nav-user-photo" src="${ctx}/pic/logo.png" alt="Jason's Photo" />
+                            <span class="user-info"><small>用户未登录,</small>前往登录</span>
+                            <span class="user-info">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        </a>
+                    </c:if>
                 </li>
                 <!-- /section:basics/navbar.user_menu -->
 
-                <li class="light-blue nologin">
-                    <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                        <img class="nav-user-photo" src="${ctx}/pic/logo.png" alt="Jason's Photo" />
-                        <span class="user-info"><small>用户未登录,</small>前往登录</span>
-                        <span class="user-info">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    </a>
-                </li>
             </ul>
         </div>
         <!-- /section:basics/navbar.dropdown -->

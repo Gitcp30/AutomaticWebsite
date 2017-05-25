@@ -1,8 +1,6 @@
 package com.jmu.controller.web;
 
-import com.google.common.collect.Lists;
 import com.jmu.common.AjaxResponse;
-import com.jmu.constant.ResponseCode;
 import com.jmu.domain.*;
 import com.jmu.domain.vo.LoginUSer;
 import com.jmu.service.admin.BullentinBoardService;
@@ -184,11 +182,6 @@ public class PublicWebController {
     @RequestMapping(value="/login",method = RequestMethod.POST)
     public AjaxResponse checkLogin(@RequestBody LoginUSer loginUSer, HttpSession session){
         AjaxResponse response = loginService.checkWebLogin(loginUSer,session);
-        if(response.getCode() == ResponseCode.SUCCESS){
-            User user = (User) session.getAttribute("currentUser");
-            List list = Lists.newArrayList(user);
-            response.setData(list);
-        }
         return response;
     }
 
