@@ -1,8 +1,10 @@
 package com.jmu.controller.web;
 
+import com.jmu.common.AjaxResponse;
 import com.jmu.domain.*;
 import com.jmu.service.admin.BullentinBoardService;
 import com.jmu.service.admin.CompanyService;
+import com.jmu.service.admin.MessageBoardService;
 import com.jmu.service.admin.SysPictureService;
 import com.jmu.service.web.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,8 @@ public class PublicWebController {
     private CompanyService companyService;
     @Autowired
     private BullentinBoardService bullentinBoardService;
+    @Autowired
+    private MessageBoardService messageBoardService;
 
     /**
      *  进入index界面
@@ -148,6 +152,23 @@ public class PublicWebController {
             return bullentinBoardService.findOne(bullentinBoardId);
         } else {
             return null;
+        }
+    }
+
+
+    /**
+     * 新增留言板
+     * @param messageBoard
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "saveMessageBoard",method = RequestMethod.POST)
+    public AjaxResponse saveMessageBoard(@RequestBody MessageBoard messageBoard){
+        if(messageBoard.getCompanyId() != null && messageBoard.getUserName() != null
+                && messageBoard.getContent()!=null && messageBoard.getMailbox() !=null){
+            return messageBoardService.addMessageBoard(messageBoard);
+        } else {
+            return AjaxResponse.fail("信息不全!");
         }
     }
 

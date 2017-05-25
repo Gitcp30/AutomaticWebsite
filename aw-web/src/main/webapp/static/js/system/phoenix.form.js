@@ -1,4 +1,8 @@
 	define(function(require, exports, module) {
+
+        require('layer');
+        require('layer-css');
+
     !function($) {
         $.fn.toObject = function() {
             var inputs = {};

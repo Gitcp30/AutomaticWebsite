@@ -281,9 +281,9 @@
     <div class="tabsWrap">
         <div class="content">
             <ul class="nav nav-tabs padding-12 tab-color-blue background-blue">
-                <li class="active">
+               <%-- <li class="active">
                     <a data-toggle="tab" href="#webTheme">网站主题</a>
-                </li>
+                </li>--%>
 
                 <li>
                     <a data-toggle="tab" href="#pageLayout">页面版式</a>
@@ -293,9 +293,9 @@
                     <a data-toggle="tab" href="#webSettings">网站设置</a>
                 </li>
 
-                <li>
+               <%-- <li>
                     <a data-toggle="tab" href="#baiduSEO">百度优化</a>
-                </li>
+                </li>--%>
             </ul>
             <div class="styleDesignBtnContainer">
                 <button class="btn btn-white btn-info btn-round">

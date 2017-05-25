@@ -167,24 +167,26 @@ define(function(require, exports) {
 
     // 留言板
 	exports.messageBoard = function () {
-		return '<div class="row messageBoard" componentId="component_messageBoard">'+
+		return '<form class="messageBoardForm">'+
+            '<div class="row messageBoard" componentId="component_messageBoard">'+
             '<div class="col-sm-12" style="border-right:1px solid #ddd;">'+
             '<div class="well col-sm-12">'+
             '<h3><i class="fa fa-file-text" aria-hidden="true"></i> 留言板</h3>'+
             '<div class="input-group input-group-md">'+
             '<span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-user" aria-hidden="true"></i></span>'+
-            '<input type="text" class="form-control" placeholder="用户名" aria-describedby="sizing-addon1">'+
+            '<input type="text" class="form-control" name="userName" placeholder="用户名" aria-describedby="sizing-addon1">'+
             '<span class="input-group-addon" id="sizing-addon1"><i class="ace-icon fa fa-envelope"></i></span>'+
-            '<input type="text" class="form-control" placeholder="邮箱" aria-describedby="sizing-addon1">'+
+            '<input type="text" class="form-control" name="mailbox" placeholder="邮箱" aria-describedby="sizing-addon1">'+
             '</div>'+
             '<div class="input-group input-group-md">'+
             '<span class="input-group-addon" id="sizing-addon1"><i class="ace-icon fa fa-pencil-square-o"></i></span>'+
-            '<textarea class="form-control" rows="3" placeholder="请输入留言" aria-describedby="sizing-addon1"></textarea>'+
+            '<textarea class="form-control" name="content" rows="3" placeholder="请输入留言" aria-describedby="sizing-addon1"></textarea>'+
             '</div>'+
-            '<button type="submit" class="btn btn-info btn-block">提交</button>'+
+            '<button class="btn btn-info btn-block">提交</button>'+
             '</div>'+
             '</div>'+
-            '</div>';
+            '</div>'+
+            '</form>';
     }
 
     // 单位详情信息

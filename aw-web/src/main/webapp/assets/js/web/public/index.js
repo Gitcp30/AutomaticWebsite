@@ -1,7 +1,8 @@
 /**
  * Created by zzr on 2017/4/28.
  */
-seajs.use(['jquery', 'lodash','componentutils', 'gridstack', 'jquery.SuperSlide','jquery.newsbox','jquery-ui.custom','phoenix.date'], function ($, _,componentUtils) {
+seajs.use(['jquery', 'lodash','componentutils','phoenix.util', 'gridstack', 'jquery.SuperSlide','jquery.newsbox','jquery-ui.custom','phoenix.date','phoenix.form'], function ($, _,componentUtils,phoenixUtils) {
+
 
     $(function () {
 
@@ -354,6 +355,26 @@ seajs.use(['jquery', 'lodash','componentutils', 'gridstack', 'jquery.SuperSlide'
                             window.open(ctx +"/qw/"+company_url+"/bullentinBoardDetail?bbId="+$(this).attr('data-bbId'),'_blank');
                             return false;
                         });
+                        // 留言板
+                    } else if(node.componentId == 'component_messageBoard'){
+                       $(model).find(".grid-stack-item-content .messageBoard button").on('click',function () {
+                            var data = $('.messageBoardForm').toObject();
+                            if(data.userName == "" || data.mailBox == "" || data.content == ""){
+                                layer.msg("信息不完整，请继续输入！");
+                            } else {
+                                debugger
+                                var temp = $.extend({}, data, {companyId:company_url});
+                                phoenixUtils.jsonAjaxRequest(ctx+'/qw/saveMessageBoard',temp,function (res) {
+                                    if(res.code == 0){
+                                        $('.messageBoardForm').reset();
+                                        layer.msg("保存成功！");
+                                    }else {
+                                        layer.msg(res.message);
+                                    }
+                                });
+                            }
+                           return false;
+                       });
                     }
                 });
             }

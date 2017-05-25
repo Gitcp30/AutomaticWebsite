@@ -10,8 +10,6 @@
         require('bootstrap-table-zh-CN');
         require('ace-elements');
         require('ace');
-        require('layer');
-        require('layer-css');
         require('treegrid');
         // 自定义方法
         require('phoenix.table');
