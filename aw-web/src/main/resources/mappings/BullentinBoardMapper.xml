@@ -288,4 +288,16 @@
 </update>
 
 
+  <select id="selectByCompanyId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from bullentin_board
+    where COMPANY_ID = #{companyId,jdbcType=VARCHAR}
+    AND STATUS != 1
+    ORDER BY  STATUS  DESC,BB_ORDER DESC
+  </select>
+
+
 </mapper>

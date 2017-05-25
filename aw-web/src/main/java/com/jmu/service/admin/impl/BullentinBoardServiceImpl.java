@@ -3,13 +3,16 @@ package com.jmu.service.admin.impl;
 import com.jmu.common.AjaxPageResponse;
 import com.jmu.common.AjaxResponse;
 import com.jmu.dao.BullentinBoardMapper;
+import com.jmu.dao.CompanyMapper;
 import com.jmu.domain.BullentinBoard;
+import com.jmu.domain.Company;
 import com.jmu.domain.vo.BullentinBoardVo;
 import com.jmu.service.admin.BullentinBoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -23,6 +26,8 @@ public class BullentinBoardServiceImpl implements BullentinBoardService {
 
     @Autowired
     private BullentinBoardMapper bullentinBoardMapper;
+    @Autowired
+    private CompanyMapper companyMapper;
 
     @Override
     public AjaxPageResponse findAll(BullentinBoardVo bullentinBoardVo, AjaxPageResponse page) {
@@ -66,6 +71,26 @@ public class BullentinBoardServiceImpl implements BullentinBoardService {
             return AjaxResponse.success();
         } else{
             return  AjaxResponse.fail("公告栏id为空");
+        }
+    }
+
+    @Override
+    public List getBullentinBoard(String comapnyUrl) {
+        if(comapnyUrl != null){
+            Company company = companyMapper.selectByVisitUrl(comapnyUrl);
+            if(company != null){
+                return bullentinBoardMapper.selectByCompanyId(company.getCompanyId());
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public BullentinBoard findOne(String bullentinBoardId) {
+        if(bullentinBoardId != null){
+            return bullentinBoardMapper.selectByPrimaryKey(bullentinBoardId);
+        } else {
+            return null;
         }
     }
 }

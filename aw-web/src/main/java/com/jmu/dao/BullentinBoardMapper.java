@@ -19,4 +19,6 @@ public interface BullentinBoardMapper extends BaseMapper<BullentinBoard> {
     int batchDeleteByPrimaryKey(String[] bullentinBoardIds);
 
     int updateStateByPrimaryKey(BullentinBoardVo bullentinBoardVo);
+
+    List<BullentinBoard> selectByCompanyId(String companyId);
 }

@@ -119,7 +119,7 @@ public class EditPageController {
             w.setPositionY(0);
             w.setSizeWidth(3);
             w.setSizeHeight(30);
-            w.setComponentId("component_login");
+            w.setComponentId("default");
             w.setComumnId(url);
             WebContent w2 = new WebContent();
             w2.setComumnId("a");
@@ -127,7 +127,7 @@ public class EditPageController {
             w2.setPositionY(0);
             w2.setSizeWidth(9);
             w2.setSizeHeight(30);
-            w2.setComponentId("component_bulletinBoard");
+            w2.setComponentId("default");
             w2.setComumnId(url);
             webContentList.add(w);
             webContentList.add(w2);

@@ -117,7 +117,6 @@ define(function(require, exports) {
      * @param data
      */
 	exports.bulletinBoard = function(data){
-			debugger
             Template7.registerPartial(
                 'begin',
                 '<div class="row bulletinBoard" componentId="component_bulletinBoard">'+
@@ -129,8 +128,8 @@ define(function(require, exports) {
                 '<div class="col-xs-12">'+
                 '<ul class="bulletinBoard-content">'+
                 '{{#each news}}' +
-					'<li class="news-item"><span>{{time}}</span>'+
-					'<a href="#">《{{title}}》</a>'+
+					'<li class="news-item"><span>{{createTime}}</span>'+
+					'<a href="#" data-bbId = "{{bullentinBoardId}}">《{{bullentinBoardTitle}}》</a>'+
 					'</li>'+
                 '{{/each}}' +
             	'</ul>'+
@@ -146,8 +145,27 @@ define(function(require, exports) {
             return render(data);
 		}
 
+    // 公告细节
+	exports.bulletinBoardDetail = function (data) {
+        Template7.registerPartial(
+            'begin',
+            '<div class="row bulletinBoardDetail">'+
+            '<div class="col-sm-12" style="border-right:1px solid #ddd;">'+
+            '<div class="well col-sm-12">'+
+            '<h3><i class="fa fa-file-text" aria-hidden="true"></i> 公告栏信息</h3>'+
+            '<h2 align="center">{{bullentinBoardTitle}}</h2>'+
+            '<h6 align="center">{{createTime}}</h6>'+
+            '<p style="text-indent:2em;">{{bullentinBoardContent}}</p>'+
+            '</div>'+
+            '</div>' +
+            '</div>'
+        );
+        return render(data);
+    }
 
-		// 留言板
+
+
+    // 留言板
 	exports.messageBoard = function () {
 		return '<div class="row messageBoard" componentId="component_messageBoard">'+
             '<div class="col-sm-12" style="border-right:1px solid #ddd;">'+

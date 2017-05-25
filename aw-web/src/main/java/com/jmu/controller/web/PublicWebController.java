@@ -1,6 +1,7 @@
 package com.jmu.controller.web;
 
 import com.jmu.domain.*;
+import com.jmu.service.admin.BullentinBoardService;
 import com.jmu.service.admin.CompanyService;
 import com.jmu.service.admin.SysPictureService;
 import com.jmu.service.web.*;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -39,6 +41,8 @@ public class PublicWebController {
 
     @Autowired
     private CompanyService companyService;
+    @Autowired
+    private BullentinBoardService bullentinBoardService;
 
     /**
      *  进入index界面
@@ -71,7 +75,7 @@ public class PublicWebController {
     public Map getBaseSettings(@RequestParam("companyUrl")String companyUrl,@RequestParam("companyPage") String companyPage){
         companyPage = companyPage.replace("#","");
         boolean bool = webColumnService.isEffectiveLink(companyPage);
-        if(!bool){
+        if(!bool && companyPage.indexOf("bullentinBoardDetail")==-1){
             return null;
         }
         // 获取公司ID
@@ -94,11 +98,58 @@ public class PublicWebController {
         // 设置横幅配置信息
         BaseSetting bannerImg = webBannerImgService.findAllByCompanyId(company.getCompanyId());
         map.put("bannerImg",bannerImg);
+        List<WebContent> webContentList = new ArrayList<WebContent>();
+        // 包含(说明是 公告栏)
+        if(companyPage.indexOf("bullentinBoardDetail")!=-1){
+            // 不包含
+            WebContent w = new WebContent();
+            w.setComumnId("a");
+            w.setPositionX(0);
+            w.setPositionY(0);
+            w.setSizeWidth(12);
+            w.setSizeHeight(40);
+            w.setComponentId(companyPage);
+            webContentList.add(w);
+        }else{
+            // 内容区域
+            webContentList = webContentService.findContent(companyPage,company.getCompanyId());
 
-        // 内容区域
-        List<WebContent> webContentList = webContentService.findContent(companyPage,company.getCompanyId());
+        }
         map.put("webContentList",webContentList);
         return map;
     }
+
+
+    /**
+     * 获取公告栏信息
+     * @param companyUrl
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "getBulletinBoard",method = RequestMethod.POST)
+    public List getBulletinBoard(String companyUrl){
+        if(companyUrl != null){
+            return bullentinBoardService.getBullentinBoard(companyUrl);
+        } else {
+            return null;
+        }
+    }
+
+
+    /**
+     *  获取公告栏信息细节
+     * @param bullentinBoardId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "getBulletinBoardDetail",method = RequestMethod.POST)
+    public BullentinBoard getBulletinBoardDetail(String bullentinBoardId){
+        if(bullentinBoardId != null){
+            return bullentinBoardService.findOne(bullentinBoardId);
+        } else {
+            return null;
+        }
+    }
+
 
 }

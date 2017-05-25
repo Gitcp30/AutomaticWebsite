@@ -1,7 +1,7 @@
 /**
  * Created by zzr on 2017/4/28.
  */
-seajs.use(['jquery', 'lodash','componentutils', 'gridstack', 'jquery.SuperSlide','jquery.newsbox','jquery-ui.custom'], function ($, _,componentUtils) {
+seajs.use(['jquery', 'lodash','componentutils', 'gridstack', 'jquery.SuperSlide','jquery.newsbox','jquery-ui.custom','phoenix.date'], function ($, _,componentUtils) {
 
     $(function () {
 
@@ -34,7 +34,6 @@ seajs.use(['jquery', 'lodash','componentutils', 'gridstack', 'jquery.SuperSlide'
                 alert("获取系统配置出错了");
             }
         });
-        debugger
 
         // 1.1背景-背景
         var bg_bg_Data = baseSettingMap['bg_bg'];
@@ -233,6 +232,7 @@ seajs.use(['jquery', 'lodash','componentutils', 'gridstack', 'jquery.SuperSlide'
 
 
         function contentType(node) {
+            debugger
             switch (node.componentId) {
                 case "default":
                     return '<div></div>';
@@ -242,7 +242,7 @@ seajs.use(['jquery', 'lodash','componentutils', 'gridstack', 'jquery.SuperSlide'
                     break;
                 case "component_bulletinBoard":
                     var context = {
-                        news: [
+                        /*news: [
                             {
                                 time: '2017/05/06',
                                 title: '地球炸啦'
@@ -267,12 +267,60 @@ seajs.use(['jquery', 'lodash','componentutils', 'gridstack', 'jquery.SuperSlide'
                                 time: '2017/05/06',
                                 title: '哈哈哈哈'
                             }
-                        ]
+                        ]*/
                     };
+                    $.ajax({
+                        type: "POST",
+                        url: ctx + "/qw/getBulletinBoard",
+                        data:{
+                            companyUrl:company_url,
+                        },
+                        dataType: 'json',
+                        cache: false,
+                        async: false,
+                        success: function (res) {
+                            if(res == null){
+                                alert("获取系统配置出错了");
+                            } else {
+                                $.each(res,function (index,row) {
+                                    res[index].createTime =  dateFormatter(row.createTime);
+                                })
+                                context = {news:res};
+                            }
+                        }, error: function () {
+                            alert("获取系统配置出错了");
+                        }
+                    });
                     return componentUtils.bulletinBoard(context);
                     break;
                 case "component_messageBoard":
                     return componentUtils.messageBoard();
+                    break;
+                case company_page:
+                    var bbId = company_page.split("bbId=")[1];
+                    debugger
+                    var context = {};
+                    $.ajax({
+                        type: "POST",
+                        url: ctx + "/qw/getBulletinBoardDetail",
+                        data:{
+                            bullentinBoardId:bbId,
+                        },
+                        dataType: 'json',
+                        cache: false,
+                        async: false,
+                        success: function (res) {
+                            if(res == null){
+                                alert("获取系统配置出错了");
+                            } else {
+                                res.createTime =  dateFormatter(res.createTime);
+                                context = res;
+                            }
+                        }, error: function () {
+                            alert("获取系统配置出错了");
+                        }
+                    });
+                    return componentUtils.bulletinBoardDetail(context);
                     break;
                 default:
                     alert("出错啦！");
@@ -294,13 +342,17 @@ seajs.use(['jquery', 'lodash','componentutils', 'gridstack', 'jquery.SuperSlide'
                     if(node.componentId == 'component_bulletinBoard'){
                         $(model).find(".grid-stack-item-content .bulletinBoard-content").bootstrapNews({
                             newsPerPage: 5,
-                            autoplay: true,
+                            autoplay: false,
                             pauseOnHover: true,
                             direction: 'up',
                             newsTickerInterval: 4000,
                             onToDo: function () {
-                                //console.log(this);
+                                console.log(this);
                             }
+                        });
+                        $(model).find(".grid-stack-item-content .bulletinBoard-content .news-item a").on('click',function () {
+                            window.open(ctx +"/qw/"+company_url+"/bullentinBoardDetail?bbId="+$(this).attr('data-bbId'),'_blank');
+                            return false;
                         });
                     }
                 });
@@ -316,5 +368,12 @@ seajs.use(['jquery', 'lodash','componentutils', 'gridstack', 'jquery.SuperSlide'
 
     });
 
+
+
+
+
+    var dateFormatter = function(value,row,index){
+        return (new Date(value)).phoenixDateFormat("yyyy/MM/dd");
+    }
 
 });
