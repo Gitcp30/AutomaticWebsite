@@ -83,4 +83,44 @@ public class LoginServiceImpl implements LoginService {
             }
         }
     }
+
+
+
+    @Override
+    public AjaxResponse checkWebLogin(LoginUSer loginUSer, HttpSession session) {
+        // 2 查询数据库验证
+        String pwd = loginUSer.getPassword();
+        loginUSer.setPassword(CommonUtils.MD5(pwd));
+        User currentUser = userMapper.selectByLogin(loginUSer);
+        if (currentUser == null){
+            return AjaxResponse.fail("密码错误!");
+        } else {
+            if (currentUser.getUserState() == Constants.STATE_NORMAL){
+                Company company = companyMapper.selectByPrimaryKey(currentUser.getCompanyId());
+                if(!company.getVisitUrl().equals(loginUSer.getCompanyUrl())){
+                    return AjaxResponse.fail("登录失败!");
+                }
+                // 判断公司状态
+                if (company !=null && company.getCompanyState() == Constants.STATE_NORMAL) {
+                    session.setAttribute("currentUser",currentUser);
+                    session.setAttribute("company",company);
+                    return AjaxResponse.success();
+                } else {
+                    String msg = "登录失败";
+                    if (company != null){
+                        switch (company.getCompanyState()){
+                            case 1:msg = "公司被锁定!";break;
+                            case 2:msg = "公司审核中!";break;
+                            case 3:msg = "公司审核失败!";break;
+                        }
+                    }
+                    return AjaxResponse.fail(msg);
+                }
+            }  // 当前用户是否被锁定
+            else {
+                return AjaxResponse.fail("当前用户被锁定!");
+            }
+        }
+    }
+
 }

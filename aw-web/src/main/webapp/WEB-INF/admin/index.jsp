@@ -33,8 +33,8 @@
         <div class="main-content">
             <div class="breadcrumbs" id="breadcrumbs">
                 <ul class="breadcrumb">
-                    <li><i class="ace-icon fa fa-home home-icon"></i> <a href="#">系統管理</a></li>
-                    <li><a href="#">系统控制参数</a></li>
+                    <li><i class="ace-icon fa fa-home home-icon"></i> <a href="#">管理页面</a></li>
+                    <%--<li><a href="#">系统控制参数</a></li>--%>
                 </ul>
                 <!-- /.breadcrumb -->
             </div>

@@ -1,16 +1,21 @@
 package com.jmu.controller.web;
 
+import com.google.common.collect.Lists;
 import com.jmu.common.AjaxResponse;
+import com.jmu.constant.ResponseCode;
 import com.jmu.domain.*;
+import com.jmu.domain.vo.LoginUSer;
 import com.jmu.service.admin.BullentinBoardService;
 import com.jmu.service.admin.CompanyService;
 import com.jmu.service.admin.MessageBoardService;
 import com.jmu.service.admin.SysPictureService;
+import com.jmu.service.front.LoginService;
 import com.jmu.service.web.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +52,8 @@ public class PublicWebController {
     private BullentinBoardService bullentinBoardService;
     @Autowired
     private MessageBoardService messageBoardService;
+    @Autowired
+    private LoginService loginService;
 
     /**
      *  进入index界面
@@ -171,6 +178,29 @@ public class PublicWebController {
             return AjaxResponse.fail("信息不全!");
         }
     }
+
+
+    @ResponseBody
+    @RequestMapping(value="/login",method = RequestMethod.POST)
+    public AjaxResponse checkLogin(@RequestBody LoginUSer loginUSer, HttpSession session){
+        AjaxResponse response = loginService.checkWebLogin(loginUSer,session);
+        if(response.getCode() == ResponseCode.SUCCESS){
+            User user = (User) session.getAttribute("currentUser");
+            List list = Lists.newArrayList(user);
+            response.setData(list);
+        }
+        return response;
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value="/loginout",method = RequestMethod.POST)
+    public AjaxResponse loginOut(HttpSession session){
+        session.removeAttribute("currentUser");
+        session.removeAttribute("company");
+        return  AjaxResponse.success();
+    }
+
 
 
 }

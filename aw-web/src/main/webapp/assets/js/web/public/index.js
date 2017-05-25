@@ -1,7 +1,7 @@
 /**
  * Created by zzr on 2017/4/28.
  */
-seajs.use(['jquery', 'lodash','componentutils','phoenix.util', 'gridstack', 'jquery.SuperSlide','jquery.newsbox','jquery-ui.custom','phoenix.date','phoenix.form'], function ($, _,componentUtils,phoenixUtils) {
+seajs.use(['jquery', 'lodash','componentutils','phoenix.util', 'gridstack', 'jquery.SuperSlide','jquery.newsbox','jquery-ui.custom','phoenix.date','phoenix.form', 'bootstrap','ace-elements', 'ace'], function ($, _,componentUtils,phoenixUtils) {
 
 
     $(function () {
@@ -348,7 +348,7 @@ seajs.use(['jquery', 'lodash','componentutils','phoenix.util', 'gridstack', 'jqu
                             direction: 'up',
                             newsTickerInterval: 4000,
                             onToDo: function () {
-                                console.log(this);
+                                // console.log(this);
                             }
                         });
                         $(model).find(".grid-stack-item-content .bulletinBoard-content .news-item a").on('click',function () {
@@ -375,6 +375,35 @@ seajs.use(['jquery', 'lodash','componentutils','phoenix.util', 'gridstack', 'jqu
                             }
                            return false;
                        });
+                       // 登录
+                    }else if(node.componentId == 'component_login'){
+                        $(model).find(".grid-stack-item-content .user_login button").on('click',function () {
+                            var data = $('.loginForm').toObject();
+                            debugger
+                            if(data.loginName == "" || data.password == ""){
+                                layer.msg("信息不完整，请继续输入！");
+                            } else {
+                               $.extend(data, {companyUrl:company_url});
+                                phoenixUtils.jsonAjaxRequest(ctx+'/qw/login',data,function (res) {
+                                    if(res.code == 0){
+                                        $('.loginForm').reset();
+                                        // 设置名称号码
+                                        var user = res.data[0];
+                                        debugger
+                                        $("#navbar .navbar-header .islogin").removeClass('hide');
+                                        $("#navbar .navbar-header .nologin").addClass('hide');
+                                        if(user.picSrc !=null){
+                                            $("#navbar .navbar-header .islogin img").attr('src',ctx+user.picSrc);
+                                        }
+                                        $("#navbar .navbar-header .islogin span").empty().html('<small>Welcome,</small>'+user.userName);
+                                        layer.msg("保存成功！");
+                                    }else {
+                                        layer.msg(res.message);
+                                    }
+                                });
+                            }
+                            return false;
+                        });
                     }
                 });
             }
@@ -390,6 +419,19 @@ seajs.use(['jquery', 'lodash','componentutils','phoenix.util', 'gridstack', 'jqu
     });
 
 
+    // 点击退出登录
+    $("#navbar .navbar-header .ace-nav").find(".islogin a.loginout").on("click",function () {
+        phoenixUtils.jsonAjaxRequest(ctx+'/qw/loginout',{},function (res) {
+            if(res.code == 0){
+                $("#navbar .navbar-header .islogin").addClass('hide');
+                $("#navbar .navbar-header .nologin").removeClass('hide');
+                layer.msg("退出成功！");
+            }else {
+                layer.msg(res.message);
+            }
+        });
+        return false;
+    });
 
 
 

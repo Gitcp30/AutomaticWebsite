@@ -243,11 +243,63 @@
             margin: 0;
         }
 
+        #navbar-container .navbar-header .nav-user-photo{
+            width: 100%;
+            height: 100%;
+            max-height:40px;
+        }
 
     </style>
 </head>
 
 <body>
+
+
+<div id="navbar" class="navbar navbar-default">
+    <!--头部 start-->
+    <div class="navbar-container" id="navbar-container">
+        <!-- #section:basics/sidebar.mobile.toggle -->
+        <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+            <span class="sr-only">Toggle sidebar</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+        </button>
+        <!-- #section:basics/navbar.dropdown -->
+        <div class="navbar-buttons navbar-header pull-right" role="navigation">
+            <ul class="nav ace-nav">
+                <!-- #section:basics/navbar.user_menu -->
+                <li class="light-blue islogin hide">
+                    <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                        <img class="nav-user-photo" src="${ctx}/pic/sys/PictureLibrary/1.jpg" alt="Jason's Photo" />
+                        <span class="user-info"><small>Welcome,</small>xx</span>
+                        <i class="ace-icon fa fa-caret-down"></i>
+                    </a>
+                    <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                        <li>
+                            <a href="${ctx}/admin" target="_blank"> <i class="ace-icon fa fa-user"></i>个人信息
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#" class="loginout"> <i class="ace-icon fa fa-power-off"></i>退出
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- /section:basics/navbar.user_menu -->
+
+                <li class="light-blue nologin">
+                    <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                        <img class="nav-user-photo" src="${ctx}/pic/logo.png" alt="Jason's Photo" />
+                        <span class="user-info"><small>用户未登录,</small>前往登录</span>
+                        <span class="user-info">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /section:basics/navbar.dropdown -->
+    </div>
+    <!-- /.navbar-container -->
+
+</div>
 
 <div class="content">
     <!--头部 -->

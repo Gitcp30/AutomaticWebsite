@@ -11,4 +11,6 @@ import javax.servlet.http.HttpSession;
 public interface LoginService {
 
     AjaxResponse checkLogin(LoginUSer loginUSer, HttpSession session);
+
+    AjaxResponse checkWebLogin(LoginUSer loginUSer, HttpSession session);
 }

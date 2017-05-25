@@ -16,6 +16,8 @@ public class LoginUSer implements Serializable{
     // 密码
     private String password;
 
+    private String companyUrl;
+
     public String getLoginName() {
         return loginName;
     }
@@ -38,5 +40,13 @@ public class LoginUSer implements Serializable{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getCompanyUrl() {
+        return companyUrl;
+    }
+
+    public void setCompanyUrl(String companyUrl) {
+        this.companyUrl = companyUrl;
     }
 }
