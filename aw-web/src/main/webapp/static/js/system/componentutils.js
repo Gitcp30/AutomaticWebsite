@@ -352,7 +352,7 @@ define(function(require, exports) {
             '<div class="col-xs-6 col-sm-4 col-md-3">'+
             '<div class="thumbnail search-thumbnail">'+
             '<span class="search-promotion label label-success arrowed-in arrowed-in-right">{{state}}</span>'+
-            '<img class="media-object" src="../assets/images/gallery/image-1.jpg" style="width: 100%;height: 200px;" />'+
+            '<img class="media-object" src="'+ctx+'{{productImg}}"  style="width: 100%;height: 200px;" />'+
             '<div class="caption">'+
             '<div class="clearfix">'+
             '<span class="pull-right label label-grey info-label">{{createTime}}</span>'+

@@ -68,6 +68,9 @@ public class Constants {
     // 存储图片的物理路径String pic_path = "F:\\workspace\\upload_temp\\profile\\";
     public static String PIC_PATH = "F:\\workspace\\upload_temp\\profile\\";
 
+    // 存储产品图片的物理路径String pic_path = "F:\\workspace\\upload_temp\\profile\\";
+    public static String PRODUCT_PIC_PATH = "F:\\workspace\\upload_temp\\product\\";
+
 
 
 }

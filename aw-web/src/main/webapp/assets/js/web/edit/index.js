@@ -1,7 +1,7 @@
 /**
  * Created by zzr on 2017/4/28.
  */
-seajs.use(['lodash','componentutils','../../../assets/js/web/edit/basesetting', 'gridstack', 'jquery.SuperSlide','jquery.newsbox'], function ( _,componentUtils,baseSettingUtils) {
+seajs.use(['lodash','componentutils','../../../assets/js/web/edit/basesetting', 'gridstack', 'jquery.SuperSlide','jquery.newsbox','layer','layer-css'], function ( _,componentUtils,baseSettingUtils) {
 
     $(function () {
         //  侧边栏初始化
@@ -246,6 +246,12 @@ seajs.use(['lodash','componentutils','../../../assets/js/web/edit/basesetting', 
                         alert("获取系统配置出错了");
                     } else {
                         basesettingMap = res;
+                        layer.confirm('修改成功！', {btn: ['确定'] }, function(index, layero){
+                            layer.close(index);
+                            window.location.reload();
+                        });
+
+
                     }
                 }, error: function () {
                     alert("获取系统配置出错了");

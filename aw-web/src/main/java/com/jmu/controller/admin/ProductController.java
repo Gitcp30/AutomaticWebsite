@@ -1,6 +1,9 @@
 package com.jmu.controller.admin;
 
 import com.jmu.common.AjaxPageResponse;
+import com.jmu.common.AjaxResponse;
+import com.jmu.constant.Constants;
+import com.jmu.domain.Product;
 import com.jmu.domain.User;
 import com.jmu.domain.vo.ProductVo;
 import com.jmu.service.admin.ProductService;
@@ -8,9 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
+import java.util.UUID;
 
 /**
  * @Description: 产品控制类
@@ -40,65 +49,72 @@ public class ProductController {
         return  productService.findAll(productVo,page);
     }
 
-/*
-    *//**
-     * 新增公告栏
-     * @param bullentinBoard
-     * @param session
-     * @return
-     *//*
+
+
     @ResponseBody
-    @RequestMapping("saveBullentinBoard")
-    public AjaxResponse saveBullentinBoard(@RequestBody BullentinBoard bullentinBoard, HttpSession session){
+    @RequestMapping(value = "/updateProduct")
+    public AjaxResponse updateProduct(@RequestParam(value = "photo",required = false) MultipartFile fileData,
+                                      Product product, HttpSession session) throws IOException {
+        if(fileData!=null && fileData.getOriginalFilename()!=null && fileData.getOriginalFilename().length()>0){
+            String originalFilename = fileData.getOriginalFilename();
+            String newFileName = UUID.randomUUID().toString().replace("-", "") + originalFilename.substring(originalFilename.lastIndexOf("."));
+            File newFile = new File(Constants.PRODUCT_PIC_PATH+newFileName);
+            fileData.transferTo(newFile);
+            product.setProductImg("/pic/product/"+newFileName);
+        }
         User currentUser = (User) session.getAttribute("currentUser");
-        bullentinBoard.setCompanyId(currentUser.getCompanyId());
-        bullentinBoard.setCreator(currentUser.getUserId());
-        return bullentinBoardService.saveBullentinBoard(bullentinBoard);
+        product.setModifier(currentUser.getUserId());
+        return  productService.updateProduct(product);
     }
 
 
-    *//**//**
-     * 公告栏删除
-     * @param bullentinBoardIds
-     * @return
-     *//**//*
+
+
     @ResponseBody
-    @RequestMapping("deleteBullentinBoard")
-    public AjaxResponse deleteBullentinBoard(@RequestParam(value="bullentinBoardIds[]",required=true) String[] bullentinBoardIds){
-        if (bullentinBoardIds != null && bullentinBoardIds.length > 0){
-            return bullentinBoardService.deleteBullentinBoard(bullentinBoardIds);
+    @RequestMapping(value = "/saveProduct")
+    public AjaxResponse saveProduct(@RequestParam(value = "photo",required = false) MultipartFile fileData,
+                                      Product product, HttpSession session) throws IOException {
+        //上传图片
+        if(fileData!=null && fileData.getOriginalFilename()!=null && fileData.getOriginalFilename().length()>0){
+            String originalFilename = fileData.getOriginalFilename();
+            String newFileName = UUID.randomUUID().toString().replace("-", "") + originalFilename.substring(originalFilename.lastIndexOf("."));
+            File newFile = new File(Constants.PRODUCT_PIC_PATH+newFileName);
+            fileData.transferTo(newFile);
+            product.setProductImg("/pic/product/"+newFileName);
+        }
+        User currentUser = (User) session.getAttribute("currentUser");
+        product.setCompanyId(currentUser.getCompanyId());
+        product.setCreator(currentUser.getUserId());
+        return productService.saveProduct(product);
+    }
+
+
+    @ResponseBody
+    @RequestMapping("deleteProduct")
+    public AjaxResponse deleteProduct(@RequestParam(value="productIds[]",required=true) String[] productIds){
+        if (productIds != null && productIds.length > 0){
+            return productService.deleteProduct(productIds);
         }
         return AjaxResponse.fail("没有可删除的数据！");
     }
 
 
-
     @ResponseBody
-    @RequestMapping("updateBullentinBoardState")
-    public AjaxResponse updateBullentinBoardState(Short Status, @RequestParam(value="bullentinBoardIds[]",required=true) String[] bullentinBoardIds, HttpSession session){
+    @RequestMapping("updateProductState")
+    public AjaxResponse updateProductState(Short state, @RequestParam(value="productIds[]",required=true) String[] productIds, HttpSession session){
 
-        if(Status == null || bullentinBoardIds ==null){
-            return AjaxResponse.fail("用户为空");
+        if(state == null || productIds ==null){
+            return AjaxResponse.fail("产品为空");
         }
         // userVo启用数据
         User user = (User) session.getAttribute("currentUser");
 
-        BullentinBoardVo bullentinBoardVo = new BullentinBoardVo();
-        bullentinBoardVo.setModifyTime(new Date());
-        bullentinBoardVo.setModifier(user.getUserId());
-        bullentinBoardVo.setStatus(Status);
-        bullentinBoardVo.setBullentinBoardIds(bullentinBoardIds);
-
-        return bullentinBoardService.updateBullentinBoardState(bullentinBoardVo);
+        ProductVo productVo = new ProductVo();
+        productVo.setModifyTime(new Date());
+        productVo.setModifier(user.getUserId());
+        productVo.setState(state);
+        productVo.setProductIds(productIds);
+        return productService.updateProductState(productVo);
     }
-
-
-    @ResponseBody
-    @RequestMapping(value = "/updateBullentinBoard")
-    public AjaxResponse updateBullentinBoard(@RequestBody BullentinBoard bullentinBoard, HttpSession session){
-        User currentUser = (User) session.getAttribute("currentUser");
-        bullentinBoard.setModifier(currentUser.getUserId());
-        return  bullentinBoardService.updateBullentinBoard(bullentinBoard);
-    }*/
 
 }

@@ -231,7 +231,6 @@ seajs.use(['jquery', 'lodash','componentutils','phoenix.util', 'gridstack', 'jqu
             always_show_resize_handle: false,
         };
 
-
         function contentType(node) {
             debugger
             switch (node.componentId) {
@@ -245,34 +244,7 @@ seajs.use(['jquery', 'lodash','componentutils','phoenix.util', 'gridstack', 'jqu
                     return componentUtils.memberRegister();
                     break;
                 case "component_bulletinBoard":
-                    var context = {
-                        /*news: [
-                            {
-                                time: '2017/05/06',
-                                title: '地球炸啦'
-                            },
-                            {
-                                time: '2017/05/06',
-                                title: '哈哈哈哈'
-                            },
-                            {
-                                time: '2017/05/06',
-                                title: '哈哈哈哈'
-                            },
-                            {
-                                time: '2017/05/06',
-                                title: '哈哈哈哈'
-                            },
-                            {
-                                time: '2017/05/06',
-                                title: '哈哈哈哈'
-                            },
-                            {
-                                time: '2017/05/06',
-                                title: '哈哈哈哈'
-                            }
-                        ]*/
-                    };
+                    var context = { };
                     $.ajax({
                         type: "POST",
                         url: ctx + "/qw/getBulletinBoard",
@@ -299,6 +271,33 @@ seajs.use(['jquery', 'lodash','componentutils','phoenix.util', 'gridstack', 'jqu
                     break;
                 case "component_messageBoard":
                     return componentUtils.messageBoard();
+                    break;
+                case "component_product":
+                    var context = { };
+                    $.ajax({
+                        type: "POST",
+                        url: ctx + "/qw/getProduct",
+                        data:{
+                            companyUrl:company_url,
+                        },
+                        dataType: 'json',
+                        cache: false,
+                        async: false,
+                        success: function (res) {
+                            if(res == null){
+                                alert("获取系统配置出错了");
+                            } else {
+                                $.each(res,function (index,row) {
+                                    res[index].createTime =  dateFormatter(row.createTime);
+                                    res[index].state = stateFormatter(row.state);
+                                })
+                                context = {product:res};
+                            }
+                        }, error: function () {
+                            alert("获取系统配置出错了");
+                        }
+                    });
+                    return componentUtils.product(context);
                     break;
                 case company_page:
                     var bbId = company_page.split("bbId=")[1];
@@ -536,6 +535,17 @@ seajs.use(['jquery', 'lodash','componentutils','phoenix.util', 'gridstack', 'jqu
 
     var dateFormatter = function(value,row,index){
         return (new Date(value)).phoenixDateFormat("yyyy/MM/dd");
+    }
+
+    // 状态转化
+    var stateFormatter = function (value) {
+        debugger
+        switch (value){
+            case 0:return '正常';break;
+            case 1:return '停用';break;
+            case 2:return '置顶';break;
+            default:return'未说明';break;
+        }
     }
 
 });

@@ -10,14 +10,10 @@ define(function(require, exports) {
 
 
     var $productTable = $('#productTable');
-
-
-
-
-    var $bullentinBoardTable = $('#bullentinBoardTable');
-    var $bullentinBoardAddDialog = $('#bullentinBoardAddDialog');
-    var $bullentinBoardEditor = $('#bullentinBoard-editor');
-    var $bullentinBoardQueryDialog = $('#bullentinBoardQueryDialog');
+    var $productAddDialog = $("#productAddDialog");
+    var $productAddForm = $("#productAddForm");
+    var $product_picSrc = $("#product_picSrc");
+    var $productQueryDialog = $("#productQueryDialog");
 
     var isSeniorQuery = false;
     var currentRow = null;
@@ -32,10 +28,6 @@ define(function(require, exports) {
         }
     }
 
-    // 标题转化
-    exports.titleFormatter = function (value,row,index) {
-        return '<span>《'+value+'》</span>';
-    }
 
 
     // 操作
@@ -53,16 +45,19 @@ define(function(require, exports) {
     // 操作事件
     exports.operateEvents = {
         'click .delete' : function(e, value, row) {
-            if (!row.bullentinBoardId) {
+            if (!row.productId) {
                 return;
             }
-            deleteBullentinBoard([row]);
+            deleteProduct([row]);
         },
         'click .edit' : function(e, value, row) {
-            $bullentinBoardAddDialog.reset();
-            $bullentinBoardAddDialog.toForm(row);
-            $bullentinBoardEditor.html(row.bullentinBoardContent);
-            $bullentinBoardAddDialog.modal('show');
+            debugger
+            $productAddDialog.reset();
+            $productAddDialog.toForm(row);
+            if(row.productImg !=null && row.productImg !=""){
+                $product_picSrc.attr("src",ctx+row.productImg);
+            }
+            $productAddDialog.modal('show');
             currentRow = row;
         }
     };
@@ -71,7 +66,7 @@ define(function(require, exports) {
     exports.queryParams = function (tableParams) {
         var params;
         if (isSeniorQuery) {
-            params = $bullentinBoardQueryDialog.toObject();
+            params = $productQueryDialog.toObject();
         } else {
             params = {productName: tableParams.search }// 搜索框
         }
@@ -87,79 +82,91 @@ define(function(require, exports) {
 
 
     // 新增记录
-    exports.addbullentinBoardHandler = function () {
-        $bullentinBoardAddDialog.reset();
-        $bullentinBoardEditor.empty();
-        $bullentinBoardAddDialog.modal('show');
+    exports.addproductHandler = function () {
+        $productAddDialog.reset();
+        $product_picSrc.attr("src","");
+        $productAddDialog.modal('show');
     }
 
 
     // 重置新增框
-    exports.bbAddDialogResetHandler = function () {
-        $bullentinBoardAddDialog.reset();
-        $bullentinBoardEditor.empty();
+    exports.productAddDialogResetHandler = function () {
+        debugger
+        $product_picSrc.attr("src","");
+        $productAddDialog.reset();
     }
 
     // 新增 提交数据
-    exports.bbAddDialogCommitHandler = function () {
-        // 获取数据
-        var row = $bullentinBoardAddDialog.toObject();
-        row['bullentinBoardContent'] = $bullentinBoardEditor.html();
+    exports.productAddDialogCommitHandler = function () {
+        var row = $productAddForm.serializeObject();
+        var formData = new FormData();
         // 新增
         if(currentRow == null || currentRow == undefined){
+
+            $.each(row, function(key, val) {
+                formData.append(key,val);
+            });
+            // 是否更换图片
+            if($('#product_up')[0].files[0] != undefined){
+                formData.append('photo', $('#product_up')[0].files[0]);
+            }
             // 提交
-            phoenixUtils.jsonAjaxRequest(ctx+'/admin/web/saveBullentinBoard',row,function (res) {
+            phoenixUtils.ajaxRequest(ctx+'/admin/web/saveProduct',formData,function (res) {
                 if(res.code == Constants.CODE_SUCCESS){
-                    $bullentinBoardAddDialog.modal('hide');
-                    $bullentinBoardTable.bootstrapTable('refresh');
-                    $bullentinBoardAddDialog.reset();
-                    $bullentinBoardEditor.empty();
+                    $productAddDialog.modal('hide');
+                    $productTable.bootstrapTable('refresh');
+                    $product_picSrc.attr("src","");
+                    $productAddDialog.reset();
                 }else {
                     layer.msg(res.message);
                 }
-            });
+            },{processData: false,contentType: false});
             // 修改
         }else {
             var data = $.extend({}, currentRow, row);
-            debugger
-            phoenixUtils.jsonAjaxRequest(ctx+'/admin/web/updateBullentinBoard',data,function (res) {
+            $.each(data, function(key, val) {
+                formData.append(key,val);
+            });
+            // 是否更换图片
+            if($('#product_up')[0].files[0] != undefined){
+                formData.append('photo', $('#product_up')[0].files[0]);
+            }
+            phoenixUtils.ajaxRequest(ctx+'/admin/web/updateProduct',formData,function (res) {
                 debugger
                 if(res.code == Constants.CODE_SUCCESS){
-                    $bullentinBoardAddDialog.modal('hide');
-                    $bullentinBoardTable.bootstrapTable('refresh');
-                    $bullentinBoardAddDialog.reset();
-                    $bullentinBoardEditor.empty();
+                    $productAddDialog.modal('hide');
+                    $productTable.bootstrapTable('refresh');
+                    $productAddDialog.reset();
                     currentRow = null;
                 }else {
                     layer.msg(res.message);
                 }
-            });
+            },{processData: false,contentType: false});
         }
-
     }
 
 
     // 删除记录
-    exports.deleteBullentinBoardHandler = function () {
-        var selectedRows = $bullentinBoardTable.bootstrapTable('getSelections');
-        deleteBullentinBoard(selectedRows);
+    exports.deleteProductHandler = function () {
+        var selectedRows = $productTable.bootstrapTable('getSelections');
+        deleteProduct(selectedRows);
     }
 
     // 删除记录方法
-    function deleteBullentinBoard(selectedRows) {
+    function deleteProduct(selectedRows) {
         if(phoenixUtils.hasOne(selectedRows)){
             layer.confirm('确定要删除？', {
                 btn: ['确定','取消'] //按钮
             }, function(index, layero){
                 var ids = $.map(selectedRows, function(row) {
-                    return row.bullentinBoardId;
+                    return row.productId;
                 });
                 phoenixUtils.ajaxRequest(
-                    ctx+ "/admin/web/deleteBullentinBoard",
-                    {bullentinBoardIds: ids},
+                    ctx+ "/admin/web/deleteProduct",
+                    {productIds: ids},
                     function (res) {
                         if(res.code == Constants.CODE_SUCCESS){
-                            $bullentinBoardTable.bootstrapTable('refresh');
+                            $productTable.bootstrapTable('refresh');
                             layer.close(index);
                         }else {
                             layer.msg(res.message);
@@ -193,12 +200,12 @@ define(function(require, exports) {
     // 启用/停用/置顶  更新方法
     function  updateState(state) {
         debugger
-        var selectedRows = $bullentinBoardTable.bootstrapTable('getSelections');
+        var selectedRows = $productTable.bootstrapTable('getSelections');
         // 存在记录
         if(phoenixUtils.hasOne(selectedRows)){
             var ids = $.map(selectedRows, function(row) {
                 if(row.status != state ){
-                    return row.bullentinBoardId;
+                    return row.productId;
                 }
             });
             // 是否有可以启用/停用的单位
@@ -207,11 +214,11 @@ define(function(require, exports) {
                 return;
             } else {
                 phoenixUtils.ajaxRequest(
-                    ctx+ "/admin/web/updateBullentinBoardState",
-                    {'Status':state,'bullentinBoardIds':ids},
+                    ctx+ "/admin/web/updateProductState",
+                    {'state':state,'productIds':ids},
                     function (res) {
                         if(res.code == Constants.CODE_SUCCESS){
-                            $bullentinBoardTable.bootstrapTable('refresh');
+                            $productTable.bootstrapTable('refresh');
                         }else {
                             layer.msg(res.message);
                         }
@@ -227,19 +234,19 @@ define(function(require, exports) {
     // 高级查询弹框
     exports.queryDialogHandler = function () {
         isSeniorQuery = true;
-        $bullentinBoardQueryDialog.modal('show');
+        $productQueryDialog.modal('show');
     }
 
     // 高级查询查询事件
     exports.queryDialogCommitHandler = function () {
-        $bullentinBoardTable.bootstrapTable('refresh');
+        $productTable.bootstrapTable('refresh');
         isSeniorQuery = false;
-        $bullentinBoardQueryDialog.modal('hide');
+        $productQueryDialog.modal('hide');
     }
 
     // 高级查询重置
-    exports.bullentinBoardQueryResetHandler = function () {
-        $bullentinBoardQueryDialog.reset();
+    exports.productQueryResetHandler = function () {
+        $productQueryDialog.reset();
     }
 
 });

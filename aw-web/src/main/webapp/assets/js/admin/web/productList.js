@@ -1,7 +1,7 @@
 /**
  * Created by zzr on 2017/4/27.
  */
-seajs.use(['./assets/js/admin/web/productListHandler','bootstrap-datepicker'],function(handler){
+seajs.use(['./assets/js/admin/web/productListHandler','bootstrap-datepicker','uploadPreview'],function(handler){
 
     var $productTable = $('#productTable');
     var $bullentinBoardEditor = $('#bullentinBoard-editor');
@@ -39,71 +39,76 @@ seajs.use(['./assets/js/admin/web/productListHandler','bootstrap-datepicker'],fu
         } ],
         //注册加载子表的事件。注意下这里的三个参数！
         formatSearch:function () {
-            return '标题';
+            return '产品名称';
         },
         queryParams : handler.queryParams
     };
 
 
+    new uploadPreview({ UpBtn: "product_up", DivShow: "imgdiv", ImgShow: "product_picSrc" });
+    $("#product_picSrc").click(function(){
+        $("#product_up").click();
+    });
+
     /**
      * 定义单位查询按钮事件
      */
     var companyButtonConfigs = {
-        "#bullentinBoard-add-button" : {
+        "#product-add-button" : {
             name : '新增',
             eventType : 'click',
             proxy : true,
-            event : handler.addbullentinBoardHandler
+            event : handler.addproductHandler
         },
-        "#bullentinBoard-delete-button" : {
+        "#product-delete-button" : {
             name : '删除',
             eventType : 'click',
             proxy : true,
-            event : handler.deleteBullentinBoardHandler
+            event : handler.deleteProductHandler
         },
-        "#bullentinBoard-enable-button" : {
+        "#product-enable-button" : {
             name : '启用',
             eventType : 'click',
             proxy : true,
             event : handler.enableHandler
         },
-        "#bullentinBoard-disable-button" : {
+        "#product-disable-button" : {
             name : '停用',
             eventType : 'click',
             proxy : true,
             event : handler.disableHandler
         },
-        "#bullentinBoard-stick-button" : {
+        "#product-stick-button" : {
             name : '置顶',
             eventType : 'click',
             proxy : true,
             event : handler.stickHandler
         },
-        "#bullentinBoard-seniorQuery-button" : {
+        "#product-seniorQuery-button" : {
             name : '高级查询',
             eventType : 'click',
             proxy : true,
             event : handler.queryDialogHandler
         },
-        "#bullentinBoardAdd-reset-button" : {
+        "#productAdd-reset-button" : {
             name : '重置',
             eventType : 'click',
             proxy : true,
-            event : handler.bbAddDialogResetHandler
+            event : handler.productAddDialogResetHandler
         },
-        "#bullentinBoardAdd-commit-button" : {
+        "#productAdd-commit-button" : {
             name : '确定',
             eventType : 'click',
             proxy : true,
-            event : handler.bbAddDialogCommitHandler
+            event : handler.productAddDialogCommitHandler
         },
-        "#bullentinBoardQuery-reset-button" : {
+        "#productQuery-reset-button" : {
             name : '重置',
             eventType : 'click',
             proxy : true,
-            event : handler.bullentinBoardQueryResetHandler
+            event : handler.productQueryResetHandler
         },
-        "#bullentinBoardQuery-commit-button" : {
+        "#productQuery-commit-button" : {
             name : '高级查询提交',
             eventType : 'click',
             proxy : true,

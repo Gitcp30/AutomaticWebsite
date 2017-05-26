@@ -38,10 +38,9 @@
 </div>
 
 
-<%--
 
 <!-- 高级查询界面  -->
-<div class="modal fade" id="bullentinBoardQueryDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="productQueryDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog w800">
         <div class="modal-content">
             <div class="modal-header">
@@ -51,15 +50,15 @@
             <div class="modal-body" style="max-height: 800px;">
                 <div class="row">
                     <div class="col-xs-12">
-                        <form class="form-horizontal" id="employeeQueryForm" novalidate="novalidate">
+                        <form class="form-horizontal" id="productQueryForm" novalidate="novalidate">
                             <div class="form-group">
                                 <div class="col-sm-3">
-                                    <label class="control-label">标题</label>
-                                    <input type="text" class="form-control" name = "bullentinBoardTitle" placeholder="" aria-required="true">
+                                    <label class="control-label">产品名称</label>
+                                    <input type="text" class="form-control" name = "productName" placeholder="" aria-required="true">
                                 </div>
                                 <div class="col-sm-3">
                                     <label class="control-label">状态</label>
-                                    <select name="status" class="form-control">
+                                    <select name="state" class="form-control">
                                         <option value=""></option>
                                         <option value="0">正常</option>
                                         <option value="1">停用</option>
@@ -93,9 +92,9 @@
             </div>
             <div class="modal-footer">
                 <div class="pull-right">
-                    <button class="btn btn-default" id = "bullentinBoardQuery-cancel-button" type="button" data-dismiss="modal" >取消</button>
-                    <button class="btn btn-primary" id = "bullentinBoardQuery-reset-button" type="button">重置</button>
-                    <button class="btn btn-primary query" id = "bullentinBoardQuery-commit-button" type="button">查询</button>
+                    <button class="btn btn-default" id = "productQuery-cancel-button" type="button" data-dismiss="modal" >取消</button>
+                    <button class="btn btn-primary" id = "productQuery-reset-button" type="button">重置</button>
+                    <button class="btn btn-primary query" id = "productQuery-commit-button" type="button">查询</button>
                 </div>
             </div>
         </div>
@@ -105,26 +104,33 @@
 </div>
 
 <!-- 新增用户弹框  -->
-<div class="modal fade" id="bullentinBoardAddDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="productAddDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog w800">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">公告栏信息</h4>
+                <h4 class="modal-title">产品信息</h4>
             </div>
             <div class="modal-body" style="max-height: 800px;">
                 <div class="row">
                     <div class="col-xs-12">
-                        <form class="form-horizontal" id="bullentinBoardAddForm" novalidate="novalidate">
+                        <form class="form-horizontal" id="productAddForm" novalidate="novalidate">
+                            <div class="form-group">
+                                <label class="col-xs-10 col-sm-4 control-label no-padding-right">产品图片</label>
+                                <div class="col-sm-4">
+                                    <img src="" alt="选择头像" id="product_picSrc" class="col-sm-12" width="100%" height="100" style="padding: 0;cursor: pointer;">
+                                    <input type="file" id="product_up"  style="visibility:hidden"/>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <div class="col-sm-4">
-                                    <label class="control-label">标题</label>
-                                    <input type="text" class="form-control" name = "bullentinBoardTitle" placeholder="" aria-required="true">
+                                    <label class="control-label">名称</label>
+                                    <input type="text" class="form-control" name = "productName" placeholder="" aria-required="true">
                                 </div>
 
                                 <div class="col-sm-4">
                                     <label class="control-label">状态</label>
-                                    <select name="status" class="form-control">
+                                    <select name="state" class="form-control">
                                         <option value="0">正常</option>
                                         <option value="1">停用</option>
                                         <option value="2">置顶</option>
@@ -132,13 +138,13 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <label class="control-label">权重</label>
-                                    <input type="text" class="form-control" name = "bbOrder" placeholder="" aria-required="true">
+                                    <input type="text" class="form-control" name = "productOrder" placeholder="" aria-required="true">
                                 </div>
-
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-12">
-                                    <div class="wysiwyg-editor" id="bullentinBoard-editor"></div>
+                                    <label class="control-label">描述</label>
+                                    <textarea class="form-control" name = "productDesc" placeholder="" aria-required="true"></textarea>
                                 </div>
                             </div>
                         </form>
@@ -147,9 +153,9 @@
             </div>
             <div class="modal-footer">
                 <div class="pull-right">
-                    <button class="btn btn-default" id = "bullentinBoardAdd-cancel-button" type="button" data-dismiss="modal" >取消</button>
-                    <button class="btn btn-primary" id = "bullentinBoardAdd-reset-button" type="button">重置</button>
-                    <button class="btn btn-primary query" id = "bullentinBoardAdd-commit-button" type="button">提交</button>
+                    <button class="btn btn-default" id = "productAdd-cancel-button" type="button" data-dismiss="modal" >取消</button>
+                    <button class="btn btn-primary" id = "productAdd-reset-button" type="button">重置</button>
+                    <button class="btn btn-primary query" id = "productAdd-commit-button" type="button">提交</button>
                 </div>
             </div>
         </div>
@@ -159,7 +165,7 @@
 </div>
 
 
---%>
+
 
 
 <script src="${ctx}/assets/js/admin/web/productList.js"></script>

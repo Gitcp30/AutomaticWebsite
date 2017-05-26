@@ -4,10 +4,7 @@ import com.jmu.common.AjaxResponse;
 import com.jmu.domain.*;
 import com.jmu.domain.vo.LoginUSer;
 import com.jmu.domain.vo.UserVo;
-import com.jmu.service.admin.BullentinBoardService;
-import com.jmu.service.admin.CompanyService;
-import com.jmu.service.admin.MessageBoardService;
-import com.jmu.service.admin.SysPictureService;
+import com.jmu.service.admin.*;
 import com.jmu.service.front.LoginService;
 import com.jmu.service.front.RegisterService;
 import com.jmu.service.web.*;
@@ -56,6 +53,8 @@ public class PublicWebController {
     private LoginService loginService;
     @Autowired
     private RegisterService registerService;
+    @Autowired
+    private ProductService productService;
 
     /**
      *  进入index界面
@@ -208,6 +207,22 @@ public class PublicWebController {
             return registerService.saveMemberRegister(userVo);
         }
         return AjaxResponse.fail("数据不全,重新输入");
+    }
+
+
+    /**
+     * 获取产品信息
+     * @param companyUrl
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "getProduct",method = RequestMethod.POST)
+    public List getProduct(String companyUrl){
+        if(companyUrl != null){
+            return productService.getProduct(companyUrl);
+        } else {
+            return null;
+        }
     }
 
 
