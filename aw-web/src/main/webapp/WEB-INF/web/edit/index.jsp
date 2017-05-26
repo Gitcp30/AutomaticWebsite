@@ -487,23 +487,29 @@
                 <!--登录-->
                 <div id="componentModal_login" class="tab-pane in active">
                     <div class="row">
-                        <div class="col-xs-4 col-sm-4">
+                        <div class="col-xs-3 col-sm-3">
                             <label>
                                 <input name="componentModal_component" type="radio" class="ace" value="component_login"/>
                                 <span class="lbl">登录</span>
                             </label>
                         </div>
-                        <div class="col-xs-4 col-sm-4">
+                        <div class="col-xs-3 col-sm-3">
                             <label>
                                 <input name="componentModal_component" type="radio" class="ace" value="component_bulletinBoard"/>
                                 <span class="lbl">公告</span>
                             </label>
                         </div>
-                        <div class="col-xs-4 col-sm-4">
+                        <div class="col-xs-3 col-sm-3">
                             <label>
-                                <input name="componentModal_component" type="radio" class="ace" value="component_messageBoard"
-                                       checked="true"/>
+                                <input name="componentModal_component" type="radio" class="ace" value="component_messageBoard"/>
                                 <span class="lbl">留言板</span>
+                            </label>
+                        </div>
+
+                        <div class="col-xs-3 col-sm-3">
+                            <label>
+                                <input name="componentModal_component" type="radio" class="ace" value="component_register"/>
+                                <span class="lbl">用户注册</span>
                             </label>
                         </div>
                     </div>

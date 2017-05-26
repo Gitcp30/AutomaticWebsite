@@ -304,6 +304,9 @@ seajs.use(['lodash','componentutils','../../../assets/js/web/edit/basesetting', 
                 case "component_login":
                     return componentUtils.memberLogin();
                     break;
+                case "component_register":
+                    return componentUtils.memberRegister();
+                    break;
                 case "component_bulletinBoard":
                     var context = {
                         news: [
@@ -478,6 +481,9 @@ debugger
                     break;
                 case "component_messageBoard":
                     $(content).empty().html(componentUtils.messageBoard());
+                    break;
+                case "component_register":
+                    $(content).empty().html(componentUtils.memberRegister());
                     break;
                 default:
                     alert("出错啦！");

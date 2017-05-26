@@ -23,6 +23,8 @@ public class UserVo extends User {
 
     private String[] userIds;
 
+    private String companyUrl;
+
     public Auditing getAuditing() {
         return auditing;
     }
@@ -61,6 +63,14 @@ public class UserVo extends User {
 
     public void setBirthdayEnd(Date birthdayEnd) {
         this.birthdayEnd = birthdayEnd;
+    }
+
+    public String getCompanyUrl() {
+        return companyUrl;
+    }
+
+    public void setCompanyUrl(String companyUrl) {
+        this.companyUrl = companyUrl;
     }
 
     public String[] getUserIds() {

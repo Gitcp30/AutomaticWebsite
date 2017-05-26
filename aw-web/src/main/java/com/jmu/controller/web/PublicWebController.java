@@ -3,11 +3,13 @@ package com.jmu.controller.web;
 import com.jmu.common.AjaxResponse;
 import com.jmu.domain.*;
 import com.jmu.domain.vo.LoginUSer;
+import com.jmu.domain.vo.UserVo;
 import com.jmu.service.admin.BullentinBoardService;
 import com.jmu.service.admin.CompanyService;
 import com.jmu.service.admin.MessageBoardService;
 import com.jmu.service.admin.SysPictureService;
 import com.jmu.service.front.LoginService;
+import com.jmu.service.front.RegisterService;
 import com.jmu.service.web.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -52,6 +54,8 @@ public class PublicWebController {
     private MessageBoardService messageBoardService;
     @Autowired
     private LoginService loginService;
+    @Autowired
+    private RegisterService registerService;
 
     /**
      *  进入index界面
@@ -194,6 +198,14 @@ public class PublicWebController {
         return  AjaxResponse.success();
     }
 
+    @ResponseBody
+    @RequestMapping(value="/memberRegister",method = RequestMethod.POST)
+    public AjaxResponse memberRegister(@RequestBody UserVo userVo){
+        if(userVo.getCompanyUrl()!=null && userVo.getMailbox()!=null && userVo.getPassword()!=null){
+            return registerService.saveMemberRegister(userVo);
+        }
+        return AjaxResponse.fail("数据不全,重新输入");
+    }
 
 
 }

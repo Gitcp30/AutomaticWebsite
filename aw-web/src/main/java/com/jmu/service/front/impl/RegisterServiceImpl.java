@@ -10,6 +10,7 @@ import com.jmu.dao.UserMapper;
 import com.jmu.domain.Auditing;
 import com.jmu.domain.Company;
 import com.jmu.domain.User;
+import com.jmu.domain.vo.UserVo;
 import com.jmu.entity.Email;
 import com.jmu.service.front.RegisterService;
 import com.jmu.util.CommonUtils;
@@ -102,5 +103,27 @@ public class RegisterServiceImpl implements RegisterService {
         auditingMapper.insertSelective(auditing);
 
         return AjaxResponse.success();
+    }
+
+
+    @Override
+    public AjaxResponse saveMemberRegister(UserVo userVo) {
+        if(userVo.getCompanyUrl() != null){
+            Company company = companyMapper.selectByVisitUrl(userVo.getCompanyUrl());
+            if(company!=null){
+                User user = new User();
+                // 保存用户
+                user.setUserId(UUID.randomUUID().toString().replace("-", ""));
+                user.setUserType((short) 1);
+                user.setPassword(CommonUtils.MD5(userVo.getPassword()));
+                user.setMailbox(userVo.getMailbox());
+                user.setSysAccount(CommonUtils.createSysAccount(userVo.getMailbox()));
+                user.setUserState((short)1);
+                user.setCompanyId(company.getCompanyId());
+                userMapper.insert(user);
+                return  AjaxResponse.success();
+            }
+        }
+        return AjaxResponse.fail("信息有误，请重新输入！");
     }
 }

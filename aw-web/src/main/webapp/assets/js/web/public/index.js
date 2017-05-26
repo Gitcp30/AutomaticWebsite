@@ -241,6 +241,9 @@ seajs.use(['jquery', 'lodash','componentutils','phoenix.util', 'gridstack', 'jqu
                 case "component_login":
                     return componentUtils.memberLogin();
                     break;
+                case "component_register":
+                    return componentUtils.memberRegister();
+                    break;
                 case "component_bulletinBoard":
                     var context = {
                         /*news: [
@@ -356,7 +359,8 @@ seajs.use(['jquery', 'lodash','componentutils','phoenix.util', 'gridstack', 'jqu
                             return false;
                         });
                         // 留言板
-                    } else if(node.componentId == 'component_messageBoard'){
+                    }
+                    else if(node.componentId == 'component_messageBoard'){
                        $(model).find(".grid-stack-item-content .messageBoard button").on('click',function () {
                             var data = $('.messageBoardForm').toObject();
                             if(data.userName == "" || data.mailBox == "" || data.content == ""){
@@ -376,7 +380,8 @@ seajs.use(['jquery', 'lodash','componentutils','phoenix.util', 'gridstack', 'jqu
                            return false;
                        });
                        // 登录
-                    }else if(node.componentId == 'component_login'){
+                    }
+                    else if(node.componentId == 'component_login'){
                         $(model).find(".grid-stack-item-content .user_login button").on('click',function () {
                             var data = $('.loginForm').toObject();
                             debugger
@@ -394,6 +399,24 @@ seajs.use(['jquery', 'lodash','componentutils','phoenix.util', 'gridstack', 'jqu
                                     }
                                 });
                             }
+                            return false;
+                        });
+                    }
+                    else if(node.componentId == 'component_register'){
+                        $(model).find(".grid-stack-item-content .memberRegister button").on('click',function () {
+                            var data = $('.registerForm').toObject();
+                            debugger
+                            // 前端验证
+                            // 提交表单
+                                $.extend(data, {companyUrl:company_url});
+                                phoenixUtils.jsonAjaxRequest(ctx+'/qw/memberRegister',data,function (res) {
+                                    if(res.code == 0){
+                                        $('.registerForm').reset();
+                                        layer.msg("注册成功，等待审核");
+                                    }else {
+                                        layer.msg(res.message);
+                                    }
+                                });
                             return false;
                         });
                     }
