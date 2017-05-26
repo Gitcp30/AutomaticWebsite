@@ -338,7 +338,50 @@ define(function(require, exports) {
         );
         return render(data);
     }
-	// 渲染视图
+
+    // 产品展示
+    exports.product =function (data) {
+        debugger
+        Template7.registerPartial(
+            'begin',
+            '<div class="row" componentId="component_product">'+
+            '<div class="col-sm-12" style="border-right:1px solid #ddd;">'+
+            '<div class="well col-sm-12">'+
+            '<h3 class="productH3"><i class="fa fa-file-text" aria-hidden="true"></i> 产品展示</h3>'+
+            '{{#each product}}' +
+            '<div class="col-xs-6 col-sm-4 col-md-3">'+
+            '<div class="thumbnail search-thumbnail">'+
+            '<span class="search-promotion label label-success arrowed-in arrowed-in-right">{{state}}</span>'+
+            '<img class="media-object" src="../assets/images/gallery/image-1.jpg" style="width: 100%;height: 200px;" />'+
+            '<div class="caption">'+
+            '<div class="clearfix">'+
+            '<span class="pull-right label label-grey info-label">{{createTime}}</span>'+
+            '<div class="pull-left bigger-110">'+
+            '<i class="ace-icon fa fa-star orange2"></i>'+
+            '<i class="ace-icon fa fa-star orange2"></i>'+
+            '<i class="ace-icon fa fa-star orange2"></i>'+
+            '<i class="ace-icon fa fa-star-half-o orange2"></i>'+
+            '<i class="ace-icon fa fa-star light-grey"></i>'+
+            '</div>'+
+            '</div>'+
+            '<h3 class="search-title"><a href="#" class="blue">{{productName}}</a></h3>'+
+            '<p>{{productDesc}}</p>'+
+            '</div>'+
+            '</div>'+
+            '</div>'+
+            '{{/each}}' +
+            '</div>'+
+            '</div>'+
+            '</div>'
+        );
+        return render(data);
+    }
+
+
+
+
+
+    // 渲染视图
 	function render(data){
 		var template_nav2 = '{{> "begin"}}';
 		var compiledTemplate_nav2 = Template7.compile(template_nav2);

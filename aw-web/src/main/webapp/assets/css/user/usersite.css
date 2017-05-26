@@ -2,7 +2,7 @@
     margin: 10px 0px; //输入框上下外边距为10px,左右为0px
 }
 
-.user_login h3 , .messageBoard h3 , .bulletinBoardDetail h3, .memberRegister h3{
+.user_login h3 , .messageBoard h3 , .bulletinBoardDetail h3, .memberRegister h3 , .productH3{
     padding: 5px;
     border-bottom: 1px solid #ddd; //h3字体下边框
 }

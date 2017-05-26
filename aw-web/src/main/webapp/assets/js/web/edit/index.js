@@ -341,6 +341,9 @@ seajs.use(['lodash','componentutils','../../../assets/js/web/edit/basesetting', 
                 case "component_messageBoard":
                     return componentUtils.messageBoard();
                     break;
+                case "component_product":
+                    return componentUtils.product();
+                    break;
                 default:
                     alert("出错啦！");
                     break;
@@ -484,6 +487,41 @@ debugger
                     break;
                 case "component_register":
                     $(content).empty().html(componentUtils.memberRegister());
+                    break;
+                case "component_product":
+                    var context = {
+                        product : [
+                            {
+                                productName: '产品1',
+                                productDesc: '非常好',
+                                createTime:'2017/05/06',
+                                state:"1",
+                                productImg:"aa"
+
+                            },
+                            {
+                                productName: '产品1',
+                                productDesc: '非常好',
+                                createTime:'2017/05/06',
+                                state:"1",
+                                productImg:"aa"
+                            },
+                            {
+                                productName: '产品1',
+                                productDesc: '非常好',
+                                createTime:'2017/05/06',
+                                state:"1",
+                                productImg:"aa"
+                            },
+                            {
+                                productName: '产品1',
+                                productDesc: '非常好',
+                                createTime:'2017/05/06',
+                                state:"1",
+                                productImg:"aa"
+                            }
+                        ]};
+                    $(content).empty().html(componentUtils.product(context));
                     break;
                 default:
                     alert("出错啦！");

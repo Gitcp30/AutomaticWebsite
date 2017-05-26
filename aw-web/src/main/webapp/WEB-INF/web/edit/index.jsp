@@ -508,6 +508,13 @@
                                 <span class="lbl">用户注册</span>
                             </label>
                         </div>
+
+                        <div class="col-xs-3 col-sm-3">
+                            <label>
+                                <input name="componentModal_component" type="radio" class="ace" value="component_product"/>
+                                <span class="lbl">产品</span>
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <!-- 公告栏-->
