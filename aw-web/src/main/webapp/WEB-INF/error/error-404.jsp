@@ -20,23 +20,16 @@
         <div class="error-container">
             <div class="well">
                 <h1 class="grey lighter smaller">
-											<span class="blue bigger-125">
-												<i class="ace-icon fa fa-sitemap"></i>
-												404
-											</span>
-                    Page Not Found
+					<span class="blue bigger-125"><i class="ace-icon fa fa-sitemap"></i>页面无法访问</span>
                 </h1>
-
                 <hr>
                 <h3 class="lighter smaller">We looked everywhere but we couldn't find it!</h3>
-
                 <div>
                     <form class="form-search">
-												<span class="input-icon align-middle">
-													<i class="ace-icon fa fa-search"></i>
-
-													<input type="text" class="search-query" placeholder="Give it a search...">
-												</span>
+						<span class="input-icon align-middle">
+							<i class="ace-icon fa fa-search"></i>
+                            <input type="text" class="search-query" placeholder="Give it a search...">
+						</span>
                         <button class="btn btn-sm" type="button">Go!</button>
                     </form>
 
@@ -45,8 +38,7 @@
 
                     <ul class="list-unstyled spaced inline bigger-110 margin-15">
                         <li>
-                            <i class="ace-icon fa fa-hand-o-right blue"></i>
-                            Re-check the url for typos
+                            <i class="ace-icon fa fa-hand-o-right blue"></i> Re-check the url for typos
                         </li>
 
                         <li>

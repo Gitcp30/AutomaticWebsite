@@ -348,7 +348,41 @@ seajs.use(['lodash','componentutils','../../../assets/js/web/edit/basesetting', 
                     return componentUtils.messageBoard();
                     break;
                 case "component_product":
-                    return componentUtils.product();
+                    var context = {
+                        product : [
+                            {
+                                productName: '产品1',
+                                productDesc: '非常好',
+                                createTime:'2017/05/06',
+                                state:"1",
+                                productImg:"aa"
+
+                            },
+                            {
+                                productName: '产品1',
+                                productDesc: '非常好',
+                                createTime:'2017/05/06',
+                                state:"1",
+                                productImg:"aa"
+                            },
+                            {
+                                productName: '产品1',
+                                productDesc: '非常好',
+                                createTime:'2017/05/06',
+                                state:"1",
+                                productImg:"aa"
+                            },
+                            {
+                                productName: '产品1',
+                                productDesc: '非常好',
+                                createTime:'2017/05/06',
+                                state:"1",
+                                productImg:"aa"
+                            }
+                        ]};
+                    return componentUtils.product(context);
+                    break;
+                case "component_product":
                     break;
                 default:
                     alert("出错啦！");

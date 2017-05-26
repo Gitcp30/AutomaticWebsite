@@ -244,6 +244,7 @@ seajs.use(['jquery', 'lodash','componentutils','phoenix.util', 'gridstack', 'jqu
                     return componentUtils.memberRegister();
                     break;
                 case "component_bulletinBoard":
+                    debugger
                     var context = { };
                     $.ajax({
                         type: "POST",

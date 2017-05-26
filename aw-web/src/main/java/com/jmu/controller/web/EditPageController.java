@@ -57,6 +57,16 @@ public class EditPageController {
     }
 
     /**
+     * editPage页面
+     * @return
+     */
+    @RequestMapping(value = "getEditPage",method= RequestMethod.GET)
+    public String contentPage(){
+        return "admin/web/editPage";
+    }
+
+
+    /**
      *  获取index界面
      * @return
      */
