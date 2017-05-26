@@ -1,7 +1,7 @@
 /**
  * Created by zzr on 2017/4/28.
  */
-seajs.use(['jquery', 'lodash','componentutils','phoenix.util', 'gridstack', 'jquery.SuperSlide','jquery.newsbox','jquery-ui.custom','phoenix.date','phoenix.form', 'bootstrap','ace-elements', 'ace'], function ($, _,componentUtils,phoenixUtils) {
+seajs.use(['jquery', 'lodash','componentutils','phoenix.util', 'gridstack', 'jquery.SuperSlide','jquery.newsbox','jquery-ui.custom','phoenix.date','phoenix.form', 'bootstrap','ace-elements', 'ace','jquery-validate'], function ($, _,componentUtils,phoenixUtils) {
 
 
     $(function () {
@@ -403,11 +403,13 @@ seajs.use(['jquery', 'lodash','componentutils','phoenix.util', 'gridstack', 'jqu
                         });
                     }
                     else if(node.componentId == 'component_register'){
+                        var $form = $(model).find(".grid-stack-item-content .registerForm");
                         $(model).find(".grid-stack-item-content .memberRegister button").on('click',function () {
                             var data = $('.registerForm').toObject();
                             debugger
                             // 前端验证
-                            // 提交表单
+                            if($form.valid()){
+                                // 提交表单
                                 $.extend(data, {companyUrl:company_url});
                                 phoenixUtils.jsonAjaxRequest(ctx+'/qw/memberRegister',data,function (res) {
                                     if(res.code == 0){
@@ -417,8 +419,92 @@ seajs.use(['jquery', 'lodash','componentutils','phoenix.util', 'gridstack', 'jqu
                                         layer.msg(res.message);
                                     }
                                 });
+                            }
+
                             return false;
                         });
+                        // 用户注册form验证
+                        $form.validate({
+                            errorElement: 'div',
+                            errorClass: 'help-block',
+                            focusInvalid: false,
+                            ignore: "",
+                            rules: {
+                                mailbox: {
+                                    required: true,
+                                    email:true,
+                                    remote: {
+                                        type: "post",
+                                        //请求方式
+                                        url: ctx+"/register/checkMailbox",     //发送请求的url地址
+                                        data: {
+                                            mailbox: function(){
+                                                return $("#mailbox").val();
+                                            }
+                                        },
+                                        dataType: "json",        //发送的数据类型
+                                        dataFilter: function(res) { //返回结果
+                                            res = $.parseJSON(res);
+                                            if (res.code == "0") {
+                                                return true;
+                                            }else {
+                                                return false;
+                                            }
+                                        }
+                                    }
+                                },
+                                password: {
+                                    required: true,
+                                    minlength: 6,
+                                    maxlength:16
+                                },
+                                password2: {
+                                    required: true,
+                                    minlength: 6,
+                                    maxlength:16,
+                                    equalTo: "#password"
+                                }
+                            },
+
+                            messages: {
+                                mailbox: {
+                                    required: "请输入注册邮箱！",
+                                    email: "请输入合法的邮箱地址！",
+                                    remote:"输入邮箱已存在或公司正在审核中！"
+                                },
+                                password: {
+                                    required: "请输入6-16位数字，字母等组成的密码！",
+                                    minlength: "密码长度为6-16位！",
+                                    maxlength:"密码长度为6-16位！"
+                                },
+                                password2: {
+                                    required: "请输入6-16位数字，字母等组成的密码！",
+                                    minlength: "密码长度为6-16位！",
+                                    maxlength:"密码长度为6-16位！",
+                                    equalTo: "与输入密码不匹配！"
+                                }
+                            },
+
+
+                            highlight: function (e) {
+                                $(e).closest('.form-group').removeClass('has-success').addClass('has-error');
+                            },
+
+                            success: function (e) {
+                                $(e).closest('.form-group').removeClass('has-error').addClass('has-success');
+                                $(e).remove();
+                            },
+
+                            errorPlacement: function (error, element) {
+                                error.insertAfter(element.parent());
+                            },
+
+                            submitHandler: function (form) {
+                            },
+                            invalidHandler: function (form) {
+                            }
+                        });
+
                     }
                 });
             }

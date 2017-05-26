@@ -69,12 +69,15 @@ public class PublicWebController {
         if(company == null){
             return "error/error";
         }
-        List<WebColumn> webColumnList = webColumnService.getSelectByCompanyId(company.getCompanyId(),(short)0);
+        Map webColumns = webColumnService.getSelectByCompanyId(company.getCompanyId(),(short)0);
         List<WebBannerImg> webBannerImgList = webBannerImgService.findAll(company.getCompanyId());
         WebFooter webFooter =webFooterService.findByCompanyId(company.getCompanyId());
 
         map.put("webBannerImgList",webBannerImgList);
-        map.put("sysMenuColumns",webColumnList);
+
+        map.put("webColumn_menu",webColumns.get("webColumn_menu"));
+        map.put("webColumn_link",webColumns.get("webColumn_link"));
+
         map.put("webFooter",webFooter);
         return "web/public/index";
     }

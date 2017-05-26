@@ -78,8 +78,8 @@
                                     <label class="control-label">图标</label>
                                     <select name="functionClass" class="form-control">
                                         <option value="menu-icon fa fa-list">menu-icon fa fa-list</option>
-                                        <option value="menu-icon fa fa-list">menu-icon fa fa-list</option>
-                                        <option value="menu-icon fa fa-list">menu-icon fa fa-list</option>
+                                        <option value="menu-icon fa fa-user">menu-icon fa fa-user</option>
+                                        <option value="menu-icon fa fa-flag">menu-icon fa fa-flag</option>
                                     </select>
                                 </div>
                             </div>

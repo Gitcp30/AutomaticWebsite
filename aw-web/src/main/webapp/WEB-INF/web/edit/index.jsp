@@ -369,11 +369,9 @@
     <div id="webMenu">
         <div class="inner_menu">
                <ul class="nav nav-pills nav-justified">
-                   <c:forEach items="${requestScope.webColumnList}" var="menuCol">
+                   <c:forEach items="${requestScope.webColumn_menu}" var="menuCol">
                        <%--<li style="background-color: #cc0010;"><a href="#">首页</a></li>--%>
-                       <c:if test="${menuCol.isMenu== true}">
                            <li><a hidefocus="true" href="${ctx}/web/edit/editPage/${menuCol.url}">${menuCol.columnName}</a></li>
-                       </c:if>
                    </c:forEach>
 
 
@@ -435,10 +433,8 @@
     <div id="webFooter">
         <div class="inner_footer">
             <div class="footLinks">
-                <c:forEach items="${requestScope.webColumnList}" var="linkCol">
-                    <c:if test="${linkCol.isFooterLink== true}">
+                <c:forEach items="${requestScope.webColumn_link}" var="linkCol">
                         <span><a hidefocus="true" href="${linkCol.url}">${linkCol.columnName}</a></span>
-                    </c:if>
                 </c:forEach>
             </div>
             <div class="footCpy">

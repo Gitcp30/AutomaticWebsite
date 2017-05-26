@@ -204,11 +204,11 @@ define(function(require, exports) {
             '<h3><i class="fa fa-file-text" aria-hidden="true"></i> 注册</h3>'+
             '<div class="input-group input-group-md">'+
             '<span class="input-group-addon" ><i class="ace-icon fa fa-envelope"></i></span>'+
-            '<input type="text" class="form-control" name="mailbox"  placeholder="邮箱" aria-describedby="sizing-addon1">'+
+            '<input type="text" class="form-control" id="mailbox" name="mailbox"  placeholder="邮箱" aria-describedby="sizing-addon1">'+
             '</div>'+
             '<div class="input-group input-group-md">'+
             '<span class="input-group-addon"><i class="ace-icon fa fa-key"></i></span>'+
-            '<input type="password" class="form-control" name="password" placeholder="密码" aria-describedby="sizing-addon1">'+
+            '<input type="password" class="form-control" id="password" name="password" placeholder="密码" aria-describedby="sizing-addon1">'+
             '</div>'+
             '<div class="input-group input-group-md">'+
             '<span class="input-group-addon"><i class="ace-icon fa fa-key"></i></span>'+

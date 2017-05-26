@@ -311,28 +311,28 @@ seajs.use(['lodash','componentutils','../../../assets/js/web/edit/basesetting', 
                     var context = {
                         news: [
                             {
-                                time: '2017/05/06',
-                                title: '地球炸啦'
+                                createTime: '2017/05/06',
+                                bullentinBoardTitle: '地球炸啦'
                             },
                             {
-                                time: '2017/05/06',
-                                title: '哈哈哈哈'
+                                createTime: '2017/05/06',
+                                bullentinBoardTitle: '哈哈哈哈'
                             },
                             {
-                                time: '2017/05/06',
-                                title: '哈哈哈哈'
+                                createTime: '2017/05/06',
+                                bullentinBoardTitle: '哈哈哈哈'
                             },
                             {
-                                time: '2017/05/06',
-                                title: '哈哈哈哈'
+                                createTime: '2017/05/06',
+                                bullentinBoardTitle: '哈哈哈哈'
                             },
                             {
-                                time: '2017/05/06',
-                                title: '哈哈哈哈'
+                                createTime: '2017/05/06',
+                                bullentinBoardTitle: '哈哈哈哈'
                             },
                             {
-                                time: '2017/05/06',
-                                title: '哈哈哈哈'
+                                createTime: '2017/05/06',
+                                bullentinBoardTitle: '哈哈哈哈'
                             }
                         ]
                     };

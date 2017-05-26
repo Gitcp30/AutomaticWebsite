@@ -27,7 +27,8 @@
         $("#footer").load(ctx+"/admin/footer");
         $("#page-content").load(ctx+"/admin/welcome");
 
-        var renderSideBar = function(data) {
+
+            var renderSideBar = function(data) {
             var data = data || ctx+"/static/menu.json";
             $.ajax({
                 type: "get",
@@ -122,6 +123,5 @@
         date2Formatter = function(value,row,index){
             return (new Date(value)).phoenixDateFormat("yyyy/MM/dd");
         }
-
 
 });

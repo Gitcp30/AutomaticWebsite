@@ -2,6 +2,7 @@ package com.jmu.service.admin;
 
 import com.jmu.common.AjaxResponse;
 import com.jmu.domain.Sysfunction;
+import com.jmu.domain.vo.SysfunctionVo;
 
 import java.util.List;
 
@@ -11,6 +12,8 @@ import java.util.List;
 public interface SysFunctionService {
 
     List getFunction(Sysfunction sysfunction);
+
+    List getFunction(SysfunctionVo sysfunctionvo);
 
     List getAll();
 

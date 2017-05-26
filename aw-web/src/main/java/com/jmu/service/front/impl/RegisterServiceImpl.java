@@ -114,7 +114,7 @@ public class RegisterServiceImpl implements RegisterService {
                 User user = new User();
                 // 保存用户
                 user.setUserId(UUID.randomUUID().toString().replace("-", ""));
-                user.setUserType((short) 1);
+                user.setUserType((short) 0);
                 user.setPassword(CommonUtils.MD5(userVo.getPassword()));
                 user.setMailbox(userVo.getMailbox());
                 user.setSysAccount(CommonUtils.createSysAccount(userVo.getMailbox()));

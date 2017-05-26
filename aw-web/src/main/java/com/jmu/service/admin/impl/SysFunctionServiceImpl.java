@@ -4,6 +4,7 @@ import com.jmu.common.AjaxResponse;
 import com.jmu.dao.SysfunctionMapper;
 import com.jmu.domain.Sysfunction;
 import com.jmu.domain.vo.MenuVo;
+import com.jmu.domain.vo.SysfunctionVo;
 import com.jmu.service.admin.SysFunctionService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,33 @@ public class SysFunctionServiceImpl implements SysFunctionService {
 
                     function.setParentId(root.getFunctionId());
                     List<Sysfunction> subs =  sysFunctionMapper.selectSubByType(function);
+
+                    menuVo.setMainmenu(functionMenu);
+                    menuVo.setSubmenu(subs);
+                    menus.add(menuVo);
+
+                }
+            }
+            return  menus;
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public List getFunction(SysfunctionVo function) {
+        if(function.getFunctionTypes() != null){
+            // 查询根目录
+            List<Sysfunction> roots =  sysFunctionMapper.selectMainByTypes(function);
+            List<MenuVo> menus = new ArrayList<MenuVo>();
+            if (roots != null){
+                for(Sysfunction root :roots){
+                    MenuVo menuVo = new MenuVo();
+                    Sysfunction functionMenu = new Sysfunction();
+                    BeanUtils.copyProperties(root,functionMenu);
+
+                    function.setParentId(root.getFunctionId());
+                    List<Sysfunction> subs =  sysFunctionMapper.selectSubByTypes(function);
 
                     menuVo.setMainmenu(functionMenu);
                     menuVo.setSubmenu(subs);

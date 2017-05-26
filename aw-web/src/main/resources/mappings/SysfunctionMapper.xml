@@ -191,12 +191,38 @@
     (PARENT_ID is null or PARENT_ID= '')
   </select>
 
+
+  <select id="selectMainByTypes" parameterType="com.jmu.domain.vo.SysfunctionVo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sysfunction
+    where FUNCTION_TYPE in
+    <foreach collection="functionTypes" item="functionType" open="(" close=")" separator=",">
+      #{functionType}
+    </foreach>
+    and
+    (PARENT_ID is null or PARENT_ID= '')
+  </select>
+
+
   <select id="selectSubByType" parameterType="com.jmu.domain.Sysfunction" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from sysfunction
     where
     ( FUNCTION_TYPE = '0' or FUNCTION_TYPE = #{functionType,jdbcType=SMALLINT})
+    and PARENT_ID = #{parentId,jdbcType=VARCHAR}
+  </select>
+
+
+  <select id="selectSubByTypes" parameterType="com.jmu.domain.vo.SysfunctionVo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sysfunction
+    where FUNCTION_TYPE in
+    <foreach collection="functionTypes" item="functionType" open="(" close=")" separator=",">
+      #{functionType}
+    </foreach>
     and PARENT_ID = #{parentId,jdbcType=VARCHAR}
   </select>
 

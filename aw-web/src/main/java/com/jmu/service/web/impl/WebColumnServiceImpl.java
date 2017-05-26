@@ -10,9 +10,7 @@ import com.jmu.service.web.WebColumnService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @Description: 菜单栏项目服务实现类
@@ -54,7 +52,76 @@ public class WebColumnServiceImpl implements WebColumnService {
     }
 
     @Override
-    public List<WebColumn> getSelectByCompanyId(String companyId, short type) {
+    public Map getSelectByCompanyId(String companyId, short type) {
+        Map<String,List> map = new HashMap<String,List>();
+
+        WebFooter webFooter = webFooterMapper.selectByCompanyId(companyId);
+        String [] menus = webFooter.getMenuSelectIds().split("/");
+        String [] links = webFooter.getLinkSelectIds().split("/");
+
+        List<WebColumn> webColumnList = webColumnMapper.selectByType(type);
+
+        List<WebColumn> webColumn_menu = new ArrayList<WebColumn>();
+        List<WebColumn> webColumn_link = new ArrayList<WebColumn>();
+
+
+        for(int i=0;i<menus.length;i++){
+            for (WebColumn webColumn : webColumnList){
+                if(webColumn.getColumnId().equals(menus[i])) {
+                    webColumn_menu.add(webColumn);
+                    break;
+                }
+            }
+        }
+
+        for(int i=0;i<links.length;i++){
+            for (WebColumn webColumn : webColumnList){
+                if(webColumn.getColumnId().equals(links[i])) {
+                    webColumn_link.add(webColumn);
+                    break;
+                }
+            }
+        }
+        map.put("webColumn_menu",webColumn_menu);
+        map.put("webColumn_link",webColumn_link);
+
+       /* webColumnList = Lists.transform(webColumnList, new Function<WebColumn, WebColumn>() {
+            @Override
+            public WebColumn apply(WebColumn webColumn) {
+
+                for(int i=0;i<menus.length;i++){
+                    if(webColumn.getColumnId().equals(menus[i])) {
+                        webColumn.setIsMenu(true);
+                        break;
+                    }else{
+                        webColumn.setIsMenu(false);
+                    }
+                }
+                return webColumn;
+            }
+        });
+
+        webColumnList = Lists.transform(webColumnList, new Function<WebColumn, WebColumn>() {
+            @Override
+            public WebColumn apply(WebColumn webColumn) {
+
+                for(int i=0;i<links.length;i++){
+                    if(webColumn.getColumnId().equals(links[i])) {
+                        webColumn.setIsFooterLink(true);
+                        break;
+                    }else{
+                        webColumn.setIsFooterLink(false);
+                    }
+                }
+                return webColumn;
+            }
+        });*/
+
+        return map;
+    }
+
+    @Override
+    public List getSelectsByCompanyId(String companyId, short type) {
         WebFooter webFooter = webFooterMapper.selectByCompanyId(companyId);
         String [] menus = webFooter.getMenuSelectIds().split("/");
         String [] links = webFooter.getLinkSelectIds().split("/");

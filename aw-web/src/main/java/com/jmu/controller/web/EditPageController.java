@@ -47,11 +47,12 @@ public class EditPageController {
         User user = (User) session.getAttribute("currentUser");
 
         List list = sysPictureService.getAll("sys",user);
-        List<WebColumn> webColumnList = webColumnService.getSelectByCompanyId(user.getCompanyId(),(short)0);
+        List webColumns = webColumnService.getSelectsByCompanyId(user.getCompanyId(),(short)0);
         List<WebBannerImg> webBannerImgList = webBannerImgService.findAll(user.getCompanyId());
         map.put("webBannerImgList",webBannerImgList);
         map.put("sysPics",list);
-        map.put("sysMenuColumns",webColumnList);
+
+        map.put("sysMenuColumns",webColumns);
         return "web/edit/edit";
     }
 
@@ -62,11 +63,14 @@ public class EditPageController {
     @RequestMapping(value = "index",method= RequestMethod.GET)
     public String indexPage(Map<String, Object> map,HttpSession session){
         User user = (User) session.getAttribute("currentUser");
-        List<WebColumn> webColumnList = webColumnService.getSelectByCompanyId(user.getCompanyId(),(short)0);
+        Map webColumns = webColumnService.getSelectByCompanyId(user.getCompanyId(),(short)0);
+
         WebFooter webFooter =webFooterService.findByCompanyId(user.getCompanyId());
         List<WebBannerImg> webBannerImgList = webBannerImgService.findAll(user.getCompanyId());
 
-        map.put("webColumnList",webColumnList);
+        map.put("webColumn_menu",webColumns.get("webColumn_menu"));
+        map.put("webColumn_link",webColumns.get("webColumn_link"));
+
         map.put("webFooter",webFooter);
         map.put("webBannerImgList",webBannerImgList);
         return "web/edit/index";

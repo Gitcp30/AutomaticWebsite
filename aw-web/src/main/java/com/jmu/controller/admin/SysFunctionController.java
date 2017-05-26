@@ -4,6 +4,7 @@ import com.jmu.common.AjaxResponse;
 import com.jmu.constant.Constants;
 import com.jmu.domain.Sysfunction;
 import com.jmu.domain.User;
+import com.jmu.domain.vo.SysfunctionVo;
 import com.jmu.service.admin.SysFunctionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,21 +42,27 @@ public class SysFunctionController {
     @RequestMapping("getFunction")
     public List getFunction(HttpSession session){
 
-        Sysfunction sysfunction = new Sysfunction();
+        SysfunctionVo sysfunctionVo = new SysfunctionVo();
 
         User user = (User) session.getAttribute("currentUser");
         Short userType = user.getUserType();
-        // 当前用户为网站管理员
-        if( userType == (short) 1){
-            sysfunction.setFunctionType(Constants.USER_WEB_ADMIN);
+        // 当前用户为会员
+        if( userType == (short) 0){
+            Short[] type = {Constants.USER_STAFF};
+            sysfunctionVo.setFunctionTypes(type);
+            // 当前用户为网站管理员
+        } else if( userType == (short) 1){
+            Short[] type = {Constants.USER_STAFF,Constants.USER_WEB_ADMIN};
+            sysfunctionVo.setFunctionTypes(type);
             // 当前用户为系统管理员
         } else if(userType == (short) 2){
-            sysfunction.setFunctionType(Constants.USER_SYS_ADMIN);
+            Short[] type = {Constants.USER_STAFF,Constants.USER_SYS_ADMIN};
+            sysfunctionVo.setFunctionTypes(type);
             // 其他，错误直接返回
         } else {
             return null;
         }
-        return  functionService.getFunction(sysfunction);
+        return  functionService.getFunction(sysfunctionVo);
     }
 
 

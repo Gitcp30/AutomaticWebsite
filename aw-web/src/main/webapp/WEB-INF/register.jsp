@@ -89,6 +89,9 @@
 			.webHeader .headRight button:last-child {
 				margin: 19px 0 0 10px;
 			}
+			.webHeader .headRight button:last-child a{
+				text-decoration: none;
+			}
 			/**
 			 * 计数栏样式
 			 */
@@ -188,7 +191,7 @@
 
 				<div class="headRight">
 					<button type="button" class="btn btn-primary btn-round btn-lg">免费注册</button>
-					<button type="button" class="btn btn-white btn-round btn-lg">登录</button>
+					<button type="button" class="btn btn-white btn-round btn-lg"><a href="${ctx}/login">登录</a></button>
 				</div>
 			</div>
 		</div>
